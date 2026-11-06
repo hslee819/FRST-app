@@ -1,6 +1,17 @@
 (() => {
   'use strict';
   const screens = window.NScreens;
+  screens.grades = {
+    title:'성적', fullBleed:true,
+    render() {
+      const source = typeof window.NGradesHTML === 'string' ? '' : ' src="grades-content.html"';
+      return `<section class="grades-host" aria-label="성적"><iframe id="grades-frame" class="grades-frame" title="성적 · 리포트 서랍장, 부엉이 분석실"${source}></iframe></section>`;
+    },
+    mount() {
+      const frame = document.querySelector('#grades-frame');
+      if (frame && typeof window.NGradesHTML === 'string') frame.srcdoc = window.NGradesHTML;
+    },
+  };
   const $ = selector => document.querySelector(selector);
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const paths = {
@@ -21,7 +32,7 @@
   let toastTimer, returnFocus;
   const menuGroups = [
     ['Home',[['home','홈']]],
-    ['My',[['attendance','출결'],['timetable','시간표'],['focus','몰입도'],['penalty','벌점'],['meals','급식'],['notices','공지 사항'],['calendar','캘린더'],['surveys','설문']]],
+    ['My',[['attendance','출결'],['timetable','시간표'],['focus','몰입도'],['grades','성적'],['penalty','벌점'],['meals','급식'],['notices','공지 사항'],['calendar','캘린더'],['surveys','설문']]],
     ['1:1상담',[['counseling','학습 매니저'],['counseling','담임 선생님'],['consulting','컨설팅신청']]],
     ['강의/보강',[['lectures','선택특강 신청'],['reclass','리클래스 수강']]],
     ['부엉이 Library',[['guide','가이드북'],['faq','FAQ'],['call','바로Call']]],

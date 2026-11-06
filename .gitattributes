@@ -7,3 +7,4 @@
 /app/몰입도.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 /app/몰입도-리디자인.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 /app/n/N.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/app/n/*-content.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

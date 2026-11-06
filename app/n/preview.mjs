@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const projectRoot = fileURLToPath(new URL('./', import.meta.url));
 const allowed = new Set([
-  'index.html', 'N.html',
-  'src/base.css', 'src/my.css', 'src/services.css', 'src/focus.css',
+  'index.html', 'N.html', 'focus-content.html', 'grades-content.html',
+  'src/base.css', 'src/my.css', 'src/services.css', 'src/focus.css', 'src/grades.css',
   'src/my.js', 'src/services.js', 'src/focus.js', 'src/app.js',
 ]);
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png' };
