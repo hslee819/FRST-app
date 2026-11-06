@@ -1,17 +1,26 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>앱서비스기획팀 sdij 앱 6종 개선 화면</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>[앱서비스기획팀] sdij 앱 6종 개선 화면</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
 body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#121722;margin:0;padding:56px 20px}
 main{max-width:560px;margin:0 auto}
-h1{font-size:24px;line-height:1.4;margin:0 0 28px;word-break:keep-all}
+h1{font-size:24px;line-height:1.4;margin:0 0 40px;word-break:keep-all}
 h1 span{color:#778;font-weight:500}
-a{display:flex;align-items:center;gap:16px;padding:16px 20px;margin-bottom:12px;border:1px solid #dde;border-radius:14px;color:inherit;text-decoration:none;font-size:17px;font-weight:600}
-a:hover{border-color:#285CFF}
-.icon{flex:none;width:48px;height:48px;border-radius:12px;background:#F1F4FA;display:flex;align-items:center;justify-content:center;font-size:24px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 16px}
+a{display:flex;flex-direction:column;align-items:center;gap:8px;color:inherit;text-decoration:none;text-align:center}
+.icon{width:76px;height:76px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 2px 8px rgba(18,23,34,.12);transition:transform .15s}
+a:hover .icon{transform:scale(1.06)}
+.name{font-size:13px;font-weight:500;line-height:1.35;word-break:keep-all}
+.c1{background:linear-gradient(160deg,#5B86FF,#285CFF)}
+.c2{background:linear-gradient(160deg,#FFD27A,#FFB02E)}
+.c3{background:linear-gradient(160deg,#FFFFFF,#E9EDF5)}
+.c4{background:linear-gradient(160deg,#3A4256,#121722)}
+@media(max-width:400px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style></head>
-<body><main><h1>앱서비스기획팀 sdij 앱 6종 개선 화면 <span>(26.11.07.)</span></h1>
-<a href="scheduler_timer_tobe.html"><span class="icon">📅</span>SDIJ 스케줄러 + 타이머</a>
-<a href="sdij_drawer_tobe.html"><span class="icon">🗂️</span>SDIJ 콘텐츠 서랍장</a>
-<a href="scheduler_tobe.html"><span class="icon">🗓️</span>SDIJ 스케줄러</a>
-<a href="timer_tobe.html"><span class="icon">⏱️</span>SDIJ 타이머</a>
+<body><main><h1>[앱서비스기획팀] sdij 앱 6종 개선 화면 <span>(26.11.07.)</span></h1>
+<div class="grid">
+<a href="scheduler_timer_tobe.html"><span class="icon c1">📅</span><span class="name">SDIJ 스케줄러<br>+ 타이머</span></a>
+<a href="sdij_drawer_tobe.html"><span class="icon c2">🗂️</span><span class="name">SDIJ<br>콘텐츠 서랍장</span></a>
+<a href="scheduler_tobe.html"><span class="icon c3">🗓️</span><span class="name">SDIJ<br>스케줄러</span></a>
+<a href="timer_tobe.html"><span class="icon c4">⏱️</span><span class="name">SDIJ<br>타이머</span></a>
+</div>
 </main></body></html>
