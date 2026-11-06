@@ -104,17 +104,22 @@
     const s=get(ctx), week=weeks[s.week];
     return `<div class="focus-study-switch"><button data-action="focus-study-view" data-view="daily" class="${s.studyView==='daily'?'selected':''}" aria-pressed="${s.studyView==='daily'}">일별</button><button data-action="focus-study-view" data-view="weekly" class="${s.studyView==='weekly'?'selected':''}" aria-pressed="${s.studyView==='weekly'}">주간(요일별)</button></div><div class="focus-study-legend">${s.studyView==='weekly'?'<span><i class="lecture"></i>현장강의 공부 시간 (분)</span><span><i class="self"></i>자습 공부 시간 (분)</span>':'<span><i class="self"></i>현장강의 공부 시간 (분)</span>'}<span><i class="focus-line"></i>몰입도 ${s.studyView==='weekly'?'(1주평균)':'(1–10)'}</span></div>${sample(s)?`<div class="focus-study-total"><span title="참고 이미지에 표기된 총 공부 시간입니다.">${s.studyView==='weekly'?`총 공부 시간 ${week.shownTotal}`:'시간대별 기록'}</span></div><div class="focus-axis-captions"><span>몰입도</span><span>공부 시간 (분)</span></div>${s.studyView==='weekly'?studyChart(week):s.week===3?hourlyChart():empty}<p class="focus-study-note">아직 몰입도 측정이 시행 되지 않았어요.<br>몰입도는 수치보다는 추이를 보면서 학습에 활용해주세요.</p>`:empty}`;
   }
+  function modeTabs(ctx) {
+    const s=get(ctx);
+    const tabs=[['comparison','몰입도 비교','<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'],['study','공부 시간','<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>']];
+    return `<div class="focus-tabs" role="tablist" aria-label="몰입도 화면 선택">${tabs.map(([mode,label,path])=>`<button role="tab" class="${s.mode===mode?'on':''}" aria-selected="${s.mode===mode}" data-action="focus-mode" data-mode="${mode}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${path}</svg>${label}</button>`).join('')}</div>`;
+  }
   function render(ctx) {
     const s=get(ctx);
     let body;
     if(s.mode==='study') body=weekTabs(ctx)+study(ctx);
     else if(s.view==='monthly') body=sample(s)?monthly(ctx):empty;
     else body=weekTabs(ctx)+`<div class="focus-view-link"><button data-action="focus-view" data-view="monthly">당월 추이 보기 ${ctx.icon('chevron-right')}</button></div>`+(sample(s)&&s.week===0?(s.view==='detail'?detail(ctx):summary(ctx)):empty);
-    return `<section class="focus-screen ${s.mode==='study'?'focus-study':''}">${monthPicker(ctx)}${body}${note}</section>`;
+    return `<section class="focus-screen ${s.mode==='study'?'focus-study':''}">${modeTabs(ctx)}${monthPicker(ctx)}${body}${note}</section>`;
   }
   function onAction(action,el,ctx) {
     const s=get(ctx);
-    if(action==='focus-mode'){s.mode=s.mode==='study'?'comparison':'study';s.week=s.mode==='study'?3:0;s.view='detail';ctx.render();return true;}
+    if(action==='focus-mode'){const next=el.dataset.mode||(s.mode==='study'?'comparison':'study');if(next===s.mode)return true;s.mode=next;s.week=s.mode==='study'?3:0;s.view='detail';ctx.render();return true;}
     if(action==='focus-view'){s.view=el.dataset.view;ctx.render();return true;}
     if(action==='focus-week'){s.week=Number(el.dataset.week);ctx.render();return true;}
     if(action==='focus-study-view'){s.studyView=el.dataset.view;ctx.render();return true;}
@@ -123,5 +128,5 @@
   }
   window.NFocusData={weeks,rows,hourlyFocus,hourlyMinutes,duration};
   window.NScreens ||= {};
-  window.NScreens.focus={title:'몰입도 현황',render,onAction,header:ctx=>`<button class="text-button focus-mode-button" data-action="focus-mode">${get(ctx).mode==='study'?'몰입도 비교 보기':'공부 시간 보기'} ${ctx.icon('chevron-right')}</button>`};
+  window.NScreens.focus={title:'몰입도 현황',render,onAction};
 })();
