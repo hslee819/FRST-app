@@ -520,7 +520,7 @@
   }
   function modeTabs(ctx) {
     const s=get(ctx);
-    const tabs=[['comparison','몰입도 비교','<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'],['study','몰입도 추이','<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>']];
+    const tabs=[['comparison','몰입도 분석','<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'],['study','몰입도 추이','<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>']];
     return `<div class="focus-tabs" role="tablist" aria-label="몰입도 화면 선택">${tabs.map(([mode,label,path])=>`<button role="tab" class="${s.mode===mode?'on':''}" aria-selected="${s.mode===mode}" data-action="focus-mode" data-mode="${mode}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${path}</svg>${label}</button>`).join('')}</div>`;
   }
   function render(ctx) {
