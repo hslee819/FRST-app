@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>시대인재 N</title>
+  <link rel="stylesheet" href="src/base.css">
+  <link rel="stylesheet" href="src/my.css">
+  <link rel="stylesheet" href="src/services.css">
+  <link rel="stylesheet" href="src/focus.css">
+  <script src="src/my.js" defer></script>
+  <script src="src/services.js" defer></script>
+  <script src="src/focus.js" defer></script>
+  <script src="src/app.js" defer></script>
+</head>
+<body>
+  <div id="tablet-frame" aria-label="아이패드 가로 화면">
+    <div id="app">
+      <div class="status-bar"><span>오후 8:31&nbsp;&nbsp; 11월 6일 금요일</span><span class="device-status"><svg viewBox="0 0 24 24" aria-label="Wi-Fi"><path d="M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="20" r="1.5"/></svg>78% <span class="battery"><i></i></span></span></div>
+      <div class="app-surface">
+        <header id="page-header" class="page-header"><button id="menu-button" class="menu-button" data-action="open-menu" aria-label="메뉴 열기" aria-controls="navigation" aria-expanded="false"><span></span><span></span><span></span></button><h1 id="page-title">시대인재 N</h1><div id="header-actions" class="header-actions"></div></header>
+        <main id="screen" class="screen" tabindex="-1"></main>
+      </div>
+      <div id="drawer-shade" class="drawer-shade" data-action="close-menu" hidden></div>
+      <nav id="navigation" class="navigation" aria-label="주 메뉴" hidden>
+        <button class="drawer-close" data-action="close-menu" aria-label="메뉴 닫기">×</button>
+        <div class="profile"><div><strong>백하영t <button class="profile-bell" data-action="notifications" aria-label="알림"><svg viewBox="0 0 24 24"><path d="M5 17h14l-2-3V8a5 5 0 0 0-10 0v6zm5 4h4"/></svg></button></strong><p>78174191 / 임시관 / 1 / 4</p></div><button class="avatar" data-action="profile" aria-label="내 정보"><svg viewBox="0 0 80 80"><circle cx="40" cy="28" r="12"/><path d="M18 61a22 22 0 0 1 44 0"/></svg><span>⚙</span></button></div>
+        <div id="menu-groups"></div>
+      </nav>
+      <div id="modal-shade" class="modal-shade" hidden></div>
+      <section id="modal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden><button class="modal-close" data-action="close-modal" aria-label="닫기">×</button><h2 id="modal-title"></h2><div id="modal-body"></div></section>
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
+</body>
+</html>

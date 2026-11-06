@@ -1,0 +1,9 @@
+# Preserve imported source bytes and immutable fixtures across platforms.
+# In particular, app/ta/basic.html is checked by its original SHA256.
+/app/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+
+# These generated bundles retain blank lines left by inlined script tags.
+# Preserve their original bytes; check source files for trailing whitespace.
+/app/몰입도.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/app/몰입도-리디자인.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/app/n/N.html whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

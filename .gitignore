@@ -1,0 +1,17 @@
+# Local tooling and temporary verification artifacts
+.codex/
+.qa/
+node_modules/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.aws/
+
+# Old distribution staging folder; source lives in app/
+/app/github-upload/

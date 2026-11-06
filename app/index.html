@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="공부 시간과 몰입의 흐름을 함께 살펴보는 나만의 학습 대시보드">
+  <title>몰입도 현황 · FOCUS</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="comparison.css">
+  <script src="app-data.js" defer></script>
+  <script src="comparison-data.js" defer></script>
+  <script src="app-comparison.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <header class="app-header">
+    <div class="header-left">
+      <button class="icon-button menu-button" id="menu-button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navigation"><span></span><span></span><span></span></button>
+      <a class="brand" href="./index.html" aria-label="FOCUS 홈">FOCUS<span class="brand-dot"></span></a>
+      <span class="header-divider"></span><span class="header-section">나의 학습 대시보드</span>
+    </div>
+    <div class="header-right"><span class="demo-indicator"><i></i> 예시 데이터 포함</span><button class="avatar" id="guide-button" aria-label="앱 사용 안내">나</button></div>
+  </header>
+
+  <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+  <nav class="navigation" id="navigation" aria-label="주 메뉴" hidden>
+    <p class="nav-caption">MY LEARNING</p>
+    <button class="nav-item active" id="dashboard-nav"><span data-icon="chart"></span> 몰입도 현황 <span class="nav-active-dot"></span></button>
+    <button class="nav-item" id="comparison-nav"><span data-icon="target"></span> 다른 사람과 비교</button>
+    <button class="nav-item" id="history-nav"><span data-icon="book"></span> 학습 기록</button>
+    <button class="nav-item" id="help-nav"><span data-icon="help"></span> 사용 안내</button>
+    <div class="nav-bottom"><strong>조금씩, 더 깊이.</strong><p>오늘 쌓은 시간이<br>내일의 나를 만듭니다.</p></div>
+  </nav>
+
+  <main id="main" class="dashboard">
+    <section class="page-heading">
+      <div><p class="eyebrow"><span></span> MY LEARNING REPORT</p><h1>몰입도 현황</h1><p class="page-description">쌓여가는 공부 시간, 나만의 몰입의 흐름을 확인해 보세요.</p></div>
+      <div class="heading-actions"><button class="button button-secondary" id="export-button"><span data-icon="download"></span><span>내보내기</span></button><button class="button button-primary" id="add-button"><span data-icon="plus"></span>학습 기록 추가</button></div>
+    </section>
+
+    <div class="page-tabs" role="tablist" aria-label="학습 대시보드 탭">
+      <button id="personal-tab" role="tab" aria-selected="true" aria-controls="personal-panel" data-page="personal" class="page-tab active"><span data-icon="chart"></span>나의 학습</button>
+      <button id="comparison-tab" role="tab" aria-selected="false" aria-controls="comparison-panel" data-page="comparison" tabindex="-1" class="page-tab"><span data-icon="target"></span>다른 사람과 비교<span class="new-label">NEW</span></button>
+    </div>
+    <div id="personal-panel" role="tabpanel" aria-labelledby="personal-tab">
+    <section class="period-panel" aria-label="조회 기간 선택">
+      <div class="month-picker"><button class="icon-button month-arrow" id="prev-month" aria-label="이전 달"><span data-icon="chevron-left"></span></button><div class="month-title"><span id="year-label">2026년</span><h2 id="month-label">10<span>월</span></h2></div><button class="icon-button month-arrow" id="next-month" aria-label="다음 달"><span data-icon="chevron-right"></span></button></div>
+      <div class="week-tabs" id="week-tabs" role="group" aria-label="주차 선택"></div>
+      <button class="text-button current-month" id="current-month"><span data-icon="calendar"></span>이번 달</button>
+    </section>
+
+    <section class="stats-grid" aria-label="선택한 주의 학습 요약" id="stats-grid"></section>
+
+    <section class="chart-card" aria-labelledby="chart-heading">
+      <div class="chart-header"><div class="chart-title-group"><h2 id="chart-heading">한 주의 몰입 흐름</h2><span class="date-range" id="date-range"></span></div><div class="view-switch" role="group" aria-label="차트 보기 방식"><button data-view="daily" aria-pressed="false">일별</button><button data-view="weekly" class="selected" aria-pressed="true">주간 <span class="optional-text">(요일별)</span></button></div></div>
+      <div class="daily-controls" id="daily-controls" hidden><div id="day-tabs" class="day-tabs" role="group" aria-label="날짜 선택"></div><span class="hourly-note">예시 기록은 시간대별로 나누어 표시해요</span></div>
+      <div class="chart-legend" id="chart-legend"><span><i class="legend-swatch lecture"></i>현장강의</span><span><i class="legend-swatch self"></i>자습</span><span><i class="legend-line"></i>몰입도 <small>(0–10)</small></span></div>
+      <div class="chart-area" id="chart-area"><div class="axis-labels"><span class="focus-label">몰입도</span><span class="time-label">공부 시간 <small>(분)</small></span></div><div class="chart-scroll" id="chart-scroll"><div id="chart"></div></div><div class="chart-tooltip" id="chart-tooltip" role="status" hidden></div></div>
+      <div class="chart-empty" id="chart-empty" hidden><div class="empty-icon" data-icon="chart"></div><h3>아직 쌓인 학습 기록이 없어요</h3><p>첫 공부를 기록하고 나만의 몰입 흐름을 만들어 보세요.</p><button class="button button-primary" id="empty-add"><span data-icon="plus"></span>첫 학습 기록하기</button></div>
+      <div class="insight" id="insight"></div>
+    </section>
+
+    <section class="weekly-overview" aria-labelledby="overview-heading"><div class="section-heading"><div><span class="section-kicker">WEEKLY OVERVIEW</span><h2 id="overview-heading">이번 달, 차곡차곡</h2></div><span class="section-hint">주차를 선택해 자세히 살펴보세요 <span data-icon="arrow-down"></span></span></div><div class="overview-grid" id="overview-grid"></div></section>
+    </div>
+    <section id="comparison-panel" role="tabpanel" aria-labelledby="comparison-tab" hidden>
+      <div class="period-panel comparison-period-panel" aria-label="비교 기간 선택">
+        <div class="month-picker"><button class="icon-button month-arrow" id="compare-prev-month" aria-label="비교 이전 달"><span data-icon="chevron-left"></span></button><div class="month-title"><span id="compare-year">2026년</span><h2 id="compare-month">10<span>월</span></h2></div><button class="icon-button month-arrow" id="compare-next-month" aria-label="비교 다음 달"><span data-icon="chevron-right"></span></button></div>
+        <div id="compare-weeks" class="week-tabs" role="group" aria-label="비교 주차 선택"></div>
+        <span id="compare-month-caption" class="compare-month-caption" hidden>한 달의 몰입도를 한눈에 비교해 보세요</span>
+      </div>
+      <div class="comparison-section-heading"><div><p class="eyebrow">LEARN TOGETHER, GROW AT YOUR PACE</p><h2 id="comparison-heading">나와 함께, 몰입을 비교해요</h2><p id="comparison-range"></p></div><div class="view-switch comparison-mode" role="group" aria-label="비교 기간 보기"><button data-compare-mode="weekly" class="selected" aria-pressed="true">주간 비교</button><button data-compare-mode="monthly" aria-pressed="false">당월 추이</button></div></div>
+      <div class="comparison-source"><span data-icon="info"></span><p><strong>비교 그룹은 예시 데이터예요.</strong> 상위 50%·20% 평균은 참고 화면을 바탕으로 구성했으며, 실제 이용자 통계와 연결되어 있지 않아요.</p></div>
+      <article class="comparison-card" aria-labelledby="comparison-card-title">
+        <div class="comparison-card-header"><div><h3 id="comparison-card-title">주간 몰입도 비교</h3><span class="comparison-scale">몰입도 0–10점</span></div><button class="text-button compare-mode-link" id="compare-mode-link">당월 추이 보기 <span data-icon="chevron-right"></span></button></div>
+        <div id="comparison-gauges" class="comparison-gauges"></div>
+        <div id="comparison-legend" class="comparison-legend" role="group" aria-label="비교 차트 표시 항목"></div>
+        <div id="comparison-chart-wrap"><div class="comparison-axis"><span>몰입도</span><span id="comparison-chart-caption">요일별 평균</span></div><div class="comparison-chart-scroll" id="comparison-chart-scroll"><div id="comparison-chart"></div></div><div id="comparison-tooltip" class="comparison-tooltip" role="status" hidden></div></div>
+        <div id="comparison-detail" class="comparison-detail" hidden><p id="comparison-detail-note" class="comparison-detail-note"></p><div class="comparison-table-scroll"><table id="comparison-table"><caption>교시별 개인 몰입도와 비교 그룹 평균</caption><thead id="comparison-table-head"></thead><tbody id="comparison-table-body"></tbody></table></div><div class="comparison-detail-key"><span><i class="class-indicator"></i>수업: 몰입도 평균에서 제외</span><span>— : 교시별 측정 데이터 없음</span></div></div>
+        <div id="comparison-empty" class="comparison-empty" hidden><span data-icon="chart"></span><h3>이 기간의 비교 데이터가 없어요</h3><p>학습 기록을 추가하거나, 예시가 있는 2026년 10월을 선택해 주세요.</p><button class="button button-secondary" id="compare-return-demo">10월 예시 보기</button></div>
+        <div id="comparison-pages" class="comparison-pages" aria-label="주간 비교 화면 선택"><button class="icon-button" id="compare-page-prev" aria-label="주간 요약 보기"><span data-icon="chevron-left"></span></button><div class="comparison-page-buttons"><button data-compare-page="summary" aria-pressed="true" class="active"><i></i>주간 요약</button><button data-compare-page="detail" aria-pressed="false"><i></i>교시별 상세</button></div><button class="icon-button" id="compare-page-next" aria-label="교시별 상세 보기"><span data-icon="chevron-right"></span></button></div>
+        <div id="comparison-insight" class="comparison-insight"></div>
+      </article>
+      <div class="comparison-footnotes"><p><span data-icon="calendar"></span>월요일을 기준으로 주차를 나눕니다. 월초·월말의 주에는 전월·다음 달 날짜가 포함될 수 있어요.</p><p><span data-icon="info"></span>나의 값은 저장된 학습 기록을 우선 반영해요. 09.28–10.02의 기록이 없는 날짜에는 원본 화면의 교시별 예시를 표시합니다.</p></div>
+    </section>
+    <footer class="page-footer"><p><span data-icon="info"></span>몰입도는 수치보다는 주간 추이를 보며 학습에 활용해 주세요.</p><span>나의 속도로, 꾸준히 <i>FOCUS</i></span></footer>
+  </main>
+
+  <dialog id="record-dialog" aria-labelledby="record-heading" class="dialog record-dialog"><form id="record-form"><div class="dialog-header"><div><p class="eyebrow">ONE STEP FORWARD</p><h2 id="record-heading">오늘의 공부를 남겨요</h2></div><button type="button" class="icon-button" data-close aria-label="닫기"><span data-icon="close"></span></button></div><p class="dialog-description">작은 기록 하나가 더 나은 내일의 시작이에요.</p><label class="field">공부한 날짜<input type="date" name="date" required></label><fieldset class="type-field"><legend>공부 유형</legend><label><input type="radio" name="type" value="self" checked><span><span data-icon="book"></span>자습</span></label><label><input type="radio" name="type" value="lecture"><span><span data-icon="school"></span>현장강의</span></label></fieldset><div class="field-row"><label class="field">시간<input type="number" name="hours" min="0" max="24" step="1" value="1" required><span class="input-suffix">시간</span></label><label class="field">분<input type="number" name="minutes" min="0" max="59" step="1" value="0" required><span class="input-suffix">분</span></label></div><label class="field range-field"><span>오늘의 몰입도 <output id="focus-output">7<span> / 10</span></output></span><input type="range" name="focus" min="0" max="10" step="1" value="7"><span class="range-labels"><span>집중이 어려웠어요</span><span>깊이 몰입했어요</span></span></label><label class="field">한 줄 메모 <small>(선택)</small><input type="text" name="note" maxlength="100" placeholder="어떤 공부를 했나요?"></label><p class="form-error" id="form-error" role="alert" hidden></p><button type="submit" class="button button-primary submit-button">학습 기록 저장<span data-icon="arrow-right"></span></button><p class="local-note"><span data-icon="lock"></span>기록은 이 브라우저에 저장됩니다.</p></form></dialog>
+
+  <dialog id="history-dialog" aria-labelledby="history-heading" class="dialog history-dialog"><div class="dialog-header"><div><p class="eyebrow">MY STUDY LOG</p><h2 id="history-heading">나의 학습 기록</h2></div><button class="icon-button" data-close aria-label="닫기"><span data-icon="close"></span></button></div><p class="dialog-description">직접 추가한 기록을 확인하고 관리해 보세요.</p><div id="history-list"></div></dialog>
+
+  <dialog id="guide-dialog" aria-labelledby="guide-heading" class="dialog guide-dialog"><div class="dialog-header"><div><p class="eyebrow">HELLO, FOCUS</p><h2 id="guide-heading">기록하고, 몰입하고, 성장해요.</h2></div><button class="icon-button" data-close aria-label="닫기"><span data-icon="close"></span></button></div><div class="guide-steps"><div><span>01</span><p><strong>나의 흐름 살펴보기</strong>월과 주차를 선택하면 공부 시간과 평균 몰입도를 함께 볼 수 있어요. 일별 화면에서는 시간대별 흐름을 확인해 보세요.</p></div><div><span>02</span><p><strong>하루의 공부 기록하기</strong>공부한 날짜, 시간, 몰입도를 기록하세요. 추가한 기록은 이 브라우저에 저장되고, 메뉴의 학습 기록에서 삭제할 수 있어요.</p></div><div><span>03</span><p><strong>기록 가져가기</strong>내보내기를 누르면 선택한 주의 일별 학습 요약을 CSV 파일로 저장할 수 있어요.</p></div></div><div class="guide-note"><span data-icon="info"></span><p>2026년 10월에는 참고 화면을 바탕으로 한 예시 데이터가 포함되어 있어요. 총 공부 시간은 기록을 합산하며, 일별 시간대는 시각화를 위한 예시 배분입니다. 실제 측정 장치와 연동되지 않습니다.</p></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
