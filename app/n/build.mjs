@@ -2,10 +2,11 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Script } from 'node:vm';
+import { buildGradesContent } from './grades-content.mjs';
 
 const projectRoot = fileURLToPath(new URL('./', import.meta.url));
-const styles = ['src/base.css', 'src/my.css', 'src/services.css', 'src/focus.css'];
-const scripts = ['src/my.js', 'src/services.js', 'src/focus.js', 'src/app.js'];
+const styles = ['src/base.css', 'src/my.css', 'src/services.css', 'src/focus.css', 'src/grades.css'];
+const scripts = ['src/my.js', 'src/services.js', 'src/focus.js', 'src/grades.js', 'src/app.js'];
 
 export async function buildStandalone(root = projectRoot) {
   let html = await readFile(path.join(root, 'index.html'), 'utf8');
@@ -39,7 +40,8 @@ export async function buildStandalone(root = projectRoot) {
     const image = await readFile(path.join(root, 'assets', name));
     assets[name.slice(0, -4)] = `data:image/png;base64,${image.toString('base64')}`;
   }
-  const assetScript = `<script>window.NAssets=${JSON.stringify(assets).replace(/</g, '\\u003c')};</script>`;
+  const gradesHTML = await buildGradesContent(root);
+  const assetScript = `<script>window.NAssets=${JSON.stringify(assets).replace(/</g, '\\u003c')};window.NGradesHTML=${JSON.stringify(gradesHTML).replace(/</g, '\\u003c')};</script>`;
   html = html.replace('</body>', () => `${assetScript}\n${inlineScripts.join('\n')}\n</body>`);
   const output = path.join(root, 'N.html');
   await writeFile(output, html, 'utf8');

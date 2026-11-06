@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
-const files = ['my.js', 'services.js', 'focus.js', 'app.js'];
+const files = ['my.js', 'services.js', 'focus.js', 'grades.js', 'app.js'];
 const sources = await Promise.all(files.map(async name => ({ name, code: await readFile(new URL('../src/' + name, import.meta.url), 'utf8') })));
 const plain = value => JSON.parse(JSON.stringify(value));
 
@@ -100,9 +100,9 @@ function boot({ page = 'home', saved = new Map(), storageAccess = {} } = {}) {
   };
 }
 
-test('all 16 screens render and are reachable through the actual main menu', () => {
+test('all 17 screens render and are reachable through the actual main menu', () => {
   const h = boot();
-  const pages = ['home', 'attendance', 'timetable', 'focus', 'penalty', 'meals', 'notices', 'calendar', 'surveys', 'counseling', 'consulting', 'lectures', 'reclass', 'guide', 'faq', 'call'];
+  const pages = ['home', 'attendance', 'timetable', 'focus', 'grades', 'penalty', 'meals', 'notices', 'calendar', 'surveys', 'counseling', 'consulting', 'lectures', 'reclass', 'guide', 'faq', 'call'];
   assert.deepEqual(Object.keys(h.screens).sort(), [...pages].sort());
   for (const page of pages) {
     h.click('open-menu');

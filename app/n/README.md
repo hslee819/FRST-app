@@ -24,6 +24,7 @@ node n/preview.mjs
 - `src/my.*`: 홈·MY 영역
 - `src/services.*`: Library·상담·학습 지원 화면
 - `src/focus.*`: 몰입도 현황·비교 화면
+- `src/grades.*`, `grades-content.mjs`: My의 성적 화면. `../../개선 앱 화면/sdij_drawer_tobe.html`(콘텐츠 서랍장 개선안)에서 리포트 서랍장·부엉이 분석실만 남겨 `grades-content.html`을 만들고, 빌드할 때 `N.html`에 함께 넣습니다. 서랍장 개선안을 고치면 `node n/build.mjs`를 다시 실행합니다.
 - `assets/`: 제공 화면에서 추출한 그림과 가이드 카드
 - `.qa/`: 추출 좌표·원본 해시·확인용 자료
 

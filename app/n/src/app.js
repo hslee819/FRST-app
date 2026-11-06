@@ -21,7 +21,7 @@
   let toastTimer, returnFocus;
   const menuGroups = [
     ['Home',[['home','홈']]],
-    ['My',[['attendance','출결'],['timetable','시간표'],['focus','몰입도'],['penalty','벌점'],['meals','급식'],['notices','공지 사항'],['calendar','캘린더'],['surveys','설문']]],
+    ['My',[['attendance','출결'],['timetable','시간표'],['focus','몰입도'],['grades','성적'],['penalty','벌점'],['meals','급식'],['notices','공지 사항'],['calendar','캘린더'],['surveys','설문']]],
     ['1:1상담',[['counseling','학습 매니저'],['counseling','담임 선생님'],['consulting','컨설팅신청']]],
     ['강의/보강',[['lectures','선택특강 신청'],['reclass','리클래스 수강']]],
     ['부엉이 Library',[['guide','가이드북'],['faq','FAQ'],['call','바로Call']]],

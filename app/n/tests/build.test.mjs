@@ -11,16 +11,18 @@ test('standalone app embeds source scripts and all referenced artwork without ne
   const html = await readFile(new URL('N.html', root), 'utf8');
   assert.doesNotMatch(html, /<script\b[^>]*\bsrc=|<link\b[^>]*rel="stylesheet"/);
   const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match => match[1]);
-  assert.equal(scripts.length, 5);
+  assert.equal(scripts.length, 6);
   for (const script of scripts) new Script(script);
   const sandbox = { window: {} };
   new Script(scripts[0]).runInNewContext(sandbox);
   assert.equal(Object.keys(sandbox.window.NAssets).length, 15);
+  assert.match(sandbox.window.NGradesHTML, /n-grades-host-style/);
+  assert.match(sandbox.window.NGradesHTML, /const S=\{tab:'report',/);
   for (const [name, url] of Object.entries(sandbox.window.NAssets)) {
     assert.match(url, /^data:image\/png;base64,/);
     assert.deepEqual(Buffer.from(url.split(',')[1], 'base64'), await readFile(new URL(`assets/${name}.png`, root)));
   }
-  for (const [index, name] of ['my', 'services', 'focus', 'app'].entries()) {
+  for (const [index, name] of ['my', 'services', 'focus', 'grades', 'app'].entries()) {
     const source = await readFile(new URL(`src/${name}.js`, root), 'utf8');
     assert.equal(scripts[index + 1].trim(), source.replace(/<\/script/gi, '<\\/script').trim());
   }
