@@ -79,25 +79,25 @@
     return `<h2 class="focus-month-title">당월 몰입도 추이</h2><div class="focus-view-link"><button data-action="focus-view" data-view="detail">주간 몰입도 보기 ${ctx.icon('chevron-right')}</button></div><div class="focus-month-legend"><strong>몰입도</strong><div><span>전체유 평균 <i style="background:#4c6cf3"></i></span><span>몰입도 상위 50% 평균 <i style="background:#68696d"></i></span><span>몰입도 상위 20% 평균 <i style="background:#d5d5dc"></i></span></div></div><div class="focus-month-scroll" tabindex="0" aria-label="가로로 스크롤하여 월말 추이 보기">${monthlyChart()}</div>`;
   }
   function studyChart(week) {
-    const top=32,bottom=250,x=i=>112+i*210, yScore=v=>bottom-v/10*(bottom-top), yMinutes=v=>bottom-v/720*(bottom-top);
-    let svg='<svg viewBox="0 0 1100 302" role="img" aria-label="요일별 현장강의와 자습 공부 시간 및 몰입도">';
-    for(let i=0;i<=5;i++) {const y=yScore(i*2);svg+=`<path d="M50 ${y}H1050" stroke="#dedee6"/><text x="24" y="${y+5}" text-anchor="end" font-size="15">${i*2}</text>`;}
-    for(let i=0;i<=6;i++) {const y=yMinutes(i*120);svg+=`<text x="1065" y="${y+5}" font-size="15">${i*120}</text>`;}
+    const top=34,bottom=238,x=i=>130+i*200, yScore=v=>bottom-v/10*(bottom-top), yMinutes=v=>bottom-v/720*(bottom-top);
+    let svg='<svg viewBox="0 0 1100 282" role="img" aria-label="요일별 현장강의와 자습 공부 시간 및 몰입도">';
+    for(let i=0;i<=5;i++) {const y=yScore(i*2);svg+=`<path d="M48 ${y}H1052" stroke="#ececf0"/><text x="30" y="${y+4}" text-anchor="end" font-size="12" fill="#f2352b">${i*2}</text>`;}
+    for(let i=0;i<=6;i++) {const y=yMinutes(i*120);svg+=`<text x="1070" y="${y+4}" text-anchor="start" font-size="12" fill="#8b8d94">${i*120}</text>`;}
     week.focus.forEach((v,i)=> {
       const sx=x(i), total=week.self[i]+week.lecture[i], selfY=yMinutes(week.self[i]), totalY=yMinutes(total);
-      svg+=`<defs><clipPath id="focus-bar-${i}"><rect x="${sx-42}" y="${totalY}" width="84" height="${bottom-totalY}" rx="12"/></clipPath></defs><g clip-path="url(#focus-bar-${i})"><rect x="${sx-42}" y="${selfY}" width="84" height="${bottom-selfY}" fill="#e4e4e6"/><rect x="${sx-42}" y="${totalY}" width="84" height="${selfY-totalY}" fill="#8b8b8d"/></g><text x="${sx}" y="${selfY+(bottom-selfY)/2-3}" text-anchor="middle" font-size="12">자습<tspan x="${sx}" dy="16" font-weight="700">${duration(week.self[i])}</tspan></text><text x="${sx}" y="${totalY+(selfY-totalY)/2-4}" text-anchor="middle" fill="white" font-size="11" font-weight="650">현장강의<tspan x="${sx}" dy="14">${duration(week.lecture[i])}</tspan></text><text x="${sx}" y="280" text-anchor="middle" font-size="18" font-weight="600">${days[i]}</text>`;
+      svg+=`<defs><clipPath id="focus-bar-${i}"><rect x="${sx-30}" y="${totalY}" width="60" height="${bottom-totalY}" rx="10"/></clipPath></defs><g clip-path="url(#focus-bar-${i})"><rect x="${sx-30}" y="${selfY}" width="60" height="${bottom-selfY}" fill="#e4e6ec"/><rect x="${sx-30}" y="${totalY}" width="60" height="${selfY-totalY}" fill="#2b303b"/></g><text x="${sx}" y="${selfY+(bottom-selfY)/2+2}" text-anchor="middle" font-size="11" fill="#555a64">자습<tspan x="${sx}" dy="14" font-weight="700" fill="#2b303b">${duration(week.self[i])}</tspan></text><text x="${sx+40}" y="${totalY+8}" font-size="11.5" font-weight="700" fill="#2b303b" stroke="#fff" stroke-width="3" paint-order="stroke">${duration(total)}<tspan x="${sx+40}" dy="15" font-size="10.5" font-weight="400" fill="#8b8d94">현장강의 ${duration(week.lecture[i])}</tspan></text><text x="${sx}" y="266" text-anchor="middle" font-size="14" font-weight="600" fill="#333">${days[i]}</text>`;
     });
-    svg+=`<polyline points="${week.focus.map((v,i)=>`${x(i)},${yScore(v)}`).join(' ')}" fill="none" stroke="#ff241d" stroke-width="2.5"/>`;
-    week.focus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${yScore(v)}" r="6" fill="white" stroke="#ff241d" stroke-width="2.5"/><text x="${x(i)}" y="${yScore(v)-15}" text-anchor="middle" font-size="23" fill="#ff241d" font-weight="700">${v}</text>`;});
+    svg+=`<polyline points="${week.focus.map((v,i)=>`${x(i)},${yScore(v)}`).join(' ')}" fill="none" stroke="#f2352b" stroke-width="1.6"/>`;
+    week.focus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${yScore(v)}" r="4.5" fill="#f2352b" stroke="#fff" stroke-width="1.5"/><text x="${x(i)}" y="${yScore(v)-11}" text-anchor="middle" font-size="12" font-weight="700" fill="#f2352b" stroke="#fff" stroke-width="3" paint-order="stroke">${v}</text>`;});
     return svg+'</svg>';
   }
   function hourlyChart() {
-    const x=i=>65+i*69,y=v=>250-v/10*220;
-    let svg='<svg viewBox="0 0 1100 300" role="img" aria-label="8시부터 22시까지 공부 시간과 몰입도">';
-    for(let v=0;v<=10;v+=2)svg+=`<path d="M30 ${y(v)}H1070" stroke="#dedee6"/><text x="15" y="${y(v)+5}" text-anchor="end" font-size="15">${v}</text><text x="1080" y="${y(v)+5}" font-size="15">${v*6}</text>`;
-    hourlyMinutes.forEach((v,i)=>{const h=v/60*220;svg+=`<path d="M${x(i)-21} 250V${250-h+20}q0-20 21-20t21 20V250Z" fill="#cfcfd2"/><text x="${x(i)}" y="278" text-anchor="middle" font-size="16">${i+8}</text>`;});
-    svg+=`<polyline points="${hourlyFocus.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="#ff241d" stroke-width="2.5"/>`;
-    hourlyFocus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="5" fill="white" stroke="#ff241d" stroke-width="2"/><text x="${x(i)}" y="${y(v)-16}" text-anchor="middle" font-size="20" font-weight="700" fill="#ff241d">${v}</text>`;});
+    const x=i=>70+i*68,y=v=>238-v/10*204;
+    let svg='<svg viewBox="0 0 1100 282" role="img" aria-label="8시부터 22시까지 공부 시간과 몰입도">';
+    for(let v=0;v<=10;v+=2)svg+=`<path d="M40 ${y(v)}H1052" stroke="#ececf0"/><text x="28" y="${y(v)+4}" text-anchor="end" font-size="12" fill="#f2352b">${v}</text><text x="1070" y="${y(v)+4}" font-size="12" fill="#8b8d94">${v*6}</text>`;
+    hourlyMinutes.forEach((v,i)=>{const h=v/60*204;svg+=`<rect x="${x(i)-18}" y="${238-h}" width="36" height="${h}" rx="8" fill="#e4e6ec"/><text x="${x(i)}" y="266" text-anchor="middle" font-size="13" fill="#333">${i+8}</text>`;});
+    svg+=`<polyline points="${hourlyFocus.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="#f2352b" stroke-width="1.6"/>`;
+    hourlyFocus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#f2352b" stroke="#fff" stroke-width="1.5"/><text x="${x(i)}" y="${y(v)-10}" text-anchor="middle" font-size="12" font-weight="700" fill="#f2352b" stroke="#fff" stroke-width="3" paint-order="stroke">${v}</text>`;});
     return svg+'</svg>';
   }
   function study(ctx) {
