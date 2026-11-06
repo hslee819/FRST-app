@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SDIJ TA (현황)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{--fg:#111;--sub:#8a8a8a;--faint:#c4c4c4;--line:#e3e3e3;--line2:#d2d2d2;--bg2:#f5f5f6;--purple:#5b2be0;--red:#e2363c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#d9dbe0;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden;color:var(--fg)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea{font:inherit;color:inherit}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#ipad{width:1180px;height:820px;background:#fff;position:relative;overflow:hidden;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.25);flex:none}
+.status{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:13px;font-weight:700;position:relative;z-index:80}
+.status .r{display:flex;gap:6px;align-items:center}
+.batt{width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px;padding:1px}.batt i{display:block;height:100%;width:88%;background:currentColor}
+#app{position:absolute;inset:0}
+.top{position:absolute;top:30px;left:0;right:0;height:46px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.top .bk{position:absolute;left:24px}
+.top .bell{position:absolute;right:28px}
+.edge{position:absolute;left:0;top:350px;width:14px;height:60px;border-radius:0 8px 8px 0;background:#eee;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:10px;z-index:5}
+.pg{position:absolute;top:76px;left:30px;right:30px;bottom:20px}
+.sec-h{display:flex;align-items:baseline;gap:10px;font-size:15px;font-weight:700}
+.sec-h small{font-size:9.5px;font-weight:400;color:var(--sub)}
+.crumb{display:flex;align-items:center;gap:12px;font-size:12.5px;margin-top:20px}
+.crumb .g{color:var(--faint)}
+.crumb .ar{font-size:8px;color:#555}
+.pop{position:absolute;right:0;top:0;width:330px;border:1px solid var(--line);border-radius:4px;background:#fff;z-index:10;font-size:11px}
+.pop .hd{height:34px;display:flex;align-items:center;gap:6px;padding:0 10px;cursor:pointer}
+.pop .hd .tk{flex:1;overflow:hidden;height:16px;position:relative}
+.pop .hd .tk span{display:block;transition:transform .4s}
+.pop li{list-style:none;display:flex;gap:10px;height:32px;align-items:center;padding:0 16px;cursor:pointer}
+.pop li:hover{background:var(--bg2)}
+.pop li b{width:14px;font-weight:500}
+.pop li i{margin-left:auto;font-style:normal;font-size:9px}
+.cols{position:absolute;top:110px;left:0;right:0;bottom:56px;border:1px solid var(--line);border-radius:4px;padding:16px;display:flex;gap:10px;background:#fafafa}
+.col{border:1px solid var(--line);background:#fff;overflow-y:auto;flex:1}
+.col button{display:flex;align-items:center;gap:6px;width:100%;height:46px;padding:0 18px;border-bottom:1px solid var(--line);font-size:14px;text-align:left}
+.col button.on{background:#111;color:#fff;font-weight:700}
+.col .cam{font-weight:800;letter-spacing:.3px}
+.nextb{position:absolute;right:16px;bottom:6px;height:38px;padding:0 30px;border-radius:19px;background:#ececec;color:#aaa;font-size:12px}
+.nextb.en{background:#111;color:#fff}
+.qbtn{height:32px;padding:0 22px;border-radius:16px;background:#111;color:#fff;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.tabs2{display:flex;gap:22px;font-size:16px;font-weight:700}
+.tabs2 button{color:var(--faint)}.tabs2 button.on{color:var(--fg)}
+.tog{width:34px;height:20px;border-radius:10px;background:#ddd;position:relative;transition:.2s;flex:none}
+.tog::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s}
+.tog.on{background:var(--purple)}.tog.on::after{left:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow-y:auto;position:absolute;top:118px;left:0;right:0;bottom:0;padding-bottom:20px}
+.card{border:1px solid var(--line);border-radius:4px;padding:12px;cursor:pointer;background:#fff;height:270px;display:flex;flex-direction:column}
+.card:hover{border-color:#999}
+.card .ch{display:flex;align-items:center;font-size:11.5px;gap:8px;margin-bottom:10px}
+.card .ch small{color:var(--sub);font-size:10px}
+.card .ch .bm{margin-left:auto;font-size:10px;display:flex;align-items:center;gap:2px}
+.qbox{border:1px solid var(--line);padding:8px;flex:1;overflow:hidden;font-size:9.5px;line-height:1.45;white-space:pre-line}
+.tag{display:inline-block;font-size:9px;padding:1px 5px;border:1px solid var(--line2);color:#666;margin-bottom:6px;background:#fafafa}
+.abox{margin-top:8px;border:1px solid var(--line);height:28px;display:flex;align-items:center;gap:8px;padding:0 6px;font-size:9.5px;color:#555;overflow:hidden;white-space:nowrap}
+.abox .tag{margin:0;background:#555;color:#fff;border:0}
+.aibtn{margin-top:8px;height:22px;background:#3a2bb8;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.dimimg{background:#555;color:#fff;padding:6px;font-size:9px;line-height:1.5;margin-bottom:6px}
+.det{position:absolute;top:120px;bottom:0;left:0;right:0;display:flex;gap:16px}
+.det .pane{flex:1;border:1px solid var(--line);border-radius:4px;padding:14px;position:relative;font-size:12.5px;line-height:1.6;display:flex;flex-direction:column}
+.pane .ph{display:flex;justify-content:space-between;font-size:10.5px;color:#555;margin-bottom:22px}
+.pane .body{flex:1;overflow-y:auto;white-space:pre-line;padding:0 10px}
+.sm{height:26px;padding:0 12px;border:1px solid var(--line2);border-radius:13px;font-size:10.5px;background:var(--bg2);display:inline-flex;align-items:center;gap:4px;color:#555}
+.badge{display:inline-block;font-size:9px;padding:2px 6px;background:#4a6bd8;color:#fff;border-radius:2px;margin-left:8px;vertical-align:middle;font-weight:500}
+.redbtn{height:32px;padding:0 20px;background:var(--red);color:#fff;font-size:11.5px;border-radius:3px}
+.form{position:absolute;top:150px;left:0;right:0;bottom:0;display:flex;gap:20px}
+.upl{border:1px solid var(--line);height:330px;display:flex;align-items:center;justify-content:center;font-size:11.5px;color:#555;gap:6px;cursor:pointer;flex:1}
+.camsq{width:48px;height:48px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#aaa;flex:none;cursor:pointer}
+textarea.qt{width:100%;height:105px;border:1px solid var(--line);padding:10px;font-size:10.5px;resize:none;outline:0;line-height:1.6}
+.tabtn{flex:1;height:42px;border:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:11.5px}
+.tabtn.on{border-color:#111;border-width:1.5px}
+.rchip{height:24px;padding:0 9px;font-size:10px;border-radius:3px}
+.rchip.on{background:#111;color:#fff}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:40;display:flex;align-items:center;justify-content:center}
+.sheet{position:absolute;left:40px;right:40px;top:50px;bottom:24px;background:#fff;border-radius:6px;padding:20px 26px;overflow:hidden}
+.banner{border-radius:8px;background:linear-gradient(90deg,#3a1fc7,#7a28e8);color:#fff;padding:12px 16px;position:relative;margin-top:10px}
+.banner .lab{display:inline-block;font-size:8.5px;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;margin-right:8px}
+.banner .sel{position:absolute;right:14px;top:16px;background:#fff;color:#333;border-radius:4px;padding:6px 10px;font-size:9.5px;line-height:1.7;font-family:monospace;min-width:120px}
+.strip{background:#3a1fc7;color:#fff;font-size:9.5px;font-weight:700;text-align:center;padding:4px;margin-top:10px}
+.ta{border:1px solid var(--line);display:flex;gap:14px;padding:14px 16px;margin-top:8px;cursor:pointer;position:relative}
+.ta.sel{border:2px solid #3a1fc7}
+.ta .av{width:40px;height:40px;border-radius:50%;flex:none;margin-top:10px}
+.ta .nm{font-size:12.5px;font-weight:700}
+.ta .nm small{font-weight:400;color:#555;margin-left:8px;font-size:10.5px}
+.ta .q{font-size:11.5px;margin:6px 0;color:#333}
+.ta .tg{font-size:10px;color:#555}
+.ta .st{position:absolute;right:16px;top:12px;text-align:right;font-size:9.5px;color:#555;line-height:2.3}
+.aib{display:inline-block;background:#3a1fc7;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:2px;margin-left:6px}
+.box{background:#fff;border-radius:3px;overflow:hidden;text-align:center}
+.box p{padding:30px 20px;font-size:13px}
+.box .mf{display:flex;height:52px}.box .mf button{flex:1;font-size:13px}
+.mtabs{display:flex;gap:22px;font-size:16px;font-weight:700;margin-top:28px}
+.mtabs button{color:var(--faint)}.mtabs button.on{color:var(--fg)}
+.mbox{position:absolute;top:62px;left:0;right:0;bottom:0;border:1px solid var(--line);border-radius:4px;padding:20px}
+.mnav{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700}
+.arr{width:20px;height:20px;border-radius:50%;background:#333;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+.arr.dis{background:#bbb}
+.empty{text-align:center;margin-top:120px}
+.empty b{display:block;font-size:14px;margin-top:16px}
+.empty small{font-size:10.5px;color:#555}
+.qc{width:280px;border:1px solid var(--line);padding:12px;margin-top:20px;cursor:pointer;font-size:11px}
+.sbar{position:absolute;top:0;left:0;bottom:0;width:180px;background:#fff;z-index:50;padding:44px 16px;transform:translateX(-100%);transition:.25s;box-shadow:4px 0 20px rgba(0,0,0,.1)}
+.sbar.open{transform:none}
+.sbar .logo{font-size:20px;font-weight:300;letter-spacing:-.5px;margin-bottom:34px}
+.sbar .logo b{font-weight:900;font-size:16px;letter-spacing:-1px}
+.sbar nav button{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border-radius:18px;font-size:11.5px;color:#555;margin-bottom:4px}
+.sbar nav button.on{background:#111;color:#fff;font-weight:700}
+.sbar .me{position:absolute;bottom:18px;left:16px;right:16px;border-top:1px solid var(--line);padding-top:14px;display:flex;gap:8px;align-items:center;font-size:10px;cursor:pointer}
+.sbar .me i{width:24px;height:24px;border-radius:50%;background:#8bd18f;color:#fff;font-style:normal;display:flex;align-items:center;justify-content:center;font-size:10px}
+.ddl{position:relative;height:24px;border:1px solid var(--line2);border-radius:12px;padding:0 10px;font-size:10px;display:inline-flex;align-items:center;gap:20px;color:#555}
+.ddl select{position:absolute;inset:0;opacity:0;cursor:pointer}
+#toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:#111;color:#fff;font-size:12px;font-weight:700;padding:10px 18px;border-radius:3px;z-index:90;opacity:0;transition:.2s;pointer-events:none;white-space:nowrap}
+#toast.on{opacity:1}
+#jump{position:fixed;right:14px;bottom:14px;z-index:100;font-size:12px}
+#jump>button{background:#111;color:#fff;border-radius:18px;padding:8px 14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+#jump ul{list-style:none;position:absolute;bottom:42px;right:0;background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);padding:6px;display:none;width:220px;max-height:80vh;overflow:auto}
+#jump.open ul{display:block}
+#jump li button{width:100%;text-align:left;padding:7px 10px;border-radius:6px;color:#111}
+#jump li button:hover{background:#f1f1f1}
+.mini{border:1px solid var(--line);padding:8px;margin:10px 0;font-size:9px}
+.mini .s{display:flex;justify-content:space-around;text-align:center;margin-top:8px}
+.mini .s b{display:block;font-size:15px}
+
+/* 촬영 사진 톤: 연회색 바탕, 저대비 회색 테두리, 검정 선택/필 버튼 */
+:root{--line:#d9d9db;--line2:#cfcfd2;--bg2:#f5f5f6;--sub:#8d8d92;--faint:#b9b9bd;--paper:#fff;--panel:#fff}
+#ipad{background:var(--paper)}
+.top{font-weight:600;font-size:19px}
+.sec-h{font-weight:600}
+.crumb{font-size:13.5px;margin-top:22px}
+.pop,.card,.det .pane,.upl,.camsq,textarea.qt,.tabtn,.col,.ta{background:var(--panel)}
+.cols{top:92px;background:#fff;border-color:#e3e3e3}
+.col button{border-bottom-color:#dcdcdf;font-weight:500;height:47px}
+.col button.on{background:#141414}
+.nextb{background:#e3e3e6;color:#a4a4a8}
+.qbox,.abox{background:#f8f8f9}
+.sheet{background:#f1f1f3}
+.banner{background:linear-gradient(90deg,#4b17e6,#7a1ff0)}
+.strip{background:#4b17e6}
+.sm{background:#ebebed}
+</style>
+</head>
+<body>
+<div id="stage"><div id="ipad">
+ <div class="status"><span>오후 8:16&nbsp;&nbsp; 11월 3일 화요일</span><span class="r"><svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5l2-2.3a2.8 2.8 0 00-4 0zM3.3 6.8l1.4 1.5a4.7 4.7 0 016.6 0l1.4-1.5a6.7 6.7 0 00-9.4 0zM.5 3.9L2 5.4a8.6 8.6 0 0112 0l1.5-1.5a10.7 10.7 0 00-15 0z" fill="currentColor"/></svg><svg width="12" height="12" viewBox="0 0 12 12"><path d="M7.5 1a5 5 0 103.5 8.6A5.5 5.5 0 017.5 1z" fill="currentColor"/></svg>88% <span class="batt"><i></i></span></span></div>
+ <div id="app"></div><div id="side"></div><div id="overlay"></div><div id="toast"></div>
+</div></div>
+<div id="jump"><ul id="jumplist"></ul><button onclick="this.parentNode.classList.toggle('open')">화면 목록</button></div>
+<script>
+const I={
+ bell:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>',
+ back:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>',
+ cam:'<svg width="13" height="11" viewBox="0 0 24 20"><path d="M2 5h5l2-3h6l2 3h5v14H2z" fill="currentColor"/><circle cx="12" cy="11" r="4" fill="#fff"/></svg>',
+ cmt:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h18v13H8l-5 4z"/><path d="M7 9h10M7 13h6"/></svg>',
+ arrow:'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 12h16M14 6l6 6-6 6"/></svg>',
+ trend:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e2363c" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>',
+ bm:'<svg width="9" height="10" viewBox="0 0 12 14"><path d="M1 1h10v12l-5-3-5 3z" fill="currentColor"/></svg>',
+ bmo:'<svg width="11" height="12" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1h10v12l-5-3-5 3z"/></svg>',
+ warn:'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16v1"/></svg>',
+ ban:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>',
+ user:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="8" r="4"/><path d="M2 21c0-4 4-7 8-7M15 18l2 2 4-4"/></svg>',
+ plus:'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#111"/><path d="M12 7v10M7 12h10" stroke="#fff" stroke-width="2.4"/></svg>',
+ heart:f=>`<svg width="10" height="10" viewBox="0 0 24 24" fill="${f?'#111':'none'}" stroke="#111" stroke-width="2"><path d="M12 21s-8-5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 6-8 11-8 11z"/></svg>`,
+ search:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+ q:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 9a3 3 0 115 2c-1 1-2 1.5-2 3M12 18v.5"/></svg>',
+ ppl:'<svg width="13" height="12" viewBox="0 0 26 20" fill="currentColor"><circle cx="8" cy="6" r="4"/><circle cx="18" cy="6" r="4"/><path d="M0 19c0-5 4-7 8-7s8 2 8 7zM14 19c0-3 1-5 2-6 5 0 10 2 10 6z"/></svg>',
+ chat:'<svg width="13" height="12" viewBox="0 0 24 22" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 2h14v10H7l-5 4zM9 15v3h8l5 3V8h-4"/></svg>',
+ refresh:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 12a8 8 0 11-2.3-5.7L20 8M20 3v5h-5"/></svg>',
+ magq:'<svg width="90" height="90" viewBox="0 0 100 100"><circle cx="42" cy="42" r="30" fill="#f4f4f4" stroke="#555" stroke-width="7"/><path d="M64 64l22 22" stroke="#666" stroke-width="12" stroke-linecap="round"/><text x="42" y="57" font-size="42" font-weight="900" text-anchor="middle" fill="#222">?</text></svg>',
+};
+const toast=t=>{const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),1700)};
+
+/* ---------- data ---------- */
+const SUBJ=['국어','수학','영어','지구과학I','생활과윤리'];
+const CONTENTS={'국어':['월례고사','서바이벌','상상(FINAL)','엑셀러레이터'],'수학':['월례고사','서바이벌','서바이벌전국','FINAL브릿지전국','브릿지N'],'영어':['월례고사','서바이벌'],'지구과학I':['월례고사','서바이벌'],'생활과윤리':['월례고사','서바이벌']};
+const ROUNDS=c=>c==='월례고사'?['10회']:c==='엑셀러레이터'?['27회','28회','29회']:['16회','17회','18회'];
+const COUNT=s=>s==='국어'?45:s==='수학'?30:s==='영어'?45:20;
+const POPULAR=['국어 서바이벌프로 8회 2번','수학 월례고사 3회 4번','수학 서바이벌 24회 30번','수학 월례고사 10회 29번','수학 월례고사 10회 15번','국어 월례고사 10회 34번','수학 서바이벌 24회 21번','국어 월례고사 10회 2번','수학 서바이벌 22회 22번','국어 월례고사 10회 16번','수학 서바이벌전국 10회 30번','국어 상상(FINAL) 8회 24번','생윤 월례고사 10회 3번','수학 서바이벌 24회 20번'];
+const TREND=['–','–','–','–','–','–','▾','▴','▾','▾'];
+const A1=`등급컷이 많이 잡혔다고 느끼는 학생이 정말 많은 것 같습니다. 제가 보기에도 너무 높게 잡힌 것 같긴 합니다. 이번에 학생들 정신차리라고 보정을 저렇게 했다고 생각하시면 좋겠습니다!!
+저는 9월례를 되게 망했었는데, 어차피 파이널때 무너져봤자 저만 손해라는 마인드로 열심히 했습니다. 지금까지 노력이 헛되지 않았을 것이고, 헛되지 않게 하려면 남은 기간을 지금까지처럼 열심히 해야한다고 멘탈관리를 했습니다. 그래서 학생분께서도 많은 학생이 좌절할 이 시기에 오히려 이를 역전의 발판으로 삼으시면 좋겠습니다. 그래서 학생분의 말씀처럼 본인이 해온 것을 믿고, 지금까지 해온대로 열심히 하시면 좋은 결과 있을 겁니다. 그러니 자기 전까지만 속상해하시고 일어나신 뒤에는 극복해서 다시 정진하시면 좋겠습니다! 월례 보시느라 수고 많으셨습니다!`;
+const ANS=[
+ {who:'최현우 TA',date:'2026.10.29',bm:12,school:'중앙대학교 의학과',rate:'4.9 / 5 (3026)',time:'161분',like:182,q:`그 이번 시험이 전체적으로 표본이 좀 미친(negative)거 같은데,,,
+그런거 신경쓰지 말고 제가 해왔던대로 계속 열심히 하면 좋은 결과 있겠죠...??
+그렇다고 해주세요..
+ㅠㅜ올해 왠케 잘하는 친구들이 많져
+그래도 흔들리지 말아야겠죠 수능은 어떻게될지 모리니깐!
+(국어 망한 부엉이가....)`,a:A1,qd:'2026-10-29 00:12:14',ad:'2026-10-29 00:16:29'},
+ {who:'홍서준 TA',date:'2026.10.29',bm:3,school:'서울대학교 경제학부',rate:'4.8 / 5 (1211)',time:'94분',like:76,q:`수능날 언매 받으려면 서바는 어느정도 점수대로 나오는게 좋을까요..? 티에이님들 작년 국어 수능 전 수치가 궁금합니다
+요즘 국어가 1컷 89~91로 잡혀서 그런지 모든 시험에서 균일하게 91~94 정도 나오는데
+항상 백분위 97이 뜨네요..... ㅜ
+그리고 9모 표본이 수능 표본이 진짜 그렇게 많이 차이나나요..? 수능때도 언매 받고 싶어요`,a:'제 주변에서 원점수 기준 안정권은 시대 출신은 서바 92점 이상이었던 것 같아요. 지금처럼 꾸준히 91~94가 나온다면 충분히 1등급을 노려볼 수 있는 실력입니다. 9모와 수능 표본 차이보다 본인 컨디션 관리가 더 중요해요!',qd:'2026-10-29 01:02:44',ad:'2026-10-29 09:40:10'},
+ {who:'김하진 TA',date:'2026.10.30',bm:0,school:'연세대학교 치의학과',rate:'4.9 / 5 (842)',time:'120분',like:51,q:`체력, 컨디션 관리를 위해 수액 맞으셨던 ta님 계신가요?!
+n이 2보다 큰 n수라 그런지 요즘 너무 체력이 빠지는게 느껴져서 고민중인데 효과 어떨나요?
+(+) 수액 맞게 되면 이번에 난생 처음으로 영양수액 같은 거 맞아보는거라 부작용같은게 있을 수도 있나요??`,a:'안녕하세요. 저도 수능 전에 컨디션 관리용으로 맞아본 적이 있어요. 다만 처음 맞는 거라면 수능 직전보다는 미리 한 번 맞아보고 몸에 맞는지 확인하는 걸 추천드려요.',qd:'2026-10-30 08:12:01',ad:'2026-10-30 10:20:33'},
+ {who:'이주형 TA',date:'2026.10.28',bm:5,school:'고려대학교 의과대학',rate:'4.7 / 5 (655)',time:'201분',like:40,q:`사람이 아닌 것 같습니다...
+언매생지에
+수과탐 합쳐서 4개 영어포함해도 6개인데
+국어만 6개 틀렸습니다
+사람이 1년동안 변화가 없는데 수능 직전에 작작해지네요
+이게 1컷이 93이라니...
+언매 다맞았는데`,a:'월례 한 번으로 1년이 결정되지 않아요. 틀린 6문항이 어떤 유형인지부터 정리해 보면 남은 기간 동안 충분히 바뀔 수 있습니다.',qd:'2026-10-28 22:01:10',ad:'2026-10-29 07:15:42'},
+ {who:'김하경 TA',date:'2026.10.29',bm:0,school:'성균관대학교 의예과',rate:'4.9 / 5 (1020)',time:'88분',like:66,img:true,q:`[이미지] 백시부엉이가되어가규있는ㅠ 원점수래전드거하!! 칭찬부탁드려두될까요ㅎㅎ
+근데 1컷 이게맞나요 그으으오렇게쉬웠다는거죠 못맞았는데...
++24 이후로 언매 장지문이 수능때마다 나이도 갱신하는거보도`,a:'와 축하드려요!! 이번 시험은 전체적으로 쉬운 편이라 컷이 높았지만, 원점수 자체가 높게 나온 건 실력이 올라왔다는 뜻이에요.',qd:'2026-10-29 03:22:41',ad:'2026-10-29 11:02:12'},
+ {who:'이지민 TA',date:'2026.10.29',bm:7,school:'서울대학교 약학과',rate:'4.8 / 5 (733)',time:'110분',like:58,q:`문제질문은 아닌데요
+저는 피를 뽑으면 혈중 99.78정도 나오는 순수혈통 문과입니다
+어느 정도냐면 학교가 외고였는데 고2때 과탐 하나를 해야하는거에요
+그래서 그냥 사람많은 지구과학을 골랐는데
+난 우리나라 문과의 자존심이자 암 하면서 시험까지 수업을 단 1분`,a:'문과 출신이라도 지구과학은 충분히 따라갈 수 있어요. 개념을 그림으로 정리하는 습관부터 들여보세요.',qd:'2026-10-29 12:12:00',ad:'2026-10-29 15:20:00'},
+];
+const AIANS=[
+ {bm:60,date:'2026.10.28',score:true,q:`얘들아 10월례 국어가 많이 쉬웠어?
+평소 서바 7분정도 남기고 끝내고, 아무리 내려가도 국어 하방이 백분위 98정도여서 어느정도 국어에 자신감은 있는 편이었는데..
+이번 10월례 독서에서 진짜 턱턱 막히더라고..
+
+내가 이런 시설만 점수가 괜찮게 나오지, 올해 6 9모 둘 다 백분위 96이어서
+내가 실전에 약한건가라는 생각은 들어
+
+티에이앱이나 주변 말 들어보면 오늘 처음 100점 받았다가 꽤 보이더라구..
+처음엔 시대의 불보정인가 했다가 반응 보니까 내가 남들에 비해 좀 취약한 부분이 있는 것 같은데 전혀 파악이 안된다..`,add:true},
+ {bm:7,date:'2026.10.28',img:true,q:'나 ㅈ댓ㅅ어\n[이미지] 월례고사 성적표 캡처'},
+ {bm:2,date:'2026.10.28',img:true,q:`부엉아 국어가 그렇게 쉬웠어?
+아무리 화작이어도 95점이 2등급이 나올 정도의 시험은 아니였다고 보거든?
+시대인재의 등급컷을 믿어도 되는거니?
+[이미지] 성적표 캡처`},
+ {bm:15,date:'2026.10.28',q:'나 10월례 전과목 싹 다 말아먹었는데 오덕해 부엉이??.. 나만 퇴보하고있는것같아.... 오답해야되는데 아무것도 손에 안 잡혀.....'},
+ {bm:3,date:'2026.10.28',q:`부엉아 나 살면서 마킹실수는 한적이 없는데 마킹실수를 했어ㅜㅜ
+오엠알 학원한테 보여달라하면 보여주나? 나 걱정 이렇게나 많은데..
+ta 한번은 질문 자꾸 가져가고 답장 안하시는데 왜그러는걸까?질문 올리면 거의 바로 가져가서 답변은 오랫동안~안하시는데 질문 쌓아`},
+ {bm:6,date:'2026.10.30',q:`아니 지가 빌런 피해서 자리 옮겼으면 조용히 해야 되는 거 아님? 본인이 빌런이 되고 있네. 앤날 저녁 먹고 주는 간식 라브에서 처먹질 않나... 원래 라브에선 사탕 같은 조용한 음식만 녹여먹는 거 국룰 아님?`},
+];
+const AI_TEXT=`요약: 이번 10월례 국어는 독서 지문의 정보량이 많아 체감 난도가 높았지만, 문학·선택과목이 평이해서 전체 등급컷이 올라간 시험이에요.
+
+1. 점수보다 "막힌 지점"을 먼저 기록해 보세요. 어떤 지문의 몇 번 문항에서 시간이 얼마나 걸렸는지 적어두면 약점이 보여요.
+2. 독서에서 막혔다면 문단별로 핵심 정보를 한 줄씩 요약하는 연습이 도움이 돼요.
+3. 6·9모 백분위 96, 월례 92점이면 실전에 약하다기보다 특정 유형에서 시간이 새는 경우가 많아요.
+
+팁: 남은 기간에는 새로운 문제를 늘리기보다, 틀린 지문을 다시 읽으며 "왜 막혔는지"를 정리하는 게 효과적이에요.
+(프로토타입 예시 답변이에요)`;
+const TAS=[
+ {id:'ai',name:'아이올(AI OWL) TA',ai:true,q:'핵심 내용부터 자세한 설명, 헷갈리기 쉬운 부분과 팁까지 전수합니다',tg:'#친절함  #체계적 풀이',fav:1845,rate:'4.38 (999+)',av:'radial-gradient(circle at 40% 40%,#cfd8ff,#7b6fd6)'},
+ {id:'kdh',name:'권도헌 TA',school:'가천대학교 의예과',subj:'언매 · 미적 · 생과I',q:'현유찬T 조교, 11/6~7 답변 불가',tg:'#팩트 중시  #현실적인 풀이  #차분함',fav:240,fast:1426,rate:'5.0 (529)',av:'linear-gradient(#556,#c96 70%,#333)'},
+ {id:'lys',name:'이윤서 TA',school:'연세대학교 의예과',subj:'물리I · 언매',q:'국어, 물1 24평가원 3연속만점/ 물1시대컨검토진',tg:'#현실적인 풀이  #친절함  #약점 파악',fav:541,fast:719,rate:'5.0 (457)',av:'radial-gradient(circle,#f3d9a4,#d6a85c)'},
+ {id:'hda',name:'홍다안 TA',school:'서울대학교 수리과학부',subj:'미적 · 확통',q:'풀이의 이유까지 설명해 드려요',tg:'#자세한 설명  #영상 답변',fav:388,fast:902,rate:'4.9 (611)',av:'radial-gradient(circle,#bde3c8,#5aa57a)'},
+];
+
+/* ---------- state ---------- */
+const S={page:'search',subj:'국어',content:null,round:null,num:null,popOpen:false,tick:0,
+ rTab:'ans',aiOn:false,sel:null,detTab:0,aiOk:false,
+ form:{txt:'',req:'없습니다',taMode:null,imgs:0},
+ taModal:false,taFilter:'all',taSort:'추천순',favs:new Set(),pickAI:false,pickTA:null,tmp:null,
+ confirm:null,mine:[],myTab:'문항 질문',ticket:false,side:false,bmSubj:'모든 과목',bmAns:'전체답변'};
+
+const topbar=(t,back)=>`<div class="top">${back?`<button class="bk" data-a="back">${I.back}</button>`:''}${t}<button class="bell" data-a="bell">${I.bell}</button></div><button class="edge" data-a="side">›</button>`;
+const crumbTxt=()=>[S.subj,S.content,S.round,S.num&&S.num+'번'].filter(Boolean).join(' ');
+
+/* 1. 문항 검색 */
+function search(){
+ const c=CONTENTS[S.subj];
+ const step=!S.content?['콘텐츠를 고르세요',0]:!S.round?['회차를 고르세요',0]:!S.num?['번호를 고르세요',0]:['확인 →',1];
+ const pop=`<div class="pop"><div class="hd" data-a="pop">${I.trend}<span style="flex:none">이번 주 인기 문항</span>${S.popOpen?'<span style="flex:1"></span>▴':`<span class="tk"><span>${S.tick+1+4}. ${POPULAR[(S.tick+4)%POPULAR.length]}</span></span>▾ ⌄`}</div>
+  ${S.popOpen?`<div style="padding:4px 16px 8px;font-size:9.5px;color:var(--sub)">한주 동안 다른 학생들이 가장 많이 질문한 문항 순위입니다.</div><ul>${POPULAR.slice(0,10).map((p,i)=>`<li data-a="popgo" data-v="${p}"><b>${i+1}</b>${p}<i style="color:${TREND[i]==='▴'?'var(--red)':TREND[i]==='▾'?'#4a6bd8':'#999'}">${TREND[i]}</i></li>`).join('')}</ul>`:''}</div>`;
+ return topbar('문항 검색')+`<div class="pg"><div style="position:relative"><div class="sec-h">문항 정보 <small>문제의 출처를 입력하거나 촬영하여 검색할 수 있습니다.</small></div>${pop}
+ <div class="crumb"><span>${S.subj}</span><span class="ar">▶</span><span class="${S.content?'':'g'}">${S.content||'콘텐츠 선택'}</span><span class="ar">▶</span><span class="${S.round?'':'g'}">${S.round||'회차 선택'}</span><span class="ar">▶</span><span class="${S.num?'':'g'}">${S.num?S.num+'번':'번호 선택'}</span></div></div>
+ <div class="cols"><div class="col" style="flex:${S.content?1:1.05}"><button class="cam" data-a="camera">CAMERA ${I.cam}</button>${SUBJ.map(s=>`<button class="${S.subj===s?'on':''}" data-a="subj" data-v="${s}">${s}</button>`).join('')}</div>
+ <div class="col">${c.map(x=>`<button class="${S.content===x?'on':''}" data-a="content" data-v="${x}">${x}</button>`).join('')}</div>
+ ${S.content?`<div class="col">${ROUNDS(S.content).map(x=>`<button class="${S.round===x?'on':''}" data-a="round" data-v="${x}">${x}</button>`).join('')}</div>`:''}
+ ${S.round?`<div class="col" style="flex:.5">${[...Array(COUNT(S.subj))].map((_,i)=>`<button class="${S.num===i+1?'on':''}" data-a="num" data-v="${i+1}" style="height:44px">${i+1} ${i<8?I.cmt:''}</button>`).join('')}</div>`:''}</div>
+ <button class="nextb ${step[1]?'en':''}" data-a="go">${step[0]}</button></div>`;
+}
+/* 2. 검색결과 */
+function result(){
+ const list=S.aiOn?AIANS:ANS,has=S.num===1&&S.content==='월례고사'&&S.subj==='국어';
+ let body;
+ if(S.rTab==='sol')body=`<div class="grid" style="display:block"><div style="border:1px solid var(--line);height:420px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:13px">${crumbTxt()} 해설지 (PDF 뷰어 자리 · 스크린샷 없음)</div></div>`;
+ else if(!has)body=`<div class="grid" style="display:block"><div class="empty">${I.magq}<b>아직 등록된 답변이 없어요!</b><small>첫 번째로 질문해 보세요.</small></div></div>`;
+ else body=`<div class="grid">${list.map((x,i)=>`<div class="card" data-a="open" data-v="${i}"><div class="ch">${x.who||'아이올(AI OWL) TA'} <small>${x.date} 등록</small><span class="bm">${I.bm} ${x.bm}</span></div>
+  <div class="qbox"><span class="tag">질문</span>\n${x.score?`<div class="dimimg">${x.q.split('\n').slice(0,3).join('\n')}<div class="mini" style="background:#fff;color:#111;margin:6px 0 0">개인 성적 분석<div class="s"><span>원점수<b>92점</b></span><span>표준점수<b>128.0</b></span><span>백분위<b>95</b></span><span>등급<b>2</b></span></div></div></div>`:x.img?`<div class="dimimg">${x.q}</div>`:x.q}</div>
+  ${S.aiOn?`<div class="aibtn">AI 답변</div>`:`<div class="abox"><span class="tag">답변</span>${x.a.slice(0,30)}</div>`}</div>`).join('')}</div>`;
+ return topbar(`${crumbTxt()} · 검색결과`,1)+`<div class="pg"><div style="display:flex;align-items:center;margin-top:20px"><div class="tabs2"><button class="${S.rTab==='ans'?'on':''}" data-a="rtab" data-v="ans">답변</button><button class="${S.rTab==='sol'?'on':''}" data-a="rtab" data-v="sol">해설지</button></div>
+ <button class="qbtn" style="margin-left:auto" data-a="ask">질문하기 ${I.arrow}</button></div>
+ ${S.rTab==='ans'?`<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;margin-top:18px">AI 답변 함께 보기 <button class="tog ${S.aiOn?'on':''}" data-a="aion"></button></div>`:''}${body}</div>`;
+}
+/* 3. 상세 */
+function detail(){
+ const ai=S.sel.ai,x=S.sel.ai?AIANS[S.sel.i]:ANS[S.sel.i];
+ const tabs=['최초질문',...(x.add?['추가질문 #1']:[])];
+ const q=S.detTab===1?'방금 답변 고마워! 그럼 독서에서 정보량 많은 지문은 처음 읽을 때 뭘 표시하면서 읽는 게 좋아? (예시 추가질문)':x.q;
+ const qd=x.qd||'2026-10-28 23:14:36',ad=x.ad||'2026-10-28 23:15:36';
+ let ans;
+ if(ai&&!S.aiOk)ans=`<div class="body" style="text-align:center;display:flex;flex-direction:column;justify-content:center"><b style="font-size:15px;margin-bottom:16px">AI 답변 이용 안내</b><div style="font-size:11.5px;line-height:1.8">이 기능은 질문 내용을 빠르게 확인하고 이해하는 데 도움을 주기 위해 제공됩니다. 먼저 AI 답변을 확인하며 전반적인 내용을 살펴보세요.</div>
+  <ul style="text-align:left;font-size:11.5px;margin:14px 30px;line-height:1.8"><li>실제 교육 과정과 다르거나 부정확한 정보가 포함될 수 있습니다.</li><li>이해가 충분하지 않은 경우에는 TA에게 추가로 질문해 주세요.</li></ul>
+  <div style="font-size:11.5px;font-weight:700;margin-bottom:16px">위 내용을 이해한 경우, 아래 버튼을 눌러 AI 답변을 확인하실 수 있습니다.</div><div><button class="redbtn" data-a="aiok">확인하고 계속하기</button></div></div>`;
+ else ans=`<div class="body">${ai?AI_TEXT:x.a}</div>`;
+ return topbar('검색 결과 상세보기',1)+`<div class="pg"><div style="display:flex;align-items:center;margin-top:16px"><span style="font-size:16px;font-weight:700">${crumbTxt()||'국어 월례고사 10회 1번'}</span><span class="badge">문제 해결</span><button class="qbtn" style="margin-left:auto" data-a="ask">질문하기 ${I.arrow}</button></div>
+ <div style="display:flex;align-items:center;margin-top:18px"><div class="tabs2" style="font-size:14px">${tabs.map((t,i)=>`<button class="${S.detTab===i?'on':''}" data-a="dettab" data-v="${i}">${t}</button>`).join('')}</div>
+ <div style="margin-left:auto;display:flex;gap:10px"><button class="sm" data-a="report">${I.warn} 질문 신고</button><button class="sm" data-a="bookmark">${I.bmo} 북마크</button></div></div>
+ <div class="det" style="top:96px"><div class="pane"><div class="ph"><span class="tag">질문</span><span>${qd} 등록</span></div><div class="body">${x.score&&S.detTab===0?`<div class="mini" style="font-size:10px">개인 성적 분석<div class="s"><span>원점수<b>92점</b><small>공통 68점 + 선택 24점</small></span><span>표준점수<b>128.0</b></span><span>백분위<b>95</b></span><span>등급<b>2</b></span></div><div style="text-align:center;color:var(--sub);margin-top:6px">응시일 : 26.10.28(수요일)</div></div>`:''}${q}</div></div>
+ <div class="pane"><div class="ph"><span><span class="tag" style="background:#555;color:#fff;border:0">답변</span> ${ai&&!S.aiOk?'로딩이 오래 걸릴 수 있습니다.':''}</span><span>${ad} 등록</span></div>${ans}
+ ${ai?'':`<div style="display:flex;justify-content:space-between;font-size:10px;color:#555;border-top:1px solid var(--line);padding-top:8px;margin-top:8px"><span><b style="color:#111">${x.who.replace(' TA','')}</b> &nbsp;${x.school}</span><span>★ ${x.rate} &nbsp; ◷ ${x.time} &nbsp; ♥ ${x.like}</span></div>`}
+ <div style="font-size:10.5px;margin-top:8px;display:flex;gap:10px;align-items:center"><b>답변 리뷰</b><span style="color:#ccc;cursor:pointer" data-a="stars">☆☆☆☆☆</span><span style="color:var(--sub)">태그 정보 없음</span></div></div></div></div>`;
+}
+/* 4. 문항 질문 */
+function ask(){
+ const f=S.form,hasCrumb=!!S.num;const taTxt=S.pickAI||S.pickTA?[S.pickAI?'아이올(AI OWL) TA':'',S.pickTA?TAS.find(t=>t.id===S.pickTA).name:''].filter(Boolean).join(', '):'';
+ return topbar('문항 질문',1)+`<div class="pg"><div style="display:flex;align-items:center;margin-top:18px"><div class="sec-h">문항 정보 <small>출처가 명확하지 않으면 질문이 취소될 수 있습니다.</small></div><button class="qbtn" style="margin-left:auto" data-a="submit">질문 등록하기</button></div>
+ <div style="border:1px solid var(--line);height:44px;margin-top:12px;display:flex;align-items:center;padding:0 18px;gap:12px;font-size:12px">${hasCrumb?[S.subj,S.content,S.round,S.num].map((v,i)=>(i?'<span style="font-size:7px">▶</span>':'')+`<span>${v}</span>`).join(''):`<span class="g" style="color:var(--faint)">문항 검색에서 문항을 먼저 골라 주세요</span><button class="sm" data-a="tosearch" style="margin-left:8px">문항 고르기</button>`}
+ <button style="margin-left:auto;font-size:10px;color:#555;text-decoration:underline" data-a="resetq">${I.refresh} 문항 초기화</button></div>
+ <div class="form" style="top:110px"><div style="flex:1;display:flex;flex-direction:column"><div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:700">질문 이미지 등록 <small style="font-weight:400;color:var(--sub);font-size:10px">${f.imgs} / 5</small></span><small style="font-size:8.5px;color:var(--sub)">* 문항(지문이나 해설) 위에 필기한 뒤 바로 첨부할 수 있습니다.</small></div>
+  <div style="display:flex;gap:10px;margin-top:14px"><div class="camsq" data-a="img">${I.cam}</div><div class="upl" data-a="img">${f.imgs?`<div style="display:flex;gap:8px">${[...Array(f.imgs)].map(()=>`<div style="width:70px;height:90px;background:#eee;border:1px solid #ddd;font-size:9px;display:flex;align-items:center;justify-content:center;color:#888">이미지</div>`).join('')}</div>`:`${I.plus} 이미지 업로드 하기`}</div></div></div>
+ <div style="flex:1"><div style="font-size:14px;font-weight:700;margin-bottom:12px">질문 내용 입력</div><textarea class="qt" maxlength="1000" data-a="qtxt" placeholder="문제 1개당 질문 1개로 답변합니다.\n여러 문제를 함께 올리면 답변을 받지 못할 수 있어요.\n문제 이미지나 풀이 과정이 있는 필기 이미지와 함께 질문 내용을 입력해주세요.">${f.txt}</textarea><div style="text-align:right;font-size:9.5px;color:#555" id="qcnt">${f.txt.length}/1000</div>
+ <div style="font-size:14px;font-weight:700;margin:14px 0 12px">답변 요청 TA 선택</div><div style="display:flex;gap:10px"><button class="tabtn ${f.taMode==='none'?'on':''}" data-a="tamode" data-v="none">${I.ban} 원하는 TA가 없어요.</button><button class="tabtn ${f.taMode==='pick'?'on':''}" data-a="tamode" data-v="pick">${I.user} <span>원하는 TA가 있어요.${taTxt?`<br><small style="color:var(--purple)">${taTxt}</small>`:''}</span></button></div>
+ <div style="font-size:14px;font-weight:700;margin:24px 0 12px">답변 요청 사항</div><div style="display:flex;gap:8px">${['없습니다','문제풀이 설명이 필요해요','개념 설명도 함께 부탁해요','직접입력'].map(t=>`<button class="rchip ${f.req===t?'on':''}" data-a="req" data-v="${t}">${t}</button>`).join('')}</div></div></div></div>`;
+}
+/* 5. 나의 질문들 */
+function mine(){
+ const t=S.myTab;let body;
+ const nav=`<div class="mnav"><button class="arr" data-a="na">‹</button>2026년 11월<button class="arr dis">›</button></div>`;
+ if(t==='북마크'){body=`<div style="display:flex;align-items:center"><b style="font-size:15px">전체 보기</b><div style="margin-left:auto;display:flex;gap:10px">${dd('bmSubj',['모든 과목','국어','수학','영어'])}${dd('bmAns',['전체답변','영상 답변','텍스트 답변'])}</div></div>`;
+  const show=(S.bmSubj==='모든 과목'||S.bmSubj==='수학')&&S.bmAns!=='텍스트 답변';
+  body+=show?`<div class="qc" style="width:260px" data-a="na"><div style="display:flex;align-items:center;gap:8px;border-left:3px solid #5fcf80;padding-left:8px">수학 <small style="color:#555">서바이벌전국 17회 9번</small><span style="margin-left:auto">${I.bm} 1</span></div>
+  <div style="display:flex;justify-content:space-between;margin-top:12px">홍다안<small style="color:#555">2026.11.02 북마크</small></div>
+  <div style="border:1px solid var(--line);height:100px;margin-top:10px;padding:6px;font-size:8px;color:#777;line-height:1.6"><span class="tag">질문</span><br>[문제 이미지] 함수 f(x)가 모든 실수 x에 대하여 ...</div>
+  <div style="border:1px solid var(--line);height:30px;margin-top:8px;display:flex;align-items:center;gap:8px;padding:0 6px"><span class="tag" style="background:#555;color:#fff;border:0;margin:0">답변</span>영상 답변 <span style="margin-left:auto">⊙</span></div></div>`
+  :`<div class="empty">${I.magq}<b>아직 북마크된 질답이 없어요!</b><small>자주 찾는 질문을 북마크해 두면 더 편리하게 이용할 수 있어요.</small></div>`}
+ else if(t==='문항 질문'){body=nav+(S.mine.length?`<div style="display:flex;gap:16px;flex-wrap:wrap">${S.mine.map(m=>`<div class="qc" data-a="na"><div style="display:flex;justify-content:space-between"><span class="tag">매칭 중</span><span>${I.bm} 0</span></div>
+  <div style="border-left:3px solid #f7c66a;padding-left:8px;margin-top:4px">${m.subj} <small style="color:#555">${m.rest}</small></div><div style="display:flex;justify-content:space-between;color:#aaa;font-size:10px;margin-top:10px"><span>${m.ta}</span><span style="color:#555">2026.11.02 등록</span></div>
+  <div style="border:1px solid var(--line);height:150px;margin-top:10px;padding:8px;white-space:pre-line;font-size:10px"><span class="tag">질문 1건</span>\n${m.txt||'(내용 없음)'}</div></div>`).join('')}</div>`
+  :`<div class="empty" style="margin-top:80px">${I.magq}<b>등록된 질문이 없어요!</b><small>궁금한 것이 있다면 부담 없이 질문해보세요. 많은 도움이 될 거예요!</small></div>`)}
+ else body=nav+`<div class="empty" style="margin-top:80px">${I.magq}<b>등록된 질문이 없어요!</b><small>궁금한 것이 있다면 부담 없이 질문해보세요. 많은 도움이 될 거예요!</small></div>`;
+ return topbar('나의 질문들')+`<div class="pg"><div style="display:flex;align-items:center"><div class="mtabs">${['북마크','문항 질문','TA Meet','SA Meet'].map(x=>`<button class="${t===x?'on':''}" data-a="mytab" data-v="${x}">${x}</button>`).join('')}</div><button class="sm" style="margin:28px 0 0 auto;background:#fff;padding:0 22px" data-a="ticket">내 이용권 확인</button></div>
+ <div class="mbox" style="top:80px">${body}</div></div>`;
+}
+const dd=(k,opts)=>`<span class="ddl">${S[k]} ⌄<select data-a="dd" data-k="${k}">${opts.map(o=>`<option ${o===S[k]?'selected':''}>${o}</option>`).join('')}</select></span>`;
+function meet(kind){return topbar(kind)+`<div class="pg"><div class="empty" style="margin-top:200px">${I.magq}<b>${kind} 화면</b><small>스크린샷이 없어 비워 두었어요. 예약 내역은 나의 질문들 > ${kind}에서 볼 수 있어요.</small></div></div>`}
+
+/* overlays */
+function taModal(){
+ let list=TAS.slice();if(S.taFilter==='fav')list=list.filter(t=>S.favs.has(t.id));
+ if(S.taSort==='관심순')list.sort((a,b)=>b.fav-a.fav);if(S.taSort==='답변순')list.sort((a,b)=>(b.fast||0)-(a.fast||0));if(S.taSort==='이름순')list.sort((a,b)=>a.name.localeCompare(b.name));
+ const tm=S.tmp;
+ return `<div class="dim" style="background:rgba(0,0,0,.35)"><div class="sheet"><div style="text-align:center;font-size:17px;font-weight:700">TA 선택</div>
+ <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px"><button class="sm" style="background:#eee;border:0;padding:0 20px" data-a="tacancel">취소</button><button class="qbtn" style="height:28px" data-a="tadone">완료</button></div>
+ <div style="display:flex;align-items:center;font-size:10px;margin-top:14px"><span>* 오른쪽에 있는 '관심 TA' 글자를 누르면, 해당 TA를 내 관심 TA로 등록할 수 있어요!</span>
+ <span style="margin-left:auto;display:flex;gap:10px;align-items:center;font-size:11px"><button style="${S.taFilter==='all'?'font-weight:700':'color:#555'}" data-a="taf" data-v="all">전체 TA 보기</button>|<button style="${S.taFilter==='fav'?'font-weight:700':'color:#555'}" data-a="taf" data-v="fav">관심 TA만 보기</button><span class="ddl" style="width:90px">${S.taSort} ⌄<select data-a="tasort">${['추천순','관심순','답변순','이름순'].map(o=>`<option ${o===S.taSort?'selected':''}>${o}</option>`).join('')}</select></span></span></div>
+ <div class="banner"><div style="font-size:11px;font-weight:700"><span class="lab">부엉이 연구실</span>AI 답변 기능을 사용해보세요. (20회 남음)</div><div style="font-size:9px;margin-top:6px;opacity:.9">AI 만 또는 TA 와 함께 질문 가능 · AI 답변은 신속하지만 오류가 있을 수 있습니다.</div>
+ <div style="border-top:1px solid rgba(255,255,255,.3);margin:8px 160px 0 0;padding-top:8px;font-size:9.5px">ⓘ 문항 질문권을 <b>AI 질문권</b>으로 전환해 사용할 수 있습니다. (1:1) <button style="background:#fff;color:#333;font-size:8.5px;padding:2px 8px;border-radius:3px;margin-left:6px" data-a="convert">전환하기 →</button></div>
+ <div class="sel">AI: ${tm.ai?'아이올(AI OWL) TA ⊗':'선택 없음'}<br>TA: ${tm.ta?TAS.find(t=>t.id===tm.ta).name+' ⊗':'선택 없음'}</div></div>
+ ${tm.ai&&!tm.ta?`<div style="font-size:10px;margin-top:6px">AI에게만 질문합니다. AI 질문 이용권만 사용하며, 답변이 충분하지 않다면 재질문 버튼을 통해 TA에게도 질문할 수 있습니다.</div>`:''}
+ <div style="overflow-y:auto;position:absolute;top:${tm.ai&&!tm.ta?262:244}px;left:26px;right:26px;bottom:16px">
+ ${list.length?list.map(t=>`${t.ai?`<div class="strip">AI 조교를 선택해 보세요! 빠른 답변과 함께 핵심 요약, 자세한 설명, 팁까지 알려드립니다. 정확한 문항 정보와 구체적인 질문으로 더 나은 답변을 받아보세요.</div>`:''}
+ <div class="ta ${(t.ai&&tm.ai)||tm.ta===t.id?'sel':''}" style="${t.ai?'margin-top:0':''}" data-a="pickta" data-v="${t.id}"><div class="av" style="background:${t.av}"></div><div><div class="nm">${t.name}${t.ai?'<span class="aib">AI</span>':`<small>${t.school}</small><small>${t.subj}</small>`}</div><div class="q">"${t.q}"</div><div class="tg">${t.tg}</div></div>
+ <div class="st"><button data-a="fav" data-v="${t.id}" style="font-size:9.5px">${I.heart(S.favs.has(t.id))} 관심 TA : ${t.fav+(S.favs.has(t.id)?1:0)}</button><br>${t.fast?`⚡ 신속답변 : ${t.fast}<br>`:''}★ 평균평점(개수) : ${t.rate}</div></div>`).join('')
+ :`<div style="text-align:center;margin-top:120px;font-size:12px">현재 질문 가능한 TA 없습니다.</div>`}</div></div></div>`;
+}
+function overlay(){
+ const o=document.getElementById('overlay');let h='';
+ if(S.taModal)h=taModal();
+ else if(S.confirm==='ask'){const ta=S.pickAI||S.pickTA?[S.pickAI?'아이올(AI OWL) TA':'',S.pickTA?TAS.find(t=>t.id===S.pickTA).name:''].filter(Boolean).join(' · '):null;
+  h=`<div class="dim"><div class="box" style="width:330px"><div style="padding:24px 18px 16px;font-size:12px">질문을 등록하시겠습니까?<div style="border:1px solid var(--line);margin-top:16px;padding:14px"><div style="font-size:12px"><span class="tag" style="margin:0 6px 0 0">Q1</span>${crumbTxt()}</div>
+  <div style="border:1px solid #333;height:28px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px">${ta?I.user+' '+ta:I.ban+' 원하는 TA가 없어요.'}</div></div></div>
+  <div class="mf"><button data-a="cfno">취소</button><button style="background:#111;color:#fff" data-a="cfyes">질문 등록하기</button></div></div></div>`}
+ else if(S.confirm==='loading')h=`<div class="dim" style="background:rgba(255,255,255,.6);backdrop-filter:blur(3px)"><div style="background:#777;color:#fff;padding:8px 16px;font-size:11px;font-weight:700">질문을 등록하는 중입니다.</div></div>`;
+ else if(S.confirm==='done')h=`<div class="dim"><div class="box" style="width:240px"><p>질문이 성공적으로 등록 되었습니다.</p><div class="mf"><button style="background:#111;color:#fff" data-a="donego">확인</button></div></div></div>`;
+ else if(S.ticket){const used=S.mine.length;h=`<div class="dim" data-a="ticketx"><div style="background:#fff;width:470px;padding:18px 8px 26px;border-radius:2px"><div style="font-size:13px;font-weight:700;padding-left:6px">프리미엄 플러스 <span class="tag" style="background:#111;color:#fff;border:0">이용 중</span></div>
+  <div class="mnav" style="justify-content:center;font-size:13px;margin:12px 0 16px"><span class="arr">‹</span>2026년 11월<span class="arr">›</span></div><div style="display:flex;gap:6px">
+  ${[['문항 질문',used+'회 사용함',(20-used)+' / 20회'],['AI 질문',(S.aiUsed||0)+'회 사용함',(20-(S.aiUsed||0))+' / 20회'],['TA 미팅','0분 사용함','300 / 300분'],['SA 미팅','0회 사용함','0 / 0회']].map(([a,b,c])=>`<div style="flex:1;background:#f4f4f4;padding:10px 8px;font-size:8px;color:#555"><div style="display:flex;justify-content:space-between"><b style="font-size:9.5px;color:#111">${a}</b><u>${b}</u></div><div style="display:flex;justify-content:space-between;margin-top:12px"><span>잔여 횟수</span><span>${c}</span></div></div>`).join('')}</div></div></div>`}
+ else if(S.camera)h=`<div class="dim" style="background:#000"><div style="color:#fff;text-align:center"><div style="width:520px;height:360px;border:2px dashed #666;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px">카메라 화면 (문제를 화면에 맞춰 촬영)</div><div style="margin-top:20px;display:flex;gap:30px;justify-content:center;align-items:center"><button style="color:#fff" data-a="camx">취소</button><button style="width:56px;height:56px;border-radius:50%;background:#fff;border:4px solid #888" data-a="shot"></button><span style="width:30px"></span></div></div></div>`;
+ o.innerHTML=h;
+}
+function sidebar(){const items=[['search','문항 검색',I.search],['ask','문항 질문',I.q],['tameet','TA Meet',I.ppl],['sameet','SA Meet',I.ppl],['mine','나의 질문들',I.chat]];
+ document.getElementById('side').innerHTML=`${S.side?'<div class="dim" style="background:rgba(0,0,0,.35);z-index:49" data-a="sidex"></div>':''}<div class="sbar ${S.side?'open':''}"><div class="logo">sdij <b>TA</b></div><nav>${items.map(([k,t,ic])=>`<button class="${S.page===k||(k==='search'&&['result','detail'].includes(S.page))?'on':''}" data-a="nav" data-v="${k}">${ic} ${t}</button>`).join('')}</nav>
+ <div class="me" data-a="na"><i>이</i><div>이현서t<br><small style="color:#888">정보 및 설정</small></div></div></div>`}
+function render(){
+ const p=S.page;document.getElementById('app').innerHTML=p==='search'?search():p==='result'?result():p==='detail'?detail():p==='ask'?ask():p==='mine'?mine():meet(p==='tameet'?'TA Meet':'SA Meet');
+ overlay();sidebar();
+}
+const HIST=[];const go=p=>{HIST.push(S.page);S.page=p};
+
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,v=t.dataset.v;
+ if(t.tagName==='SELECT')return;
+ switch(a){
+  case 'side':S.side=true;break;case 'sidex':S.side=false;break;
+  case 'nav':S.side=false;HIST.length=0;S.page=v;if(v==='ask'){S.form={txt:'',req:'없습니다',taMode:null,imgs:0}}break;
+  case 'bell':toast('새 알림이 없어요');return;
+  case 'back':S.page=HIST.pop()||'search';break;
+  case 'pop':S.popOpen=!S.popOpen;break;
+  case 'popgo':{const m=v.match(/^(\S+) (.+) (\d+회) (\d+)번$/);if(!m)return;const subj=m[1]==='생윤'?'생활과윤리':m[1];S.subj=subj;S.content=m[2];S.round=m[3];S.num=+m[4];S.popOpen=false;break}
+  case 'camera':S.camera=true;overlay();return;
+  case 'camx':S.camera=false;overlay();return;
+  case 'shot':S.camera=false;S.subj='국어';S.content='월례고사';S.round='10회';S.num=1;toast('촬영한 문제로 국어 월례고사 10회 1번을 찾았어요 (예시)');break;
+  case 'subj':S.subj=v;S.content=S.round=S.num=null;break;
+  case 'content':S.content=v;S.round=S.num=null;break;
+  case 'round':S.round=v;S.num=null;break;
+  case 'num':S.num=+v;break;
+  case 'go':if(!S.num)return;S.rTab='ans';S.aiOn=false;go('result');break;
+  case 'rtab':S.rTab=v;break;
+  case 'aion':S.aiOn=!S.aiOn;break;
+  case 'open':S.sel={i:+v,ai:S.aiOn};S.detTab=0;S.aiOk=false;go('detail');break;
+  case 'dettab':S.detTab=+v;break;
+  case 'aiok':S.aiOk=true;break;
+  case 'report':toast('질문 신고 (프로토타입에서는 동작하지 않아요)');return;
+  case 'bookmark':toast('북마크에 추가했어요');return;
+  case 'stars':toast('답변 리뷰는 내 질문에만 남길 수 있어요');return;
+  case 'ask':S.form={txt:'',req:'없습니다',taMode:null,imgs:0};S.pickAI=false;S.pickTA=null;go('ask');break;
+  case 'tosearch':S.page='search';break;
+  case 'resetq':S.content=S.round=S.num=null;toast('문항을 초기화했어요');break;
+  case 'img':if(S.form.imgs<5)S.form.imgs++;else toast('이미지는 5장까지 올릴 수 있어요');break;
+  case 'tamode':S.form.taMode=v;if(v==='pick'){S.taModal=true;S.tmp={ai:S.pickAI,ta:S.pickTA}}else{S.pickAI=false;S.pickTA=null}break;
+  case 'req':S.form.req=v;if(v==='직접입력')toast('요청 사항을 직접 입력할 수 있어요');break;
+  case 'taf':S.taFilter=v;overlay();return;
+  case 'fav':e.stopPropagation();if(S.favs.has(v)){S.favs.delete(v);toast('관심 TA에서 해제되었습니다.')}else{S.favs.add(v);toast('관심 TA로 등록되었습니다.')}overlay();return;
+  case 'pickta':if(v==='ai')S.tmp.ai=!S.tmp.ai;else S.tmp.ta=S.tmp.ta===v?null:v;overlay();return;
+  case 'convert':toast('문항 질문권 1회를 AI 질문권으로 전환해요 (예시)');return;
+  case 'tacancel':S.taModal=false;if(!S.pickAI&&!S.pickTA)S.form.taMode=null;break;
+  case 'tadone':S.pickAI=S.tmp.ai;S.pickTA=S.tmp.ta;S.taModal=false;if(!S.pickAI&&!S.pickTA)S.form.taMode=null;break;
+  case 'submit':if(!S.num){toast('문항 정보를 먼저 골라 주세요');return}if(!S.form.taMode){toast('답변 요청 TA를 선택해 주세요');return}S.confirm='ask';overlay();return;
+  case 'cfno':S.confirm=null;overlay();return;
+  case 'cfyes':S.confirm='loading';overlay();setTimeout(()=>{S.confirm='done';overlay()},900);return;
+  case 'donego':S.confirm=null;if(S.pickAI)S.aiUsed=(S.aiUsed||0)+1;S.mine.unshift({subj:S.subj,rest:`${S.content} ${S.round} ${S.num}번`,txt:S.form.txt,ta:S.pickTA?TAS.find(x=>x.id===S.pickTA).name+' 검토 중':S.pickAI?'AI 답변 생성 중':'TA가 검토 중'});HIST.length=0;S.page='mine';S.myTab='문항 질문';break;
+  case 'mytab':S.myTab=v;break;
+  case 'ticket':S.ticket=true;overlay();return;
+  case 'ticketx':if(e.target===t){S.ticket=false;overlay()}return;
+  case 'na':toast('스크린샷이 없어 동작은 비워 두었어요');return;
+  default:return;
+ }
+ render();
+});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.a==='dd'){S[t.dataset.k]=t.value;render()}if(t.dataset.a==='tasort'){S.taSort=t.value;overlay()}});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.a==='qtxt'){S.form.txt=t.value;document.getElementById('qcnt').textContent=t.value.length+'/1000'}});
+setInterval(()=>{if(S.page==='search'&&!S.popOpen&&!S.side){S.tick=(S.tick+1)%10;const el=document.querySelector('.pop .tk span');if(el)el.textContent=`${(S.tick+4)%10+1}. ${POPULAR[(S.tick+4)%POPULAR.length]}`}},2500);
+
+const JUMPS=[
+ ['① 문항 검색 (처음)',{page:'search',subj:'국어',content:null,round:null,num:null}],
+ ['② 콘텐츠 선택',{page:'search',subj:'국어',content:'월례고사',round:null,num:null}],
+ ['③ 회차 선택',{page:'search',subj:'국어',content:'월례고사',round:'10회',num:null}],
+ ['④ 번호 선택 → 확인',{page:'search',subj:'국어',content:'월례고사',round:'10회',num:1}],
+ ['⑤ 이번 주 인기 문항 펼침',{page:'search',subj:'국어',content:'월례고사',round:'10회',num:1,popOpen:true}],
+ ['⑥ 검색결과 (TA 답변)',{page:'result',subj:'국어',content:'월례고사',round:'10회',num:1,aiOn:false,rTab:'ans'}],
+ ['⑦ 검색결과 (AI 답변 함께 보기)',{page:'result',subj:'국어',content:'월례고사',round:'10회',num:1,aiOn:true,rTab:'ans'}],
+ ['⑧ 상세보기 (TA 답변)',{page:'detail',subj:'국어',content:'월례고사',round:'10회',num:1,sel:{i:0,ai:false},detTab:0}],
+ ['⑨ 상세보기 (AI 답변 안내)',{page:'detail',subj:'국어',content:'월례고사',round:'10회',num:1,sel:{i:0,ai:true},detTab:0,aiOk:false}],
+ ['⑩ 문항 질문 작성',{page:'ask',subj:'국어',content:'월례고사',round:'10회',num:1}],
+ ['⑪ TA 선택 (전체)',{page:'ask',subj:'국어',content:'월례고사',round:'10회',num:1,taModal:true,taFilter:'all',tmp:{ai:false,ta:null}}],
+ ['⑫ TA 선택 (관심 TA 없음)',{page:'ask',subj:'국어',content:'월례고사',round:'10회',num:1,taModal:true,taFilter:'fav',tmp:{ai:false,ta:null}}],
+ ['⑬ TA 선택 (AI 선택됨)',{page:'ask',subj:'국어',content:'월례고사',round:'10회',num:1,taModal:true,taFilter:'all',tmp:{ai:true,ta:null}}],
+ ['⑭ 질문 등록 확인',{page:'ask',subj:'국어',content:'월례고사',round:'10회',num:1,confirm:'ask'}],
+ ['⑮ 나의 질문들 (문항 질문)',{page:'mine',myTab:'문항 질문'}],
+ ['⑯ 내 이용권 확인',{page:'mine',myTab:'문항 질문',ticket:true}],
+ ['⑰ 나의 질문들 (북마크)',{page:'mine',myTab:'북마크'}],
+ ['⑱ TA Meet / SA Meet 탭',{page:'mine',myTab:'TA Meet'}],
+ ['⑲ 사이드 메뉴',{page:'mine',myTab:'북마크',side:true}]];
+document.getElementById('jumplist').innerHTML=JUMPS.map((j,i)=>`<li><button data-j="${i}">${j[0]}</button></li>`).join('');
+document.getElementById('jumplist').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;e.stopPropagation();
+ Object.assign(S,{popOpen:false,taModal:false,confirm:null,ticket:false,side:false,camera:false,form:{txt:'',req:'없습니다',taMode:null,imgs:0}},JUMPS[+b.dataset.j][1]);
+ if(S.page==='mine'&&S.myTab==='문항 질문'&&!S.mine.length&&b.dataset.j!=='17')S.mine=[{subj:'국어',rest:'월례고사 10회 1번',txt:'ㅠㅠ',ta:'TA가 검토 중'}];
+ HIST.length=0;if(['result','detail','ask'].includes(S.page))HIST.push('search');if(S.page==='detail')HIST.push('result');
+ render();document.getElementById('jump').classList.remove('open')});
+function fit(){const s=Math.min((innerWidth-24)/1180,(innerHeight-24)/820);document.getElementById('ipad').style.transform=`scale(${s})`}
+addEventListener('resize',fit);fit();render();
+</script>
+</body>
+</html>
