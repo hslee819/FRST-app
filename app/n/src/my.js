@@ -2,7 +2,7 @@
   'use strict';
   window.NScreens ||= {};
 
-  const student = '백하영t';
+  const student = '이현서t';
   const studentInfo = '78174191 / 임시관 / 1 / 4';
   const categories = ['전체', '몰입도', '공지', '앱', '수업', '콘텐츠', '벌점'];
   const notices = [
@@ -120,7 +120,7 @@
     const csv = '\ufeff' + rows.map(row => row.map(value => '"' + value.replace(/"/g, '""') + '"').join(',')).join('\r\n');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     const link = document.createElement('a');
-    link.href = url; link.download = '백하영t-시간표.csv';
+    link.href = url; link.download = '이현서t-시간표.csv';
     document.body.appendChild(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     ctx.toast('화면에 표시된 시간표를 CSV로 다운로드했습니다.');

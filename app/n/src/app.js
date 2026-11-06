@@ -69,7 +69,7 @@
     if(action === 'close-modal') return closeModal();
     if(action === 'navigate') { if (el.dataset.page === 'counseling') state.counselChoice = el.dataset.label === '담임 선생님' ? 'teacher' : 'manager'; return go(el.dataset.page); }
     if(action === 'notifications') return modal('알림','<p>새로운 알림이 없습니다.</p>');
-    if(action === 'profile') return modal('내 정보','<p><strong>백하영t</strong></p><p>78174191 / 임시관 / 1 / 4</p><p class="modal-note">캡처에 표시된 프로필입니다.</p>');
+    if(action === 'profile') return modal('내 정보','<p><strong>이현서t</strong></p><p>78174191 / 임시관 / 1 / 4</p><p class="modal-note">캡처에 표시된 프로필입니다.</p>');
     screens[state.page].onAction?.(action,el,ctx);
   });
   document.addEventListener('change', event => screens[state.page].onChange?.(event,ctx));
