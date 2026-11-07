@@ -513,3 +513,13 @@ test('renewal keeps the original TA empty state and all thirty disabled SA slots
   assert.match(app.view(), /이용권 잔여 횟수: <strong>0회<\/strong>/);
   assert.equal((app.view().match(/class="time-slot" disabled/g) ?? []).length, 30);
 });
+
+test('drawer report links open the form for 수학 서바이벌 23·24회 without adding them to the picker', () => {
+  for(const round of ['23','24']) {
+    const app=appHarness(renewal,'?'+new URLSearchParams({subject:'수학',content:'서바이벌',round,number:'14',view:'question'}));
+    assert.match(app.view(),/id="ask-form"/);
+    assert.ok(app.view().includes(`${round}회</span>`));
+  }
+  const other=appHarness(renewal,'?'+new URLSearchParams({subject:'국어',content:'서바이벌',round:'24',number:'1'}));
+  assert.match(other.view(),/<h1>문항 검색<\/h1>/);
+});

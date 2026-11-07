@@ -313,7 +313,9 @@
     const subject=params.get('subject'),content=params.get('content'),roundText=params.get('round'),numberText=params.get('number'),view=params.get('view')||'question';
     if(!subjects.includes(subject)||!books[subject].includes(content)||!['question','answers'].includes(view)||!/^\d{1,2}$/.test(roundText)||!/^\d{1,2}$/.test(numberText))return null;
     const round=Number(roundText),number=Number(numberText),maxNumber=['국어','영어'].includes(subject)?45:subject==='수학'?30:20;
-    const rounds=contentRounds(content);
+    // 콘텐츠 서랍장 리포트에만 있는 회차는 링크로 들어올 때만 허용한다.
+    const linkOnlyRounds={'수학|서바이벌':[23,24]};
+    const rounds=contentRounds(content).concat(linkOnlyRounds[subject+'|'+content]||[]);
     if(!rounds.includes(round)||number<1||number>maxNumber)return null;
     return {source:{subject,book:content,round,number},view};
   }
