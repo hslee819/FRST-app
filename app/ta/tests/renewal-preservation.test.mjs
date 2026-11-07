@@ -303,7 +303,7 @@ test('deep links retain the original form and added summaries without substituti
   assert.match(app.view(), /2번<\/span>/);
   assert.equal((app.view().match(/class="question-photo-panel"/g)||[]).length,1);
   assert.equal((app.view().match(/<img /g)||[]).length,0);
-  assert.match(app.view(),/등록된 문제 원문 사진이 없습니다/);
+  assert.match(app.view(),/원문 사진이 없어도 질문할 수 있어요/);
   assert.match(app.view(),/data-action="upload-problem-photo"/);
   assert.doesNotMatch(inlineScript(renewal),/referencePhotoUrl|KakaoTalk_20261106_151959657_14\.jpg/);
   assert.match(app.view(), /다른 학생의 질문/);
@@ -331,7 +331,7 @@ test('the problem photo panel uses one explicit source-matched original image an
   const image='data:image/jpeg;base64,/9j/2Q==';
   const existing={bookmarks:['korean8-1'],questions:[{id:'existing-q',text:'일반 풀이 첨부입니다.',created:'2026-11-06T15:00',source,images:[{data:image,name:'풀이.jpg'}]}],ratings:{}};
   const genericOnly=appHarness(renewal,query,{'ta-original-demo-v1':JSON.stringify(existing)});
-  assert.match(genericOnly.view(),/등록된 문제 원문 사진이 없습니다/);
+  assert.match(genericOnly.view(),/원문 사진이 없어도 질문할 수 있어요/);
   assert.equal((genericOnly.view().match(/<img /g)||[]).length,0);
   const photos={
     '국어|서바이벌프로|8|2':{data:image,name:'문제 원문.jpg'},
@@ -344,10 +344,10 @@ test('the problem photo panel uses one explicit source-matched original image an
   assert.ok(exact.view().includes(image));
   assert.ok(!exact.view().includes(photos['수학|월례고사|10|21'].data));
   const other=appHarness(renewal,'?'+new URLSearchParams({subject:'국어',content:'서바이벌',round:'17',number:'1'}),initialStorage);
-  assert.match(other.view(),/등록된 문제 원문 사진이 없습니다/);
+  assert.match(other.view(),/원문 사진이 없어도 질문할 수 있어요/);
   assert.equal((other.view().match(/<img /g)||[]).length,0);
   const corrupt=appHarness(renewal,query,{'ta-original-problem-photos-v1':JSON.stringify({'국어|서바이벌프로|8|2':{data:'javascript:alert(1)',name:'bad'}})});
-  assert.match(corrupt.view(),/등록된 문제 원문 사진이 없습니다/);
+  assert.match(corrupt.view(),/원문 사진이 없어도 질문할 수 있어요/);
   assert.doesNotMatch(corrupt.view(),/javascript:alert/);
 });
 

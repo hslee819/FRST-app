@@ -120,7 +120,7 @@
     const photo=problemPhotos[problemSourceKey(source)];
     return photo?{url:photo.data,kind:'original',caption:'문제 원문 · '+sourceText(source)}:null;
   }
-  function photoPanel(source=state.source){const photo=questionPhoto(source);return `<section class="question-photo-panel" aria-label="문항 사진"><div class="question-photo-header"><h2>문항 사진</h2><button type="button" class="outline" data-action="upload-problem-photo" ${problemPhotoBusy?'disabled':''}>${problemPhotoBusy?'사진 등록 중…':photo?'문제 사진 변경':'문제 원문 사진 등록'}</button></div>${photo?`<figure class="question-photo-figure"><div class="question-photo-frame original"><img src="${safe(photo.url)}" alt="${safe(sourceText(source))} 문제 원문"></div><figcaption>${safe(photo.caption)} · 1장</figcaption></figure>`:'<div class="question-photo-empty">'+icon('camera')+'<strong>등록된 문제 원문 사진이 없습니다.</strong><p>문제와 선지가 포함된 원문 사진 한 장을 등록해 주세요.<br>풀이·해설 사진은 질문 이미지에 따로 첨부할 수 있습니다.</p></div>'}</section>`;}
+  function photoPanel(source=state.source){const photo=questionPhoto(source);const label=problemPhotoBusy?'사진 등록 중…':photo?'사진 변경':'원문 사진 추가';return `<section class="question-photo-panel" aria-label="문항 원문 사진">${photo?`<button type="button" class="question-photo-thumb" data-action="view-problem-photo" aria-label="${safe(sourceText(source))} 문제 원문 크게 보기"><img src="${safe(photo.url)}" alt="${safe(sourceText(source))} 문제 원문"></button>`:`<div class="question-photo-thumb empty" aria-hidden="true">${icon('camera')}</div>`}<div class="question-photo-meta"><strong>문항 원문</strong><p>${photo?safe(photo.caption)+' · 자동 첨부됨':'원문 사진이 없어도 질문할 수 있어요.'}</p><button type="button" class="text-button" data-action="upload-problem-photo" ${problemPhotoBusy?'disabled':''}>${label}</button></div></section>`;}
   function otherQuestions(){
     const matches=selectedAnswers(),sourceKey=[state.source.subject,state.source.book,state.source.round,state.source.number].join('|');
     if(state.questionsSource!==sourceKey){state.questionsSource=sourceKey;state.questionsCategory='problem';}
@@ -167,6 +167,7 @@
   function openTA(){preserveForm();modal('답변을 요청할 TA 선택',`<p>아래 목록은 화면 확인용 예시입니다. 선택한 TA는 질문 기록에 함께 저장됩니다.</p>${[['김하경','국어'],['이승민','국어'],['박준영','수학'],['정유진','과학']].map(([name,subject])=>`<button class="teacher-option" data-action="select-ta" data-value="${name} TA"><span class="teacher-avatar">${name.slice(1)}</span><span><strong>${name} TA</strong><small>${subject} · 예시 프로필</small></span><span class="teacher-pick">선택 →</span></button>`).join('')}`);}
   const actions = {
     menu:toggleDrawer,
+    'view-problem-photo':()=>{const photo=questionPhoto();if(photo)modal('문항 원문',`<img src="${safe(photo.url)}" alt="${safe(sourceText())} 문제 원문" style="display:block;width:100%;height:auto"><p class="muted" style="margin-top:10px;font-size:12px">${safe(photo.caption)}</p>`);},
     'upload-problem-photo':()=>{if(problemPhotoBusy)return;preserveForm();problemPhotoTarget={...state.source};$('#problem-photo-input').click();},
     nav:el=>{preserveForm();go(el.dataset.id==='ask'?'form':el.dataset.id);},back:()=>{if(state.page==='detail')go('results');else if(state.page==='form')go('ask');else go('search');},
     notifications:()=>modal('알림','<p>새로운 알림이 없습니다.</p><p style="margin-top:12px">질문은 이 브라우저에만 저장되는 예시 화면이며, 실제 답변 알림은 전송되지 않습니다.</p>'),
