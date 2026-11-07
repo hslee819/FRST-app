@@ -95,7 +95,7 @@
     const x=i=>70+i*68,y=v=>238-v/10*204;
     let svg='<svg viewBox="0 0 1100 282" role="img" aria-label="8시부터 22시까지 공부 시간과 몰입도">';
     for(let v=0;v<=10;v+=2)svg+=`<path d="M40 ${y(v)}H1052" stroke="#ececf0"/><text x="28" y="${y(v)+4}" text-anchor="end" font-size="12" fill="#f2352b">${v}</text><text x="1070" y="${y(v)+4}" font-size="12" fill="#8b8d94">${v*6}</text>`;
-    hourlyMinutes.forEach((v,i)=>{const h=v/60*204;svg+=`<rect x="${x(i)-18}" y="${238-h}" width="36" height="${h}" rx="8" fill="#d3ddfc"/><text x="${x(i)}" y="266" text-anchor="middle" font-size="13" fill="#333">${i+8}</text>`;});
+    hourlyMinutes.forEach((v,i)=>{const h=v/60*204;svg+=`<rect x="${x(i)-18}" y="${238-h}" width="36" height="${h}" rx="8" fill="#d5d5dc"/><text x="${x(i)}" y="266" text-anchor="middle" font-size="13" fill="#333">${i+8}</text>`;});
     svg+=`<polyline points="${hourlyFocus.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="#f2352b" stroke-width="1.6"/>`;
     hourlyFocus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#f2352b" stroke="#fff" stroke-width="1.5"/><text x="${x(i)}" y="${y(v)-10}" text-anchor="middle" font-size="12" font-weight="700" fill="#f2352b" stroke="#fff" stroke-width="3" paint-order="stroke">${v}</text>`;});
     return svg+'</svg>';
