@@ -2,19 +2,14 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Script } from 'node:vm';
-import { prepareFocusDocument } from './focus-content.mjs';
-import { prepareGradesDocument } from './grades-content.mjs';
+import { buildGradesContent } from './grades-content.mjs';
 
 const projectRoot = fileURLToPath(new URL('./', import.meta.url));
 const styles = ['src/base.css', 'src/my.css', 'src/services.css', 'src/focus.css', 'src/grades.css'];
-const scripts = ['src/my.js', 'src/services.js', 'src/focus.js', 'src/app.js'];
+const scripts = ['src/my.js', 'src/services.js', 'src/focus.js', 'src/grades.js', 'src/app.js'];
 
 export async function buildStandalone(root = projectRoot) {
   let html = await readFile(path.join(root, 'index.html'), 'utf8');
-  const focusSource = await readFile(path.resolve(root, '../몰입도.html'), 'utf8');
-  const focusHtml = prepareFocusDocument(focusSource);
-  const gradesSource = await readFile(path.join(root, 'reference/sdij_drawer_tobe.html'), 'utf8');
-  const gradesHtml = prepareGradesDocument(gradesSource);
   const styleTags = [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/g)];
   const scriptTags = [...html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g)];
   if (JSON.stringify(styleTags.map(match => match[1])) !== JSON.stringify(styles)) {
@@ -45,11 +40,10 @@ export async function buildStandalone(root = projectRoot) {
     const image = await readFile(path.join(root, 'assets', name));
     assets[name.slice(0, -4)] = `data:image/png;base64,${image.toString('base64')}`;
   }
-  const assetScript = `<script>window.NAssets=${JSON.stringify(assets).replace(/</g, '\\u003c')};window.NFocusHTML=${JSON.stringify(focusHtml).replace(/</g, '\\u003c')};window.NGradesHTML=${JSON.stringify(gradesHtml).replace(/</g, '\\u003c')};</script>`;
+  const gradesHTML = await buildGradesContent(root);
+  const assetScript = `<script>window.NAssets=${JSON.stringify(assets).replace(/</g, '\\u003c')};window.NGradesHTML=${JSON.stringify(gradesHTML).replace(/</g, '\\u003c')};</script>`;
   html = html.replace('</body>', () => `${assetScript}\n${inlineScripts.join('\n')}\n</body>`);
   const output = path.join(root, 'N.html');
-  await writeFile(path.join(root, 'focus-content.html'), focusHtml, 'utf8');
-  await writeFile(path.join(root, 'grades-content.html'), gradesHtml, 'utf8');
   await writeFile(output, html, 'utf8');
   return { output, bytes: Buffer.byteLength(html, 'utf8'), assets: names.length };
 }

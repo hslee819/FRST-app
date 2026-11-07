@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SDIJ 콘텐츠 서랍장 (개선안)</title>
-
 <style>
 :root{--fg:#111;--sub:#8a8a8a;--faint:#c4c4c4;--line:#e6e6e6;--line2:#d4d4d4;--chip:#f3f4f6;--bg2:#f6f6f6;--red:#f2352b}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -233,6 +232,7 @@ table.ct{border-collapse:collapse;font-size:12px;table-layout:fixed}
 .new{display:none!important}
 </style>
 <style id="n-grades-host-style">
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
     html,body{background:#fff;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
     #ipad{height:672px;border-radius:0;box-shadow:none;transform:scale(var(--n-grades-scale,1))!important}
     #app{top:0}
@@ -328,6 +328,11 @@ function mkItems(n,pts,wrong,seed,known){const R=rnd(seed),out=[];
   const rate=k?k[2]:+(Math.min(85,(i/n)*55*R()+i*.6+R()*4)).toFixed(1);
   const dist=[0,0,0,0,0].map(()=>R());dist[ans-1]+=8;const sm=dist.reduce((a,b)=>a+b);
   out.push({q:i,p:pts[i-1],ans,mine,rate,dist:dist.map(v=>Math.round(v/sm*100))})}return out}
+// TA 앱 문항 질문 화면 링크 (TA가 받는 과목/콘텐츠만, 나머지는 아래 예시 모달)
+function taAskURL(subj,type,no,q){const ok={국어:['월례고사','서바이벌','상상(FINAL)','엑셀러레이터','서바이벌프로'],수학:['월례고사','서바이벌','서바이벌프로','엑셀러레이터'],영어:['월례고사','서바이벌','엑셀러레이터']};
+ if(!(ok[subj]||[]).includes(type))return '';
+ const base=/\/app\/n\//.test(document.baseURI)?'../ta/TA.html':'../app/ta/TA.html';
+ return base+'?'+new URLSearchParams({subject:subj,content:type,round:String(no),number:String(q),view:'question'});}
 const REPORT={
  '수학':{'서바이벌':{
   23:{raw:97,common:71,sel:26,std:'137.0',pct:100,grade:1,date:'26.10.19(월요일)',avg:'86.1',top:'95.6',full:'7.1%',med:'88',cuts:{확통:[131,125,119],미적:[130,124,118],기하:[129,123,117]},items:mkItems(30,MATHPTS,[3],7,KNOWN)},
@@ -587,6 +592,7 @@ function overlay(){
     <button data-a="qrev" style="display:block;margin:10px auto 0;font-size:10.5px">정답확인 ${rv?'⌃':'⌄'}</button>
     <div style="display:flex;margin-top:10px"><button data-a="qexpl" style="flex:1;font-weight:${ex?700:400}">해설</button><button data-a="toast2" data-v="오답노트에 추가했어요" style="flex:1">+ 오답노트</button></div>
     <button data-a="qask" data-v="${q}" style="display:block;width:100%;margin-top:12px;height:30px;border-radius:6px;background:#111;color:#fff;font-size:11px">TA에게 질문하기</button></div></div></div></div>`
+  :taAskURL(S.rSubj,S.rType,S.rNo,q)?`<div class="dim" style="z-index:46;background:#fff;display:block;top:30px"><div style="height:52px;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid var(--line);font-size:13px"><span style="background:#111;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">TA 앱</span><b>${tag}</b><span style="color:#2e6cf6">서랍장에서 문항 정보가 자동으로 채워졌어요<i class="new">NEW</i></span><button data-a="mclose" style="margin-left:auto;font-size:13px;font-weight:700">닫고 서랍장으로 ✕</button></div><iframe title="TA 문항 질문" src="${taAskURL(S.rSubj,S.rType,S.rNo,q)}" style="width:100%;height:calc(100% - 52px);border:0;display:block"></iframe></div>`
   :`<div class="dim"><div class="modal" style="width:860px;height:640px;border-radius:10px">
   <div class="app-hd"><span class="tag" style="background:#5b2be0">TA 앱</span><b style="color:#fff">문항 질문</b> · 과목/콘텐츠/회차/문항 선택 단계 없이 바로 진입<button data-a="mclose">×</button></div>
   <div style="display:flex;height:534px"><div style="flex:1;padding:22px 26px;border-right:1px solid var(--line)">

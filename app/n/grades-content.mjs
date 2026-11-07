@@ -1,29 +1,13 @@
-import { Script } from 'node:vm';
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-// Keep the supplied screen and its interactions together inside the grades frame.
-// Adapt navigation and remove the profile/distribution header and automatic push.
-export function prepareGradesDocument(source) {
-  for (const id of ['stage', 'ipad', 'app', 'sbar', 'overlay', 'toast', 'jumplist']) {
-    if (!source.includes(`id="${id}"`)) throw new Error(`The grades source is missing ${id}.`);
-  }
-  if (!source.includes('</head>') || !source.includes('</body>')) throw new Error('The grades HTML is incomplete.');
-  let html = source.replace('<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">', '');
-  const changes = [
-    ["['drawer','콘텐츠 서랍장',I.box],", ''],
-    ["const S={tab:'drawer',", "const S={tab:'report',"],
-    ['setTimeout(showPush,700);', ''],
-  ];
-  for (const [before, after] of changes) {
-    if (!html.includes(before)) throw new Error('The grades navigation or startup code has changed.');
-    html = html.replace(before, after);
-  }
-  const headerPattern = /function header\(\)\{[\s\S]*?(?=\r?\nfunction subjTabs)/;
-  if (!headerPattern.test(html)) throw new Error('The grades profile header could not be found.');
-  html = html.replace(headerPattern, () => 'function header(){return `<div class="hdr"><div class="rt"><button class="cic" data-a="noti" aria-label="알림">${I.bell}</button><button class="cic" data-a="settings" aria-label="설정">${I.gear}</button></div></div>`}');
-  if (/<script\b[^>]*\bsrc=|<link\b[^>]*rel="stylesheet"/i.test(html)) throw new Error('The grades document must be self-contained.');
-  for (const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)) new Script(match[1]);
+// 성적 탭은 개선안 콘텐츠 서랍장의 리포트 서랍장·부엉이 분석실을 N 앱 안에 띄운다.
+const projectRoot = fileURLToPath(new URL('./', import.meta.url));
+const drawerPath = ['..', '..', '개선 앱 화면', 'sdij_drawer_tobe.html'];
 
-  const styles = `<style id="n-grades-host-style">
+const hostStyle = `<style id="n-grades-host-style">
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
     html,body{background:#fff;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
     #ipad{height:672px;border-radius:0;box-shadow:none;transform:scale(var(--n-grades-scale,1))!important}
     #app{top:0}
@@ -39,8 +23,11 @@ export function prepareGradesDocument(source) {
     .modal{max-height:calc(100% - 24px);overflow:auto}
     .side{overflow-y:auto;padding-bottom:24px}
     .logout{position:static;display:block;width:228px;margin:24px auto 0}
-  </style>`;
-  const bridge = `(() => {
+  </style>
+</head>`;
+
+const fitScript = `<script>
+(() => {
     'use strict';
     function fitGrades() {
       const scale = Math.min(innerWidth / 1180, innerHeight / 672);
@@ -48,9 +35,37 @@ export function prepareGradesDocument(source) {
     }
     addEventListener('resize', fitGrades);
     fitGrades();
-  })();`;
-  new Script(bridge);
-  return html
-    .replace('</head>', () => `${styles}\n</head>`)
-    .replace('</body>', () => `<script>\n${bridge}\n</script>\n</body>`);
+  })();
+</script>
+</body>`;
+
+function replaceOnce(html, from, to, label) {
+  const count = html.split(from).length - 1;
+  if (count !== 1) throw new Error(`grades: expected one ${label}, found ${count}. 서랍장 개선안 구조가 바뀌었는지 확인하세요.`);
+  return html.replace(from, () => to);
+}
+
+export function transformDrawer(html) {
+  html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>\s*/g, '');
+  html = replaceOnce(html, '</head>', hostStyle, 'closing head tag');
+  html = replaceOnce(html, "const S={tab:'drawer',", "const S={tab:'report',", 'initial tab');
+  html = html.replace(/function header\(\)\{return `<div class="hdr">[\s\S]*?<\/div><\/div>`\}/, () =>
+    'function header(){return `<div class="hdr"><div class="rt"><button class="cic" data-a="noti" aria-label="알림">${I.bell}</button><button class="cic" data-a="settings" aria-label="설정">${I.gear}</button></div></div>`}');
+  if (!html.includes('<div class="hdr"><div class="rt">')) throw new Error('grades: header was not replaced.');
+  html = replaceOnce(html, "[['drawer','콘텐츠 서랍장',I.box],['report','리포트 서랍장',I.rep]", "[['report','리포트 서랍장',I.rep]", 'tab list');
+  html = replaceOnce(html, 'render();setTimeout(showPush,700);', 'render();', 'push start');
+  html = replaceOnce(html, '</body>', fitScript, 'closing body tag');
+  return html;
+}
+
+export async function buildGradesContent(root = projectRoot) {
+  const drawer = await readFile(path.join(root, ...drawerPath), 'utf8');
+  const html = transformDrawer(drawer);
+  await writeFile(path.join(root, 'grades-content.html'), html, 'utf8');
+  return html;
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const html = await buildGradesContent();
+  console.log(`Built grades-content.html (${Buffer.byteLength(html, 'utf8').toLocaleString('en-US')} bytes).`);
 }

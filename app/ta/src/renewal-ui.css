@@ -20,3 +20,5 @@
 .review-dialog .review-card-footer{flex-wrap:wrap}
 .review-dialog .review-cards-empty,.review-dialog .review-cards-complete{flex-wrap:wrap}
 @media(max-width:700px){.review-dialog{padding:20px}.review-dialog .review-card-body{padding:18px}.review-dialog .review-card-body h3{font-size:16px}}
+
+.question-photo-panel.question-photo-panel{display:flex;align-items:center;gap:14px;border:0;padding:0;margin:0 0 22px;background:none}.question-photo-panel .question-photo-thumb{flex:none;width:76px;height:76px;min-height:0;align-self:center;border:1px solid #ddd;border-radius:6px;background:#fafafa;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0;color:#aaa}.question-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}.question-photo-thumb[data-action]{cursor:zoom-in}.question-photo-thumb svg{width:26px;height:26px}.question-photo-meta{min-width:0;font-size:12px;line-height:1.6;color:#888}.question-photo-meta strong{display:block;font-size:14px;color:#333}.question-photo-meta p{margin:0}.question-photo-meta .text-button{font-size:12px;padding:0;margin-top:2px}

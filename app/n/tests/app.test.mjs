@@ -3,19 +3,18 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
-const files = ['my.js', 'services.js', 'focus.js', 'app.js'];
+const files = ['my.js', 'services.js', 'focus.js', 'grades.js', 'app.js'];
 const sources = await Promise.all(files.map(async name => ({ name, code: await readFile(new URL('../src/' + name, import.meta.url), 'utf8') })));
 const plain = value => JSON.parse(JSON.stringify(value));
 
 // This harness runs the actual application and its delegated event listeners.
 // Its small DOM stub cannot verify layout, native form validation, or focus order.
-function boot({ page = 'home', saved = new Map(), storageAccess = {}, focusHTML, gradesHTML } = {}) {
+function boot({ page = 'home', saved = new Map(), storageAccess = {} } = {}) {
   const nodes = new Map();
   const listeners = new Map();
   const timers = new Map();
   let timerId = 0;
   let document;
-  let renderedFrames = [];
 
   function element(selector = '', options = {}) {
     const classes = new Set();
@@ -48,26 +47,6 @@ function boot({ page = 'home', saved = new Map(), storageAccess = {}, focusHTML,
       click() {},
       ...options,
     };
-    if (selector === '#screen') {
-      let html = '';
-      Object.defineProperty(node, 'innerHTML', {
-        get() { return html; },
-        set(value) {
-          html = String(value);
-          for (const id of renderedFrames) nodes.delete('#' + id);
-          renderedFrames = [];
-          for (const match of html.matchAll(/<iframe\b([^>]*)>/g)) {
-            const attrs = new Map([...match[1].matchAll(/([\w-]+)="([^"]*)"/g)].map(attr => [attr[1], attr[2]]));
-            const id = attrs.get('id');
-            if (!id) continue;
-            const frame = element('#' + id, { tagName: 'IFRAME', srcdoc: '', src: attrs.get('src') || '' });
-            for (const [name, val] of attrs) frame.setAttribute(name, val);
-            nodes.set('#' + id, frame);
-            renderedFrames.push(id);
-          }
-        },
-      });
-    }
     return node;
   }
 
@@ -93,8 +72,6 @@ function boot({ page = 'home', saved = new Map(), storageAccess = {}, focusHTML,
     get(key) { return this.values[key] ?? null; }
   }
   const window = { addEventListener() {} };
-  if (focusHTML !== undefined) window.NFocusHTML = focusHTML;
-  if (gradesHTML !== undefined) window.NGradesHTML = gradesHTML;
   const context = vm.createContext({
     window, document, console, URL, URLSearchParams, Blob,
     FormData: FormDataStub,
@@ -114,7 +91,7 @@ function boot({ page = 'home', saved = new Map(), storageAccess = {}, focusHTML,
     return event;
   }
   return {
-    app: window.NApp, screens: window.NScreens, window,
+    app: window.NApp, screens: window.NScreens, focusData: window.NFocusData,
     saved, storageAccess, get, document,
     html: () => get('#screen').innerHTML,
     click(action, data = {}, options = {}) { return dispatch('click', element('', { dataset: { action, ...data }, ...options })); },
@@ -136,7 +113,7 @@ test('all 17 screens render and are reachable through the actual main menu', () 
     assert.equal(h.app.state.page, page);
     assert.equal(h.get('#navigation').hidden, true);
     assert.equal(h.get('#screen').getAttribute('data-page'), page);
-    assert.ok(h.html().trim().length > 0, `${page} has content`);
+    assert.ok(h.html().length > 100, `${page} has content`);
     assert.ok(!h.html().includes('undefined'), `${page} renders without missing values`);
     assert.equal(h.document.title, `${h.screens[page].title} · 시대인재 N`);
   }
@@ -145,73 +122,82 @@ test('all 17 screens render and are reachable through the actual main menu', () 
   assert.equal(boot({ page: 'missing' }).app.state.page, 'home');
 });
 
-function embeddedFrame(h, label) {
-  const frame = h.html().match(/<iframe\b([^>]*)>/);
-  assert.ok(frame, `The ${label} app is hosted in an iframe.`);
-  const id = frame[1].match(/\bid="([^"]+)"/)?.[1];
-  assert.ok(id, `The mounted ${label} frame has an identifier.`);
-  assert.ok(frame[1].match(/\btitle="[^"]+"/), `The ${label} frame has an accessible title.`);
-  return h.get('#' + id);
-}
-const focusFrame = h => embeddedFrame(h, 'focus');
-const gradesFrame = h => embeddedFrame(h, 'grades');
-
-test('the focus screen uses the generated local HTML as its editable-source fallback', () => {
-  for (const focusHTML of [undefined, null, { invalid: true }]) {
-    const h = boot({ page: 'focus', focusHTML });
-    const frame = focusFrame(h);
-    assert.match(frame.src, /(?:^|\/)focus-content\.html$/);
-    assert.equal(frame.srcdoc, '');
-    assert.equal(h.screens.focus.fullBleed, true);
-    assert.equal(h.get('#screen').classList.contains('full-bleed'), true);
-    assert.equal(h.get('#page-header').hidden, false, 'The host keeps its navigation header reachable.');
-    assert.equal(h.app.state.focus, undefined, 'The host does not recreate a separate focus dataset.');
-    assert.equal(h.window.NFocusData, undefined);
-  }
+test('the observed focus table retains every period, weekday value, and lecture marker', () => {
+  const h = boot({ page: 'focus' });
+  h.click('focus-view', { view: 'detail' });
+  const table = h.html().match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1];
+  const rows = [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map(match => [...match[1].matchAll(/<(?:th|td)\b[^>]*>([^<]*)<\/(?:th|td)>/g)].map(cell => cell[1]));
+  assert.deepEqual(rows, [
+    ['3교시', '8.0', '8.0', '8.0', '수업', '8.0', '-', '-', '-'],
+    ['4교시', '수업', '수업', '8.0', '수업', '8.0', '-', '-', '-'],
+    ['5교시', '7.5', '7.5', '수업', '7.5', '7.5', '-', '-', '-'],
+    ['6교시', '7.5', '7.5', '7.5', '8.0', '수업', '-', '-', '-'],
+  ]);
+  assert.match(h.html(), /개인 평균/);
+  assert.match(h.html(), /50% 평균/);
+  assert.match(h.html(), /20% 평균/);
 });
 
-test('the standalone focus payload is mounted unchanged into srcdoc without copying its UI into the host', () => {
-  const payload = '<!doctype html><html lang="ko"><head><style>.original-focus{color:red}</style></head><body><main class="original-focus">original focus payload & content</main><script>window.focusSentinel = true;</script></body></html>';
-  const h = boot({ page: 'focus', focusHTML: payload });
-  const frame = focusFrame(h);
-  assert.equal(frame.srcdoc, payload);
-  assert.equal(frame.getAttribute('src'), null, 'The standalone frame does not request a separate local file.');
-  assert.doesNotMatch(h.html(), /original focus payload|focusSentinel|<style>|<script>/);
-  assert.equal(h.get('#header-actions').innerHTML, '', 'The former custom focus controls are absent from the host header.');
-  assert.equal(h.saved.size, 0, 'Mounting a focus app does not alter host storage.');
-});
-
-test('returning to focus remounts the same embedded document and keeps other screen selections', () => {
-  const payload = '<!doctype html><html><body>existing focus application</body></html>';
-  const h = boot({ page: 'surveys', focusHTML: payload });
-  h.click('my-survey-tab', { tab: 'closed' });
-  h.click('navigate', { page: 'lectures' });
-  h.click('svc-subject', { subject: '수학' });
-  const myBefore = plain(h.app.state.my);
-  const servicesBefore = plain(h.app.state.services);
-  h.click('navigate', { page: 'focus' });
-  const first = focusFrame(h);
-  assert.equal(first.srcdoc, payload);
-  assert.deepEqual(plain(h.app.state.my), myBefore);
-  assert.deepEqual(plain(h.app.state.services), servicesBefore);
-  const hostBefore = plain(h.app.state);
-  h.click('focus-view', { view: 'monthly' });
+test('all four photographed study weeks preserve their scores, durations, and displayed totals', () => {
+  const h = boot({ page: 'focus' });
+  assert.deepEqual(plain(h.focusData.weeks), [
+    { focus: [6, 7, 7, 6, 7], lecture: [140, 180, 170, 160, 170], self: [340, 410, 380, 350, 410], shownTotal: '40h 20m' },
+    { focus: [5, 6, 6, 6, 7], lecture: [130, 170, 160, 170, 180], self: [360, 420, 400, 390, 440], shownTotal: '42h 10m' },
+    { focus: [6, 8, 7, 7, 8], lecture: [160, 190, 180, 170, 120], self: [410, 460, 430, 420, 470], shownTotal: '44h 30m' },
+    { focus: [5, 8, 6, 6, 7], lecture: [130, 190, 120, 120, 170], self: [390, 440, 410, 400, 430], shownTotal: '43h 40m' },
+  ]);
   h.click('focus-mode');
-  h.click('focus-week', { week: '2' });
-  assert.deepEqual(plain(h.app.state), hostBefore, 'Retired host focus actions cannot mutate host or other-screen state.');
-  h.click('navigate', { page: 'surveys' });
-  assert.equal(h.app.state.my.surveyTab, 'closed');
-  assert.match(h.html(), /참여불가/);
-  h.click('navigate', { page: 'lectures' });
-  assert.equal(h.app.state.services.subject, '수학');
-  h.click('navigate', { page: 'focus' });
-  assert.notEqual(focusFrame(h), first, 'Navigation creates a fresh iframe element.');
-  assert.equal(focusFrame(h).srcdoc, payload);
-  assert.equal(h.app.state.focus, undefined);
+  for (let week = 0; week < 4; week++) {
+    h.click('focus-week', { week: String(week) });
+    assert.equal(h.app.state.focus.week, week);
+    assert.ok(h.html().includes(h.focusData.weeks[week].shownTotal));
+    for (const minutes of [...h.focusData.weeks[week].lecture, ...h.focusData.weeks[week].self]) {
+      assert.ok(h.html().includes(h.focusData.duration(minutes)), `week ${week + 1}: ${minutes} minutes is displayed`);
+    }
+  }
+  // Totals are transcribed labels from the photographs; no invented aggregation
+  // replaces them. A 720-minute axis deliberately accommodates the tallest bar.
+  assert.ok(Math.max(...h.focusData.weeks.flatMap(week => week.self.map((value, i) => value + week.lecture[i]))) <= 720);
 });
 
-test('attendance month controls retain their existing boundaries and captured-event scope', () => {
-  const h = boot({ page: 'attendance' });
+test('focus controls switch between comparison, monthly trend, daily and weekly study views', () => {
+  const h = boot({ page: 'focus' });
+  assert.equal(h.app.state.focus?.view ?? 'summary', 'summary');
+  h.click('focus-view', { view: 'summary' });
+  assert.equal(h.app.state.focus.view, 'summary');
+  for (const value of ['7.75', '8.07', '8.23']) assert.ok(h.html().includes(value));
+  h.click('focus-view', { view: 'monthly' });
+  assert.match(h.html(), /당월 몰입도 추이/);
+  h.click('focus-view', { view: 'detail' });
+  assert.match(h.html(), /3교시/);
+  h.click('focus-mode');
+  assert.equal(h.app.state.focus.mode, 'study');
+  assert.equal(h.app.state.focus.week, 3);
+  assert.match(h.html(), /43h 40m/);
+  h.click('focus-study-view', { view: 'daily' });
+  assert.equal(h.app.state.focus.studyView, 'daily');
+  assert.match(h.html(), /8시부터 22시까지/);
+  h.click('focus-week', { week: '0' });
+  assert.match(h.html(), /이 기간의 몰입도 기록이 없습니다/);
+  h.click('focus-study-view', { view: 'weekly' });
+  assert.match(h.html(), /40h 20m/);
+  h.click('focus-mode');
+  assert.equal(h.app.state.focus.mode, 'comparison');
+  assert.equal(h.app.state.focus.view, 'summary');
+  assert.ok(h.html().includes('8.07'));
+});
+
+test('focus and attendance month controls do not display captured data under other months', () => {
+  const h = boot({ page: 'focus' });
+  h.click('focus-month', { delta: '-1' });
+  assert.equal(h.app.state.focus.month, 9);
+  assert.match(h.html(), /이 기간의 몰입도 기록이 없습니다/);
+  assert.doesNotMatch(h.html(), /3교시/);
+  h.click('focus-month', { delta: '1' });
+  assert.equal(h.app.state.focus.month, 10);
+  h.click('focus-month', { delta: '1' });
+  assert.equal(h.app.state.focus.month, 10);
+  h.click('navigate', { page: 'attendance' });
   assert.match(h.html(), /2027학년도 대학수/);
   h.click('my-month-prev');
   assert.equal(h.app.state.my.month, 9);
@@ -221,65 +207,33 @@ test('attendance month controls retain their existing boundaries and captured-ev
   assert.equal(h.app.state.my.month, 10);
 });
 
-test('the grades entry immediately follows focus and preserves the host header and menu', () => {
-  const h = boot();
-  const myGroup = h.get('#menu-groups').innerHTML.match(/<section class="menu-group"><h2>My<\/h2>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(myGroup);
-  const pages = [...myGroup.matchAll(/data-page="([^"]+)"/g)].map(match => match[1]);
-  const focusIndex = pages.indexOf('focus');
-  assert.ok(focusIndex >= 0);
-  assert.deepEqual(pages.slice(focusIndex, focusIndex + 3), ['focus', 'grades', 'penalty']);
-  h.click('navigate', { page: 'grades' });
-  assert.equal(h.get('#page-title').textContent, '성적');
-  assert.equal(h.get('#page-header').hidden, false);
-  assert.equal(h.get('#screen').classList.contains('full-bleed'), true);
-  assert.ok(gradesFrame(h).getAttribute('title'));
-  h.click('open-menu');
-  assert.equal(h.get('#navigation').hidden, false);
-  assert.equal(h.get('#menu-button').getAttribute('aria-expanded'), 'true');
-  h.key('Escape');
-  assert.equal(h.get('#navigation').hidden, true);
-  assert.equal(h.app.state.page, 'grades');
-  assert.equal(h.saved.size, 0);
-});
-
-test('grades uses a local fallback when an embedded document is unavailable', () => {
-  for (const gradesHTML of [undefined, null, { invalid: true }]) {
-    const h = boot({ page: 'grades', gradesHTML });
-    const frame = gradesFrame(h);
-    assert.match(frame.src, /(?:^|\/)grades-content\.html$/);
-    assert.equal(frame.srcdoc, '');
-    assert.equal(h.screens.grades.fullBleed, true);
-    assert.equal(h.app.state.grades, undefined, 'The wrapper does not invent separate grade data.');
-  }
-});
-
-test('embedded grades mounts unchanged and remains separate from focus and host screen state', () => {
-  const gradesHTML = '<!doctype html><html lang="ko"><head><style>.original-grades{color:blue}</style></head><body><main class="original-grades">grade source payload</main><script>window.gradesSentinel=true;</script></body></html>';
-  const focusHTML = '<!doctype html><html><body>focus source payload</body></html>';
-  const h = boot({ page: 'surveys', gradesHTML, focusHTML });
+test('navigation preserves screen selections and focus actions leave other screens unchanged', () => {
+  const h = boot({ page: 'surveys' });
   h.click('my-survey-tab', { tab: 'closed' });
   h.click('navigate', { page: 'lectures' });
   h.click('svc-subject', { subject: '수학' });
   const myBefore = plain(h.app.state.my);
   const servicesBefore = plain(h.app.state.services);
-  h.click('navigate', { page: 'grades' });
-  const firstFrame = gradesFrame(h);
-  assert.equal(firstFrame.srcdoc, gradesHTML);
-  assert.equal(firstFrame.getAttribute('src'), null, 'The standalone grades frame needs no sibling file.');
-  assert.doesNotMatch(h.html(), /grade source payload|gradesSentinel|<style>|<script>/);
-  assert.equal(h.get('#header-actions').innerHTML, '');
+  h.click('navigate', { page: 'focus' });
+  h.click('focus-view', { view: 'monthly' });
+  h.click('focus-mode');
+  h.click('focus-week', { week: '2' });
   assert.deepEqual(plain(h.app.state.my), myBefore);
   assert.deepEqual(plain(h.app.state.services), servicesBefore);
-  h.click('navigate', { page: 'focus' });
-  assert.equal(focusFrame(h).srcdoc, focusHTML);
-  h.click('navigate', { page: 'grades' });
-  assert.notEqual(gradesFrame(h), firstFrame);
-  assert.equal(gradesFrame(h).srcdoc, gradesHTML);
+  const focusBefore = plain(h.app.state.focus);
   h.click('navigate', { page: 'surveys' });
+  assert.equal(h.app.state.my.surveyTab, 'closed');
   assert.match(h.html(), /참여불가/);
-  assert.equal(h.saved.size, 0, 'Mounting the grades document does not write host records.');
+  h.click('my-survey-tab', { tab: 'active' });
+  h.click('navigate', { page: 'lectures' });
+  assert.equal(h.app.state.services.subject, '수학');
+  h.click('svc-lecture-tab', { tab: 'history' });
+  assert.deepEqual(plain(h.app.state.focus), focusBefore);
+  h.click('navigate', { page: 'focus' });
+  assert.deepEqual(plain(h.app.state.focus), focusBefore);
+  assert.match(h.html(), /44h 30m/);
 });
+
 test('storage wrappers fall back on malformed JSON and report denied writes honestly', () => {
   const saved = new Map([['sidae-n-bad', '{oops'], ['sidae-n-good', '{"value":7}']]);
   const access = {};
