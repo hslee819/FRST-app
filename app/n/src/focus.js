@@ -14,6 +14,7 @@
   ];
   const hourlyFocus = [4,8,0,0,4,5,5,5,5,7,5,5,5,7,3];
   const hourlyMinutes = [27,50,1,0,27,33,32,32,20,26,32,32,32,46,24];
+  const hourlyLecture = [0,0,50,50,0,0,0,0,30,20,0,0,0,0,0];
   const days = ['월','화','수','목','금'];
   const personal = [7.75,7.75,7.83,7.75,7.83];
   const top50 = [8.1,8.05,8.08,8.06,8.06];
@@ -95,14 +96,14 @@
     const x=i=>70+i*68,y=v=>238-v/10*204;
     let svg='<svg viewBox="0 0 1100 282" role="img" aria-label="8시부터 22시까지 공부 시간과 몰입도">';
     for(let v=0;v<=10;v+=2)svg+=`<path d="M40 ${y(v)}H1052" stroke="#ececf0"/><text x="28" y="${y(v)+4}" text-anchor="end" font-size="12" fill="#f2352b">${v}</text><text x="1070" y="${y(v)+4}" font-size="12" fill="#8b8d94">${v*6}</text>`;
-    hourlyMinutes.forEach((v,i)=>{const h=v/60*204;svg+=`<rect x="${x(i)-18}" y="${238-h}" width="36" height="${h}" rx="8" fill="#d5d5dc"/><text x="${x(i)}" y="266" text-anchor="middle" font-size="13" fill="#333">${i+8}</text>`;});
+    hourlyMinutes.forEach((v,i)=>{const sh=v/60*204,lh=hourlyLecture[i]/60*204,top=238-sh-lh;svg+=`<defs><clipPath id="focus-hour-${i}"><rect x="${x(i)-18}" y="${top}" width="36" height="${sh+lh}" rx="8"/></clipPath></defs><g clip-path="url(#focus-hour-${i})"><rect x="${x(i)-18}" y="${238-sh}" width="36" height="${sh}" fill="#4c6cf3"/><rect x="${x(i)-18}" y="${top}" width="36" height="${lh}" fill="#d5d5dc"/></g><title>${i+8}시 현장강의 ${hourlyLecture[i]}분 · 자습 ${v}분</title><text x="${x(i)}" y="266" text-anchor="middle" font-size="13" fill="#333">${i+8}</text>`;});
     svg+=`<polyline points="${hourlyFocus.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="#f2352b" stroke-width="1.6"/>`;
     hourlyFocus.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#f2352b" stroke="#fff" stroke-width="1.5"/><text x="${x(i)}" y="${y(v)-10}" text-anchor="middle" font-size="12" font-weight="700" fill="#f2352b" stroke="#fff" stroke-width="3" paint-order="stroke">${v}</text>`;});
     return svg+'</svg>';
   }
   function study(ctx) {
     const s=get(ctx), week=weeks[s.week];
-    return `<div class="focus-study-switch"><button data-action="focus-study-view" data-view="daily" class="${s.studyView==='daily'?'selected':''}" aria-pressed="${s.studyView==='daily'}">일별</button><button data-action="focus-study-view" data-view="weekly" class="${s.studyView==='weekly'?'selected':''}" aria-pressed="${s.studyView==='weekly'}">주간(요일별)</button></div><div class="focus-study-legend">${s.studyView==='weekly'?'<span><i class="lecture"></i>현장강의 공부 시간 (분)</span><span><i class="self"></i>자습 공부 시간 (분)</span>':'<span><i class="hour"></i>현장강의 공부 시간 (분)</span>'}<span><i class="focus-line"></i>몰입도 ${s.studyView==='weekly'?'(1주평균)':'(1–10)'}</span></div>${sample(s)?`<div class="focus-study-total"><span title="참고 이미지에 표기된 총 공부 시간입니다.">${s.studyView==='weekly'?`총 공부 시간 ${week.shownTotal}`:'시간대별 기록'}</span></div><div class="focus-axis-captions"><span>몰입도</span><span>공부 시간 (분)</span></div>${s.studyView==='weekly'?studyChart(week):s.week===3?hourlyChart():empty}<p class="focus-study-note">아직 몰입도 측정이 시행 되지 않았어요.<br>몰입도는 수치보다는 추이를 보면서 학습에 활용해주세요.</p>`:empty}`;
+    return `<div class="focus-study-switch"><button data-action="focus-study-view" data-view="daily" class="${s.studyView==='daily'?'selected':''}" aria-pressed="${s.studyView==='daily'}">일별</button><button data-action="focus-study-view" data-view="weekly" class="${s.studyView==='weekly'?'selected':''}" aria-pressed="${s.studyView==='weekly'}">주간(요일별)</button></div><div class="focus-study-legend">${s.studyView==='weekly'?'<span><i class="lecture"></i>현장강의 공부 시간 (분)</span><span><i class="self"></i>자습 공부 시간 (분)</span>':'<span><i class="lecture"></i>현장강의 공부 시간 (분)</span><span><i class="self"></i>자습 공부 시간 (분)</span>'}<span><i class="focus-line"></i>몰입도 ${s.studyView==='weekly'?'(1주평균)':'(1–10)'}</span></div>${sample(s)?`<div class="focus-study-total"><span title="참고 이미지에 표기된 총 공부 시간입니다.">${s.studyView==='weekly'?`총 공부 시간 ${week.shownTotal}`:'시간대별 기록'}</span></div><div class="focus-axis-captions"><span>몰입도</span><span>공부 시간 (분)</span></div>${s.studyView==='weekly'?studyChart(week):s.week===3?hourlyChart():empty}<p class="focus-study-note">아직 몰입도 측정이 시행 되지 않았어요.<br>몰입도는 수치보다는 추이를 보면서 학습에 활용해주세요.</p>`:empty}`;
   }
   function modeTabs(ctx) {
     const s=get(ctx);
@@ -126,7 +127,7 @@
     if(action==='focus-month') {const d=new Date(s.year,s.month-1+Number(el.dataset.delta),1);if(d>new Date(2026,9,1))return true;s.year=d.getFullYear();s.month=d.getMonth()+1;ctx.render();return true;}
     return false;
   }
-  window.NFocusData={weeks,rows,hourlyFocus,hourlyMinutes,duration};
+  window.NFocusData={weeks,rows,hourlyFocus,hourlyMinutes,hourlyLecture,duration};
   window.NScreens ||= {};
   window.NScreens.focus={title:'몰입도 현황',render,onAction};
 })();
