@@ -20,7 +20,7 @@
   const top20 = [8.28,8.2,8.24,8.25,8.18];
   const pad = value => String(value).padStart(2,'0');
   const duration = minutes => `${pad(Math.floor(minutes / 60))}h ${pad(minutes % 60)}m`;
-  const get = ctx => ctx.state.focus ||= {mode:'comparison',view:'detail',week:0,month:10,year:2026,studyView:'weekly'};
+  const get = ctx => ctx.state.focus ||= {mode:'comparison',view:'summary',week:0,month:10,year:2026,studyView:'weekly'};
   const sample = state => state.month === 10 && state.year === 2026;
   const note = '<p class="focus-footnote">* 자습 몰입도는 수치보다 주간 추이를 보며 학습에 활용해주세요.</p>';
   function monthPicker(ctx) {
@@ -76,7 +76,7 @@
     return svg+'</svg>';
   }
   function monthly(ctx) {
-    return `<h2 class="focus-month-title">당월 몰입도 추이</h2><div class="focus-view-link"><button data-action="focus-view" data-view="detail">주간 몰입도 보기 ${ctx.icon('chevron-right')}</button></div><div class="focus-month-legend"><strong>몰입도</strong><div><span>전체유 평균 <i style="background:#4c6cf3"></i></span><span>몰입도 상위 50% 평균 <i style="background:#68696d"></i></span><span>몰입도 상위 20% 평균 <i style="background:#d5d5dc"></i></span></div></div><div class="focus-month-scroll" tabindex="0" aria-label="가로로 스크롤하여 월말 추이 보기">${monthlyChart()}</div>`;
+    return `<h2 class="focus-month-title">당월 몰입도 추이</h2><div class="focus-view-link"><button data-action="focus-view" data-view="summary">주간 몰입도 보기 ${ctx.icon('chevron-right')}</button></div><div class="focus-month-legend"><strong>몰입도</strong><div><span>전체유 평균 <i style="background:#4c6cf3"></i></span><span>몰입도 상위 50% 평균 <i style="background:#68696d"></i></span><span>몰입도 상위 20% 평균 <i style="background:#d5d5dc"></i></span></div></div><div class="focus-month-scroll" tabindex="0" aria-label="가로로 스크롤하여 월말 추이 보기">${monthlyChart()}</div>`;
   }
   function studyChart(week) {
     const top=34,bottom=238,x=i=>130+i*200, yScore=v=>bottom-v/10*(bottom-top), yMinutes=v=>bottom-v/720*(bottom-top);
@@ -119,7 +119,7 @@
   }
   function onAction(action,el,ctx) {
     const s=get(ctx);
-    if(action==='focus-mode'){const next=el.dataset.mode||(s.mode==='study'?'comparison':'study');if(next===s.mode)return true;s.mode=next;s.week=s.mode==='study'?3:0;s.view='detail';ctx.render();return true;}
+    if(action==='focus-mode'){const next=el.dataset.mode||(s.mode==='study'?'comparison':'study');if(next===s.mode)return true;s.mode=next;s.week=s.mode==='study'?3:0;s.view='summary';ctx.render();return true;}
     if(action==='focus-view'){s.view=el.dataset.view;ctx.render();return true;}
     if(action==='focus-week'){s.week=Number(el.dataset.week);ctx.render();return true;}
     if(action==='focus-study-view'){s.studyView=el.dataset.view;ctx.render();return true;}

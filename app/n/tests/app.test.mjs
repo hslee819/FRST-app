@@ -124,6 +124,7 @@ test('all 17 screens render and are reachable through the actual main menu', () 
 
 test('the observed focus table retains every period, weekday value, and lecture marker', () => {
   const h = boot({ page: 'focus' });
+  h.click('focus-view', { view: 'detail' });
   const table = h.html().match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1];
   const rows = [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map(match => [...match[1].matchAll(/<(?:th|td)\b[^>]*>([^<]*)<\/(?:th|td)>/g)].map(cell => cell[1]));
   assert.deepEqual(rows, [
@@ -161,6 +162,7 @@ test('all four photographed study weeks preserve their scores, durations, and di
 
 test('focus controls switch between comparison, monthly trend, daily and weekly study views', () => {
   const h = boot({ page: 'focus' });
+  assert.equal(h.app.state.focus?.view ?? 'summary', 'summary');
   h.click('focus-view', { view: 'summary' });
   assert.equal(h.app.state.focus.view, 'summary');
   for (const value of ['7.75', '8.07', '8.23']) assert.ok(h.html().includes(value));
@@ -181,8 +183,8 @@ test('focus controls switch between comparison, monthly trend, daily and weekly 
   assert.match(h.html(), /40h 20m/);
   h.click('focus-mode');
   assert.equal(h.app.state.focus.mode, 'comparison');
-  assert.equal(h.app.state.focus.view, 'detail');
-  assert.match(h.html(), /3교시/);
+  assert.equal(h.app.state.focus.view, 'summary');
+  assert.ok(h.html().includes('8.07'));
 });
 
 test('focus and attendance month controls do not display captured data under other months', () => {
