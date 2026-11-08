@@ -17,6 +17,7 @@ let XT=[];
 function load(k,q){document.getElementById('f_'+k).srcdoc=H[k].replace('<head>','<head><script>window.__Q='+JSON.stringify(q||'')+';window.__XT='+JSON.stringify(XT)+'<\/script>')}
 function show(k){document.querySelectorAll('iframe').forEach(f=>f.classList.toggle('on',f.id==='f_'+k));document.querySelectorAll('#bar button').forEach(b=>b.classList.toggle('on',b.dataset.k===k))}
 load('sch');load('timer');
+if(new URLSearchParams(location.search).get('app')==='timer')show('timer');
 document.querySelectorAll('#bar button').forEach(b=>b.onclick=()=>show(b.dataset.k));
 addEventListener('message',e=>{const d=e.data||{};if(d.types){d.types.forEach(t=>{if(!XT.includes(t))XT.push(t)});document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.postMessage({xt:XT},'*')}catch(_){}})}if(d.go){load(d.go,d.q);show(d.go)}});
 </script></body></html>
