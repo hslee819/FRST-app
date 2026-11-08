@@ -512,8 +512,7 @@ function cumView(){
  return `<div style="position:absolute;left:15px;right:15px;top:62px;bottom:15px;overflow:hidden"><div class="ctw2" data-sl="${Math.max(0,(lti-3)*128)}" style="position:absolute;inset:0;overflow:auto"><table class="ctb" style="${CW?`width:${180+shown.length*CW+128}px`:'width:100%'}">${colg}${head}${body}</table></div></div>`;
 }
 function owl(){
- const tabs=[...SUBJECTS,'성적 통지표'];
- if(S.oSubj==='성적 통지표')return header()+subjTabs(tabs,S.oSubj,'osubj')+`<div class="box"><div class="empty" style="padding-top:220px">발급된 성적 통지표가 없어요.</div></div>`;
+ const tabs=[...SUBJECTS];
  const data=owlData();
  const exams=data.filter(d=>!d.noexam);
  if(S.oPage==null){let t=-1;exams.forEach((d,i)=>{if(d.taken)t=i});S.oPage=t>=0?Math.max(0,Math.min(t-2,exams.length-4)):0} // 개선안: 최근 응시 회차가 보이도록
