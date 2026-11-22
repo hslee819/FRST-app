@@ -351,6 +351,66 @@ input,textarea,select{font:inherit;color:inherit}
 .dmod .btns{margin:0!important}
 .dmod .btns button{height:68px;font-size:15px;font-weight:500;border-top:0;background:#f4f5f7}
 .dmod .btns button.k{background:#111}
+.wlg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--red);margin-left:10px;font-weight:700}
+.wlg i{width:10px;height:10px;border-radius:2px;background:#fdeceb;border:1px solid #f4b4b0}
+.qtab tbody tr.wr{background:#fdeceb!important}
+.qtab tbody tr.wr td:first-child{font-weight:800;box-shadow:3px 0 0 var(--red) inset}
+.qtab .circ.mw{background:var(--red);color:#fff;border-color:var(--red)}
+.dopts{display:flex;gap:10px;margin-top:20px}
+.dopts button{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 12px 16px;border:1px solid var(--line2);border-radius:6px;background:#fff}
+.dopts button:hover{border-color:#111}
+.dopts .ic{width:40px;height:40px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center}
+.dopts .ic svg{width:18px;height:18px}
+.dopts b{font-size:14.5px;font-weight:800}
+.dopts small{font-size:11px;color:var(--sub);line-height:1.45}
+.dmod:has(.dopts){width:480px}
+.dmod:has(.three){width:600px}
+.wgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:10px}
+.wgrid button{height:56px;border:1px solid var(--line2);border-radius:5px;font-size:16px;font-weight:700;background:#fff}
+.wgrid button.on{background:var(--red);border-color:var(--red);color:#fff}
+.pdfw{position:absolute;left:0;right:0;top:64px;bottom:0;background:#e9e9ec;overflow:auto;padding:24px 0;display:flex;flex-direction:column;align-items:center;gap:20px}
+.pdfw .pg{width:720px;min-height:960px;flex:none;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12);padding:36px 44px;font-family:'Noto Serif KR',serif;font-size:13px;line-height:1.75;color:#222}
+.pdfw .ph2{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #222;padding-bottom:10px;margin-bottom:18px;font-family:Pretendard;font-size:11px;color:#666}
+.pdfw .ph2 b{font-size:20px;color:#111}
+.pdfw .ppsg{border:1px solid #ccc;padding:14px 16px;margin-bottom:18px;font-size:12.5px}
+.pdfw .pcols{columns:2;column-gap:36px;column-rule:1px solid #ddd}
+.pdfw .pq{break-inside:avoid;margin-bottom:26px}
+.pdfw .po{display:flex;flex-direction:column;gap:2px;margin-top:8px;padding-left:10px}
+.cam .omrp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 16px;margin-top:14px;font-size:11px}
+.cam .omrp span{display:flex;align-items:center;gap:4px}
+.cam .omrp i{width:9px;height:13px;border:1px solid #d77;border-radius:5px}
+.cam .omrp i.f{background:#222;border-color:#222}
+.popw{position:relative;width:360px;height:34px;z-index:20}
+.popw .hd{width:100%;height:34px;display:flex;align-items:center;gap:7px;padding:0 12px;border:1px solid var(--line2);border-radius:4px;background:#fff;font-size:12px}
+.popw .hd svg{width:14px;height:14px}
+.popw .tk{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;margin-left:6px}
+.popw .tk i,.popw li i{font-style:normal;font-size:9px;margin-left:6px}
+.popw .cv{display:flex;transition:transform .2s}
+.popw.open .cv{transform:rotate(180deg)}
+.popw .pl{position:absolute;left:0;right:0;top:34px;background:#fff}
+.popw.open>*{background:#fff}
+.popw.open .hd{border-radius:4px 4px 0 0;border-bottom:0}
+.popw p,.popw ul{border:1px solid var(--line2);border-top:0}
+.popw p{font-size:10.5px;color:var(--sub);padding:2px 14px 8px;border-bottom:0}
+.popw ul{list-style:none;border-radius:0 0 4px 4px;padding-bottom:6px;box-shadow:0 10px 20px rgba(0,0,0,.08)}
+.popw li{display:flex;align-items:center;gap:10px;height:32px;padding:0 14px;font-size:12px;cursor:pointer}
+.popw li:hover{background:var(--bg2)}
+.popw li b{width:16px;font-weight:600}
+.popw li span{flex:1}
+.popw li small{color:var(--sub);font-size:10.5px}
+.crumb{gap:14px;font-size:14px;margin:2px 0 0}
+.crumb button{font-size:14px;color:var(--faint)}
+.crumb button.on{color:#111;font-weight:700}
+.crumb i{font-style:normal;font-size:9px;color:#555}
+.pick{border:1px solid var(--line2);border-radius:4px;padding:16px;gap:10px;background:#fafafa}
+.pcol,.pcol+.pcol{border:1px solid var(--line2);background:#fff}
+.pcol button.on{background:#111;font-weight:700}
+.fsel{cursor:pointer;display:flex;align-items:center;font-size:13px}
+.fsel.open{border-color:#111}
+.fsel .fl2{position:absolute;left:-1px;right:-1px;top:calc(100% + 4px);max-height:240px;overflow-y:auto;background:#fff;border:1px solid var(--line2);border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,.1);z-index:30}
+.fsel .fl2 button{display:block;width:100%;height:36px;padding:0 14px;text-align:left;font-size:13px}
+.fsel .fl2 button:hover{background:var(--bg2)}
+.fsel .fl2 button.on{font-weight:800;background:var(--bg2)}
 </style>
 </head>
 <body>
@@ -558,9 +618,10 @@ const stTag={new:'<span class="tag t-red">미응시</span>',study:'<span class="
    1. 홈 : 문항 / 성적
    ========================================================= */
 function home(){
- const right=S.homeSub==='item'?'':
-  `<button class="pb ${S.gView==='omr'?'on':''}" data-a="omrOpen" data-v="m-sv-25">${I.check} 채점하기</button><button class="pb ${S.gView==='ana'?'on':''}" data-a="gView" data-v="ana">성적 분석</button>`;
- return header()+snav([['item','문항'],['grade','성적']],S.homeSub,'homeSub',right)+`<div class="main">${S.homeSub==='item'?homeItem():homeGrade()}</div>`;
+ if(S.homeSub==='item')return header()+`<div class="main">${homeItem()}</div>`;
+ const T={report:'성적 리포트',omr:'성적 입력 · OMR 기입',wrongIn:'성적 입력 · 틀린 문항만 입력',ana:'성적 분석'}[S.gView];
+ const right=S.gView==='report'?`<button class="pb" data-a="gView" data-v="ana">성적 분석</button>`:'';
+ return header()+`<div class="snav"><button data-a="homeBack" style="margin-right:12px">${I.back}</button><span style="font-size:20px;font-weight:800">${T}</span><span class="muted" style="font-size:12px;margin-left:10px">${S.gView==='ana'?'성적 리포트':'콘텐츠 서랍장'}으로 돌아가기</span><div class="r">${right}</div></div><div class="main">${homeGrade()}</div>`;
 }
 /* ---------- 홈 > 문항 : 콘텐츠 서랍장 1페이지 (연간 · 월간 · 주간) ---------- */
 const DCOL={'국어':{fill:'#FDEBC8',bd:'#F5C26B',ck:'#C8901C'},'수학':{fill:'#DDF3E4',bd:'#6FCF8A',ck:'#2E9E52'},'영어':{fill:'#FBE3D6',bd:'#EE8A55',ck:'#C9602A'},'지구과학I':{fill:'#EEE3FB',bd:'#A47BE6',ck:'#7B4FC4'},'생활과윤리':{fill:'#E2E7FB',bd:'#4E6CDF',ck:'#3450B8'},'한국사':{fill:'#EFE5D3',bd:'#8C6B3E',ck:'#6E5128'}};
@@ -596,8 +657,13 @@ const CURW=37;
 const D={subj:'전체',types:new Set(DTYPES),names:new Set(),hide:new Set(),q:'',dd:null,view:'year',pop:null,reset:true};
 const DI={chk:c=>`<svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="${c}"/><path d="M2.7 5.2l1.6 1.5 3-3.2" stroke="#fff" stroke-width="1.3" fill="none"/></svg>`,
  refresh:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 12a8 8 0 11-2.3-5.7L20 8M20 3v5h-5"/></svg>'};
+(function(){ROWS.forEach(r=>{if(r.t==='교재'||r.nobuy)return;const T=TREE[r.s]||(TREE[r.s]={});const L=T[r.n]||(T[r.n]=[]);Object.values(r.w).forEach(a=>a.forEach(([n,st])=>{if(st!=='f'&&!L.includes(+n))L.push(+n)}))});
+ Object.values(TREE).forEach(T=>Object.keys(T).forEach(k=>{T[k].sort((a,b)=>b-a);if(!T[k].length)delete T[k]}))})();
+function ensureTree(s,c,r){const T=TREE[s]||(TREE[s]={});const L=T[c]||(T[c]=[]);if(!L.includes(r)){L.push(r);L.sort((a,b)=>b-a)}}
 function ensureContent(s,n,r){let c=CONTENTS.find(x=>x.s===s&&x.n===n&&x.r===r);
  if(!c){const row=ROWS.find(x=>x.s===s&&x.n===n);c={id:`${s}-${n}-${r}`,s,n,r,ty:row?row.t:'모의고사',d:'',st:'new'};CONTENTS.push(c)}return c}
+function makeReport(c,wrong){const n=QN[c.s]||30,items=mkItems(n,c.s==='수학'?MPTS:null,wrong,c.r*5+3);let raw=0,tot=0;items.forEach(x=>{tot+=x.p;if(x.ans===x.mine)raw+=x.p});raw=Math.round(raw/tot*100);
+ REPORT[c.id]={raw,std:'-',pct:'-',grade:raw>=90?1:raw>=80?2:3,date:'26.11.03(화)',cuts:[90,84,77],items};c.st='graded';c.paper=true;if(TREND[c.s])TREND[c.s].push([c.r,raw])}
 function ensureReport(c){if(REPORT[c.id])return;const n=QN[c.s]||30,R=rnd(c.r*7+c.n.length),w=[];const k=1+Math.floor(R()*3);for(let i=0;i<k;i++)w.push(3+Math.floor(R()*(n-3)));
  const items=mkItems(n,c.s==='수학'?MPTS:null,w,c.r*5+3);let raw=0;items.forEach(x=>{if(x.ans===x.mine)raw+=x.p});raw=Math.min(100,Math.round(raw/items.reduce((a,x)=>a+x.p,0)*100));
  REPORT[c.id]={raw,std:'-',pct:'-',grade:raw>=90?1:raw>=80?2:3,date:'26.10.'+(10+c.r%18)+'(월)',cuts:[90,84,77],items};c.paper=true}
@@ -637,23 +703,28 @@ function homeItem(){
 function dPopup(){const p=D.pop,r=ROWS[p.r],no=+p.n,c=DCOL[r.s],done=p.st==='c';
  const tag=r.n.replace(/[^가-힣A-Za-z]/g,'').slice(0,2);
  const chip=`<span class="dtag" style="background:${c.fill};border-left:3px solid ${c.bd}"><em style="color:${c.ck}">${tag}</em> ${String(no).padStart(2,'0')}<span class="dot">${done?DI.chk(c.ck):'<i class="o"></i>'}</span></span>`;
- return `<div class="dim" data-a="dClose"></div><div class="modal dmod"><div class="dbody"><div class="dh"><b>${r.s}</b>${chip}</div>
-  <p class="dq">성적을 <b>${done?'확인':'입력'}</b>하시겠습니까?</p>
-  ${done?'':`<button class="dlink" data-a="dNoDist"><span class="qm">?</span><u>콘텐츠를 배부받지 못하셨나요?</u></button>`}
-  <button class="dlink sub" data-a="dOpen"><u>원문 보기</u></button></div>
-  <div class="btns"><button data-a="dClose">취소</button><button class="k" data-a="${done?'dRep':'dOmr'}">확인</button></div></div>`}
+ const head=`<div class="dh"><b>${r.s}</b>${chip}</div>`;
+ if(p.step==='in')return `<div class="dim" data-a="dClose"></div><div class="modal dmod"><div class="dbody">${head}
+  <p class="dq">성적을 어떻게 <b>입력</b>하시겠습니까?</p>
+  <div class="dopts three">
+   <button data-a="dInCam"><span class="ic">${I.cam}</span><b>촬영하기</b><small>채점한 시험지나 OMR 카드를 찍으면 자동으로 입력</small></button>
+   <button data-a="dInWrong"><span class="ic">${I.x}</span><b>틀린 문항만 입력</b><small>틀린 번호만 누르면 나머지는 정답 처리</small></button>
+   <button data-a="dOmr"><span class="ic">${I.check}</span><b>OMR 기입</b><small>내 답안을 번호별로 마킹해 채점</small></button></div>
+  <button class="dlink" data-a="dNoDist"><span class="qm">?</span><u>콘텐츠를 배부받지 못하셨나요?</u></button></div>
+  <div class="btns"><button data-a="dBack">이전</button><button data-a="dClose" style="border-left:1px solid var(--line)">취소</button></div></div>`;
+ return `<div class="dim" data-a="dClose"></div><div class="modal dmod"><div class="dbody">${head}
+  <p class="dq">무엇을 하시겠습니까?</p>
+  <div class="dopts">
+   <button data-a="dOpen"><span class="ic">${I.doc}</span><b>원문 보기</b><small>원문 PDF 확인 후 시험 모드 · 학습 모드로 풀기</small></button>
+   <button data-a="${done?'dRep':'dIn'}"><span class="ic">${done?I.check:I.pen}</span><b>${done?'성적 확인하기':'성적 입력하기'}</b><small>${done?'채점된 성적 리포트와 정오표 보기':'촬영 · 틀린 문항만 · OMR 기입 중 선택'}</small></button></div></div>
+  <div class="btns"><button data-a="dClose" style="flex:1">취소</button></div></div>`}
 
-function homeGrade(){
- const graded=CONTENTS.filter(c=>REPORT[c.id]);
- const wait=CONTENTS.filter(c=>c.paper&&!REPORT[c.id]);
- const left=`<div class="panel col" style="width:240px;flex:none;gap:0"><div class="ph"><h4>응시 회차</h4><span class="muted" style="font-size:11px;margin-left:auto">${graded.length}회</span></div>
-  <div class="scroll" style="flex:1">
-  ${wait.length?`<div class="sec-t">채점 대기 · 지류</div>${wait.map(c=>`<button class="lrow ${S.gView==='omr'&&S.omr&&S.omr.cid===c.id?'on':''}" data-a="omrOpen" data-v="${c.id}"><i class="sd" style="background:${COL[c.s]}"></i>${c.s} ${cname(c)}<span class="r"><span class="tag t-red">채점하기</span></span></button>`).join('')}`:''}
-  <div class="sec-t">채점 완료</div>
-  ${graded.map(c=>`<button class="lrow ${S.gView==='report'&&S.gSel===c.id?'on':''}" data-a="gSel" data-v="${c.id}"><i class="sd" style="background:${COL[c.s]}"></i>${c.s} ${cname(c)}<span class="r"><b>${REPORT[c.id].raw}점</b><span class="muted" style="font-size:11px">${REPORT[c.id].grade}등급</span></span></button>`).join('')}
-  </div></div>`;
- const right=S.gView==='omr'?omrView():S.gView==='ana'?anaView():reportView();
- return left+right;
+function homeGrade(){return S.gView==='omr'?omrView():S.gView==='wrongIn'?wrongInView():S.gView==='ana'?anaView():reportView()}
+function wrongInView(){
+ const c=C(S.win.cid),n=QN[c.s]||30,w=S.win.w;
+ return `<div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>${c.s} ${cname(c)}</h4><span class="muted" style="font-size:12px">틀린 문항 번호만 눌러 주세요. 나머지는 정답으로 채점돼요.</span>
+  <div class="r"><span style="font-size:12px;font-weight:700;color:var(--red)">틀린 문항 ${w.length}개</span><button class="kb" data-a="winDone">채점하기</button></div></div>
+  <div class="scroll" style="flex:1;padding:6px 22px 20px"><div class="wgrid">${Array.from({length:n},(_,i)=>i+1).map(i=>`<button class="${w.includes(i)?'on':''}" data-a="winTog" data-v="${i}">${i}</button>`).join('')}</div></div></div>`;
 }
 function reportView(){
  const c=C(S.gSel),R=REPORT[S.gSel];const items=S.wrongOnly?R.items.filter(x=>x.ans!==x.mine):R.items;
@@ -667,14 +738,14 @@ function reportView(){
    <div class="panel" style="padding:0 16px 16px"><div class="ph" style="padding:0"><h4>예상 등급컷</h4></div>
     <table class="cuttab"><tr><th>예상 컷</th><th>${c.s==='수학'?'표준점수':'원점수'}</th></tr>${R.cuts.map((v,i)=>`<tr><td>예상 ${i+1}컷</td><td>${v}점</td></tr>`).join('')}</table></div>
    <div class="panel" style="padding:14px 16px;background:#fafafb">
-    <b style="font-size:13px">틀린 문항 ${wrongN}개</b>
+    <b style="font-size:13px;color:var(--red)">틀린 문항 ${wrongN}개</b>
     <p style="font-size:12px;color:#555;line-height:1.6;margin-top:6px">정오표에서 틀린 문항을 바로 다시 보거나, 스크랩하거나, 질문할 수 있어요.</p>
-    <div style="display:flex;gap:6px;margin-top:10px"><span class="mini">${I.doc} 문항 보기</span><span class="mini">${I.bm} 스크랩</span><span class="mini k">${I.chat} 질문하기</span></div></div>
+    <div style="display:flex;gap:6px;margin-top:10px"><span class="mini">${I.bm} 스크랩</span><span class="mini k">${I.chat} 질문하기</span></div></div>
   </div>
-  <div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>정오표</h4><div class="r"><button class="pb ${S.wrongOnly?'on':''}" data-a="wrongOnly">틀린 문항만</button></div></div>
-   <div class="scroll" style="flex:1;padding:0 16px 12px"><table class="qtab"><thead><tr><th style="width:42px">번호</th><th>단원</th><th style="width:48px">배점</th><th style="width:44px">정답</th><th style="width:54px">내 답안</th><th style="width:60px">정답률</th><th style="width:196px"></th></tr></thead><tbody>
-   ${items.map(x=>{const w=x.ans!==x.mine;return `<tr class="${w?'wr':''}"><td>${x.q}</td><td>${x.unit}</td><td>${x.p}점</td><td><span class="circ">${x.ans}</span></td><td><span class="circ">${x.mine}</span></td><td>${x.rate}%</td>
-    <td class="act">${w?`<span style="display:inline-flex;gap:4px"><button class="mini" data-a="gq" data-v="${x.q}">문항 보기</button><button class="mini" data-a="gscrap" data-v="${x.q}">스크랩</button><button class="mini k" data-a="gask" data-v="${x.q}">질문하기</button></span>`:''}</td></tr>`}).join('')}
+  <div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>정오표</h4><span class="wlg"><i></i>틀린 문항 ${wrongN}개</span><div class="r"><button class="pb ${S.wrongOnly?'on':''}" data-a="wrongOnly">틀린 문항만</button></div></div>
+   <div class="scroll" style="flex:1;padding:0 16px 12px"><table class="qtab"><thead><tr><th style="width:42px">번호</th><th>단원</th><th style="width:48px">배점</th><th style="width:44px">정답</th><th style="width:54px">내 답안</th><th style="width:60px">정답률</th><th style="width:140px"></th></tr></thead><tbody>
+   ${items.map(x=>{const w=x.ans!==x.mine;return `<tr class="${w?'wr':''}"><td>${x.q}</td><td>${x.unit}</td><td>${x.p}점</td><td><span class="circ">${x.ans}</span></td><td><span class="circ ${w?'mw':''}">${x.mine}</span></td><td>${x.rate}%</td>
+    <td class="act">${w?`<span style="display:inline-flex;gap:4px"><button class="mini" data-a="gscrap" data-v="${x.q}">스크랩</button><button class="mini k" data-a="gask" data-v="${x.q}">질문하기</button></span>`:''}</td></tr>`}).join('')}
    </tbody></table></div></div>
  </div></div>`;
 }
@@ -704,6 +775,16 @@ function anaView(){
  </div></div>`;
 }
 
+/* ---------- 원문 PDF ---------- */
+function pdfView(){
+ const c=C(S.pdf.cid),set=qsetOf(c.s),N=QN[c.s]||30;
+ const qs=Array.from({length:6},(_,i)=>{const q=set.qs[i%set.qs.length];return `<div class="pq"><b>${i+1}.</b> ${q.q}<div class="po">${q.o.map((o,k)=>`<span>${CIRC[k+1]} ${o}</span>`).join('')}</div></div>`});
+ const page=(k,arr)=>`<div class="pg"><div class="ph2"><span>${COVER[c.n]||c.n} ${c.r}</span><b>${c.s} 영역</b><span>${k} / ${Math.ceil(N/6)}</span></div>${k===1&&set.psg?`<div class="ppsg">${set.psg}</div>`:''}<div class="pcols">${arr.join('')}</div></div>`;
+ return `<button class="vback" data-a="pdfClose">${I.back}</button>
+ <div class="vtop"><b>${c.s} ${cname(c)}</b><span class="sep"></span><span class="md"><i style="background:#888"></i>원문 PDF</span>
+  <span class="r"><span class="muted" style="font-size:12px;margin-right:4px">이 콘텐츠로 풀기</span><button data-a="pdfMode" data-v="study">학습 모드</button><button class="w" data-a="pdfMode" data-v="exam">시험 모드</button></span></div>
+ <div class="pdfw">${page(1,qs.slice(0,4))}${page(2,qs.slice(4))}</div>`;
+}
 /* ---------- 뷰어 (원문 · 학습모드 · 시험모드 · 해설) ---------- */
 function viewer(){
  const V=S.viewer,c=C(V.cid),set=qsetOf(c.s),q=set.qs[V.qi],n=set.qs.length;
@@ -738,15 +819,22 @@ function arc(){
  return header()+snav([['scrap','스크랩'],['wrong','오답 정리']],S.arcSub,'arcSub',right)+`<div class="main">${S.arcSub==='scrap'?scrap():wrong()}</div>`;
 }
 function scrap(){
- const F=['전체','북마크','질문 내역','OCR'];
- const list=SCRAPS.filter(x=>S.scF==='전체'||x.kind===S.scF);
- return `<div class="col" style="flex:1">
-  <div style="display:flex;gap:8px;align-items:center">${F.map(f=>`<button class="chip ${S.scF===f?'on':''}" data-a="scF" data-v="${f}">${f} ${f==='전체'?SCRAPS.length:SCRAPS.filter(x=>x.kind===f).length}</button>`).join('')}
-   <span class="muted" style="margin-left:auto;font-size:11.5px">문항 · 성적 · 질문하기에서 저장한 문항이 한곳에 모여요</span></div>
+ const F=[['전체',()=>true],['질문',x=>x.kind==='질문 내역'],['스크랩',x=>x.kind!=='질문 내역'],['태그',x=>x.tags.length]];
+ const bar=`<div style="display:flex;gap:8px;align-items:center">${F.map(([f,fn])=>`<button class="chip ${S.scF===f?'on':''}" data-a="scF" data-v="${f}">${f==='태그'?I.tagi+' ':''}${f} ${f==='태그'?TAGS.length:SCRAPS.filter(fn).length}</button>`).join('')}
+   <span class="muted" style="margin-left:auto;font-size:11.5px">문항 · 성적 · 질문하기에서 저장한 문항이 한곳에 모여요</span></div>`;
+ if(S.scF==='태그'){if(!TAGS.includes(S.scTag))S.scTag=TAGS[0];const list=SCRAPS.filter(x=>x.tags.includes(S.scTag));
+  return `<div class="col" style="flex:1">${bar}<div style="display:flex;gap:16px;flex:1;min-height:0">
+   <div class="panel col" style="width:262px;flex:none;gap:0"><div class="ph"><h4>태그</h4><span class="muted" style="font-size:11px;margin-left:auto">${TAGS.length}개</span></div>
+    <div class="scroll" style="flex:1">${TAGS.map(t=>`<button class="lrow ${S.scTag===t?'on':''}" data-a="scTag" data-v="${t}">${I.tagi} ${t}<span class="r muted">${SCRAPS.filter(x=>x.tags.includes(t)).length}</span></button>`).join('')}</div></div>
+   <div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>${S.scTag}</h4><span class="muted" style="font-size:11.5px">${list.length}문항</span></div>
+    <div class="scroll" style="flex:1">${list.map(x=>`<button class="wrow" data-a="scOpen" data-v="${x.id}"><i class="sd" style="background:${COL[x.s]}"></i><div style="flex:1;min-width:0"><h6>${x.t}</h6><p style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.sn)}</p></div>
+     <span class="tag ${srcTag[x.src]}">${x.kind==='북마크'?'스크랩':x.kind==='질문 내역'?'질문':x.kind}</span><span class="muted" style="font-size:11px;width:60px;text-align:right">${x.date} 저장</span>${I.chev}</button>`).join('')||'<p class="muted" style="padding:40px;text-align:center;font-size:13px">이 태그가 붙은 문항이 없어요</p>'}</div></div></div></div>`}
+ const fn=F.find(f=>f[0]===S.scF)[1],list=SCRAPS.filter(fn);
+ return `<div class="col" style="flex:1">${bar}
   <div class="sgrid scroll" style="flex:1">${list.map(x=>`<button class="scard" data-a="scOpen" data-v="${x.id}">
-   <div style="display:flex;gap:6px;align-items:center;font-size:10.5px"><i class="sd" style="background:${COL[x.s]}"></i>${x.s}<span class="tag ${srcTag[x.src]}" style="margin-left:auto">${x.kind==='북마크'?'북마크 · '+x.src:x.kind}</span></div>
+   <div style="display:flex;gap:6px;align-items:center;font-size:10.5px"><i class="sd" style="background:${COL[x.s]}"></i>${x.s}<span class="tag ${srcTag[x.src]}" style="margin-left:auto">${x.kind==='북마크'?'스크랩 · '+x.src:x.kind==='질문 내역'?'질문':x.kind}</span></div>
    <h6>${x.t}</h6><p>${esc(x.sn)}</p>
-   <div class="ft">${x.date} 저장${x.folder?`<span style="margin-left:auto;display:flex;align-items:center;gap:3px">${I.folder}${x.folder}</span>`:`<span style="margin-left:auto;color:var(--blue);font-weight:700">오답 정리에 추가 +</span>`}</div></button>`).join('')}</div></div>`;
+   <div class="ft">${x.date} 저장${x.tags.length?`<span style="margin-left:8px;color:var(--sub)">${x.tags.join(' ')}</span>`:''}${x.folder?`<span style="margin-left:auto;display:flex;align-items:center;gap:3px">${I.folder}${x.folder}</span>`:`<span style="margin-left:auto;color:var(--blue);font-weight:700">오답 정리에 추가 +</span>`}</div></button>`).join('')}</div></div>`;
 }
 function groups(){return S.sortBy==='folder'?FOLDERS:TAGS}
 function inGroup(x,g){return S.sortBy==='folder'?x.folder===g:x.tags.includes(g)}
@@ -789,21 +877,29 @@ function wrongDetail(){
    ========================================================= */
 function ask(){
  if(S.askD)return header()+askDetail();
- return header()+snav([['search','문항 검색'],['write','문항 질문'],['pop','이번 주 인기 문항']],S.askSub,'askSub',`<span class="muted" style="font-size:11.5px">질문 내역은 부엉이 아카이브 &gt; 스크랩에 자동 저장</span>`)+`<div class="main">${S.askSub==='search'?askSearch():S.askSub==='write'?askWrite():askPop()}</div>`;
+ return header()+snav([['search','문항 검색'],['write','문항 질문']],S.askSub,'askSub',popTicker()+'')+`<div class="main">${S.askSub==='search'?askSearch():S.askSub==='write'?askWrite():askPop()}</div>`;
+}
+const popAr=d=>d==='up'?'<i style="color:var(--red)">▲</i>':d==='dn'?'<i style="color:#4a6bd8">▼</i>':'<i style="color:#aaa">-</i>';
+function tickHTML(){const i=Math.floor((S.tick||0)/3)%POP.length,[t,,d]=POP[i];return `<b>${i+1}.</b> ${t} ${popAr(d)}`}
+function popTicker(){const ar=popAr;
+ return `<div class="popw ${S.popOpen?'open':''}"><button class="hd" data-a="popTog"><span style="color:var(--red);display:flex">${I.fire}</span><span style="flex:none;font-weight:700">이번 주 인기 문항</span>
+  ${S.popOpen?'<span style="flex:1"></span>':`<span class="tk" id="popTk">${tickHTML()}</span>`}<span class="cv">${I.down}</span></button>
+  ${S.popOpen?`<div class="pl"><p>한 주 동안 다른 학생들이 가장 많이 질문한 문항 순위입니다.</p><ul>${POP.map(([t,n,d],k)=>`<li data-a="popOpen" data-v="${k}"><b>${k+1}</b><span>${t}</span><small>질문 ${n}</small>${ar(d)}</li>`).join('')}</ul></div>`:''}</div>`;
 }
 function askSearch(){
  const P=S.pick,cs=P.s?Object.keys(TREE[P.s]):[],rs=P.c?TREE[P.s][P.c]:[],n=P.s?QN[P.s]:0;
- const cr=(v,t)=>`<span class="${v?'on':''}">${v||t}</span>`;
+ const step=!P.s?['과목을 고르세요',0]:!P.c?['콘텐츠를 고르세요',0]:!P.r?['회차를 고르세요',0]:!P.n?['번호를 고르세요',0]:['검색하기',1];
+ const cr=(v,t,k)=>`<button class="${v?'on':''}" data-a="pCrumb" data-v="${k}">${v||t}</button>`;
  return `<div class="col" style="flex:1">
-  <div style="display:flex;align-items:center;gap:12px"><b style="font-size:15px">문항 정보</b><span class="muted" style="font-size:11.5px">문제의 출처를 고르거나 카메라로 촬영해 검색할 수 있어요</span></div>
-  <div class="crumb">${cr(P.s,'과목')} ▸ ${cr(P.c,'콘텐츠 선택')} ▸ ${cr(P.r&&P.r+'회','회차 선택')} ▸ ${cr(P.n&&P.n+'번','번호 선택')}</div>
+  <div style="display:flex;align-items:baseline;gap:10px"><b style="font-size:18px;font-weight:800">문항 정보</b><span class="muted" style="font-size:11.5px">문제의 출처를 입력하거나 촬영하여 검색할 수 있습니다.</span></div>
+  <div class="crumb">${cr(P.s,'과목 선택','s')}<i>▶</i>${cr(P.c,'콘텐츠 선택','c')}<i>▶</i>${cr(P.r&&P.r+'회','회차 선택','r')}<i>▶</i>${cr(P.n&&P.n+'번','번호 선택','n')}</div>
   <div class="pick">
    <div class="pcol"><button data-a="ocr" data-v="ask" style="font-weight:800">CAMERA ${I.cam}</button>${SUBJ.map(s=>`<button class="${P.s===s?'on':''}" data-a="pS" data-v="${s}">${s}</button>`).join('')}</div>
-   <div class="pcol">${cs.map(c=>`<button class="${P.c===c?'on':''}" data-a="pC" data-v="${c}">${c}</button>`).join('')}</div>
-   <div class="pcol">${rs.map(r=>`<button class="${P.r===r?'on':''}" data-a="pR" data-v="${r}">${r}회</button>`).join('')}</div>
-   <div class="pcol">${P.r?`<div class="nums">${Array.from({length:n},(_,i)=>i+1).map(i=>`<button class="${P.n===i?'on':''}" data-a="pN" data-v="${i}">${i}</button>`).join('')}</div>`:''}</div>
+   ${P.s?`<div class="pcol">${cs.map(c=>`<button class="${P.c===c?'on':''}" data-a="pC" data-v="${c}">${c}</button>`).join('')}</div>`:''}
+   ${P.c?`<div class="pcol">${rs.map(r=>`<button class="${P.r===r?'on':''}" data-a="pR" data-v="${r}">${r}회</button>`).join('')}</div>`:''}
+   ${P.r?`<div class="pcol" style="flex:1.1"><div class="nums">${Array.from({length:n},(_,i)=>i+1).map(i=>`<button class="${P.n===i?'on':''}" data-a="pN" data-v="${i}">${i}</button>`).join('')}</div></div>`:''}
   </div>
-  <div style="display:flex;justify-content:flex-end"><button class="kb lg ${P.n?'':'dis'}" data-a="pGo">${P.n?'검색하기':'번호를 고르세요'}</button></div></div>`;
+  <div style="display:flex;justify-content:flex-end"><button class="kb lg ${step[1]?'':'dis'}" data-a="pGo">${step[0]}</button></div></div>`;
 }
 function askDetail(){
  const d=S.askD,set=qsetOf(d.s),q=set.qs[(d.qi||0)%set.qs.length];
@@ -822,7 +918,7 @@ function askDetail(){
 }
 function askWrite(){
  const F=S.form;
- const sel=(k,v,opts)=>`<div class="sel" style="position:relative"><select data-in="f-${k}" style="appearance:none;border:0;outline:0;background:none;width:100%;font-size:13px">${opts.map(o=>`<option ${String(o)===String(v)?'selected':''}>${o}</option>`).join('')}</select>${I.down}</div>`;
+ const sel=(k,v,opts)=>`<div class="sel fsel ${S.fdd===k?'open':''}" style="position:relative" data-a="fDD" data-v="${k}"><span style="flex:1">${v}${k==='r'?'회':k==='n'?'번':''}</span>${I.down}${S.fdd===k?`<div class="fl2">${opts.map(o=>`<button class="${String(o)===String(v)?'on':''}" data-a="fOpt" data-v="${k}|${o}">${o}${k==='r'?'회':k==='n'?'번':''}</button>`).join('')}</div>`:''}</div>`;
  return `<div class="panel" style="flex:1.3;padding:20px 22px;overflow:auto">
   <div class="fl" style="display:flex;align-items:center;gap:8px">문항 정보 ${F.auto?'<span class="tag t-blue">성적 리포트에서 자동 입력됨</span>':''}</div>
   <div style="display:flex;gap:8px">${sel('s',F.s,SUBJ)}${sel('c',F.c,Object.keys(TREE[F.s]))}${sel('r',F.r,(TREE[F.s][F.c]||[]).map(String))}${sel('n',F.n,Array.from({length:QN[F.s]},(_,i)=>i+1))}</div>
@@ -976,6 +1072,14 @@ function overlay(){
  if(M.t==='folder'){return modalBox(`<h3>오답 정리에 추가</h3><p class="d">폴더를 선택하세요</p><div style="margin-top:12px">${FOLDERS.map(f=>`<button class="lrow" style="border-radius:0" data-a="fSet" data-v="${f}">${I.folder} ${f}</button>`).join('')}</div>`)}
  if(M.t==='newFolder')return modalBox(`<h3>새 폴더</h3><input class="inp" id="nf" placeholder="예) 영어 · 빈칸 추론" style="margin-top:12px"><div class="btns"><button data-a="mClose">취소</button><button class="k" data-a="nfDone">만들기</button></div>`);
  if(M.t==='tag'){const x=SCRAPS.find(y=>y.id===S.wd);return modalBox(`<h3>태그</h3><p class="d">여러 개 선택할 수 있어요</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">${TAGS.map(t=>`<button class="chip ${x.tags.includes(t)?'on':''}" data-a="tagT" data-v="${t}">${t}</button>`).join('')}</div><div class="btns"><button class="k" data-a="mClose">완료</button></div>`)}
+ if(M.t==='gcam'){const c=C(M.cid);
+  if(M.step===0)return `<div class="cam"><button class="cl" data-a="mClose">${I.x} 닫기</button><div class="hint">채점한 시험지나 OMR 카드가 사각형 안에 들어오도록 맞춰 주세요</div>
+   <div class="vf" style="font-family:Pretendard;font-size:12px"><b>${c.s} ${cname(c)} · 답안</b><div class="omrp">${Array.from({length:20},(_,i)=>`<span>${i+1} ${[1,2,3,4,5].map(v=>`<i class="${(i*7+3)%5+1===v?'f':''}"></i>`).join('')}</span>`).join('')}</div></div>
+   <button class="shut" data-a="gcShot"></button></div>`;
+  const n=QN[c.s]||30;
+  return `<div class="dim" data-a="mClose"></div><div class="modal dmod"><div class="dbody"><p class="dq" style="margin-bottom:6px">답안을 <b>인식</b>했습니다</p><p class="muted" style="font-size:12.5px">${c.s} ${cname(c)} · ${n}문항 · 인식 정확도 98%</p>
+   <div style="margin-top:16px;font-size:13px">틀린 문항 <b style="color:var(--red)">9번 · 22번 · 28번</b></div></div>
+   <div class="btns"><button data-a="dInCamRe" data-v="${c.id}">다시 촬영</button><button class="k" data-a="gcDone">채점하기</button></div></div>`}
  if(M.t==='cam'){
   if(M.step===0)return `<div class="cam"><button class="cl" data-a="mClose">${I.x} 닫기</button><div class="hint">문항이 사각형 안에 들어오도록 맞춰 주세요</div>
    <div class="vf"><b style="font-family:Pretendard">14.</b> 함수 f(x) = x³ − 3x² + k 의 극댓값이 5일 때,<br>상수 k의 값은? [4점]<br><br>① 1 &nbsp;&nbsp; ② 2 &nbsp;&nbsp; ③ 3 &nbsp;&nbsp; ④ 4 &nbsp;&nbsp; ⑤ 5<div style="position:absolute;right:14px;bottom:10px;font-size:10px;color:#999;font-family:Pretendard">SURVIVAL 24 · 수학 영역</div></div>
@@ -1011,8 +1115,13 @@ function overlay(){
    동작
    ========================================================= */
 function scrapAdd(o){if(SCRAPS.some(x=>x.t===o.t))return false;SCRAPS.unshift(Object.assign({id:Date.now()+Math.random(),date:'11. 03',folder:null,tags:[],hist:[],memo:''},o));return true}
-function goAsk(s,c,r,n){S.tab='ask';S.askD=null;S.askSub='write';S.form={s,c,r,n,txt:'',img:false,to:'TA',auto:true};toast('질문하기로 이동 · 문항 정보가 자동 입력되었어요')}
+function goAsk(s,c,r,n){ensureTree(s,c,r);S.fdd=null;S.tab='ask';S.askD=null;S.askSub='write';S.form={s,c,r,n,txt:'',img:false,to:'TA',auto:true};toast('질문하기로 이동 · 문항 정보가 자동 입력되었어요')}
 const ACT={
+ popTog:()=>{S.popOpen=!S.popOpen},
+ pCrumb:v=>{const P=S.pick;if(v==='s'){P.s=P.c=P.r=P.n=null}else if(v==='c'){P.c=P.r=P.n=null}else if(v==='r'){P.r=P.n=null}else P.n=null},
+ fDD:(v,b,e)=>{if(e&&e.target.closest('.fl2'))return;S.fdd=S.fdd===v?null:v},
+ fOpt:(v,b,e)=>{const [k,o]=v.split('|'),F=S.form;F[k]=k==='r'||k==='n'?+o:o;
+  if(k==='s'){F.c=Object.keys(TREE[F.s])[0];F.r=TREE[F.s][F.c][0];F.n=1}if(k==='c'){F.r=TREE[F.s][F.c][0];F.n=1}if(k==='r')F.n=1;F.auto=false;S.fdd=null},
  dSubj:v=>{D.subj=v;D.reset=true;D.pop=null},
  dDD:(v,b,e)=>{if(e&&e.target.closest('.dd'))return;D.dd=D.dd===v?null:v;D.pop=null},
  dChk:(v,b)=>{const set=D[b.dataset.k];b.checked?set.add(v):set.delete(v)},
@@ -1028,7 +1137,17 @@ const ACT={
   D.pop={r:+b.dataset.r,n:b.dataset.n,st}},
  dNoDist:()=>{D.pop=null;toast('배부 문의가 행정 > 출결/문의로 접수됐어요')},
  dClose:()=>{D.pop=null},
- dOpen:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.modal={t:'mode',cid:c.id}},
+ dOpen:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.pdf={cid:c.id}},
+ dIn:()=>{D.pop.step='in'},dBack:()=>{D.pop.step=null},
+ dInCam:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.modal={t:'gcam',cid:c.id,step:0}},
+ dInWrong:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.tab='home';S.homeSub='grade';S.gView='wrongIn';S.win={cid:c.id,w:[]}},
+ winTog:v=>{const w=S.win.w,i=w.indexOf(+v);if(i>=0)w.splice(i,1);else w.push(+v)},
+ winDone:()=>{const c=C(S.win.cid);makeReport(c,S.win.w);S.win=null;S.gSel=c.id;S.gView='report';toast('채점 완료 · 성적 리포트가 만들어졌어요')},
+ gcShot:()=>{S.modal.step=1},dInCamRe:v=>{S.modal={t:'gcam',cid:v,step:0}},
+ gcDone:()=>{const c=C(S.modal.cid);makeReport(c,[9,22,28].filter(x=>x<=(QN[c.s]||30)));S.modal=null;S.tab='home';S.homeSub='grade';S.gView='report';S.gSel=c.id;toast('촬영한 답안으로 채점했어요')},
+ pdfClose:()=>{S.pdf=null},
+ pdfMode:v=>{const id=S.pdf.cid;S.pdf=null;S.viewer={cid:id,mode:v,qi:0,ans:{},chk:{},sec:0}},
+ homeBack:()=>{if(S.gView==='ana'&&S.gSel&&REPORT[S.gSel]){S.gView='report'}else{S.homeSub='item';S.omr=null;S.win=null;S.gView='report'}},
  dRep:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;ensureReport(c);S.homeSub='grade';S.gView='report';S.gSel=c.id},
  dOmr:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);c.paper=true;D.pop=null;ACT.omrOpen(c.id)},
  setClose:()=>{S.side=null},
@@ -1061,7 +1180,7 @@ const ACT={
  gscrap:v=>{const c=C(S.gSel),set=qsetOf(c.s),qi=(+v-1)%set.qs.length;if(scrapAdd({s:c.s,t:`${c.s} ${cname(c)} ${v}번`,kind:'북마크',src:'성적',sn:set.qs[qi].q.replace(/<[^>]+>/g,''),qi}))toast('부엉이 아카이브 > 스크랩에 저장했어요');else toast('이미 스크랩한 문항이에요')},
  gask:v=>{const c=C(S.gSel);goAsk(c.s,c.n,c.r,+v)},
  gask2:v=>{const [id,q]=v.split(':'),c=C(id);goAsk(c.s,c.n,c.r,+q)},
- omrOpen:v=>{S.homeSub='grade';S.gView='omr';S.omr={cid:v,ans:{}}},
+ omrOpen:v=>{S.tab='home';S.homeSub='grade';S.gView='omr';S.omr={cid:v,ans:{}}},
  omrMark:v=>{const [i,b]=v.split(':').map(Number);if(S.omr.ans[i]===b)delete S.omr.ans[i];else S.omr.ans[i]=b},
  omrFill:()=>{const c=C(S.omr.cid),n=QN[c.s]||30,R=rnd(c.r*3);for(let i=1;i<=n;i++)S.omr.ans[i]=1+Math.floor(R()*5)},
  omrDone:()=>{const c=C(S.omr.cid),n=QN[c.s]||30;if(!Object.keys(S.omr.ans).length)return;const items=mkItems(n,c.s==='수학'?MPTS:null,[],c.r*3);let raw=0;
@@ -1069,7 +1188,7 @@ const ACT={
   REPORT[c.id]={raw,std:'134.0',pct:98,grade:1,date:'26.11.03(화)',cuts:[129,123,117],items};c.st='graded';if(TREND[c.s])TREND[c.s].push([c.r,raw]);
   S.gSel=c.id;S.gView='report';S.omr=null;toast('채점 완료 · 성적 리포트가 만들어졌어요')},
  /* 아카이브 */
- arcSub:v=>{S.arcSub=v},scF:v=>{S.scF=v},scOpen:v=>{S.modal={t:'scrap',id:+v}},
+ arcSub:v=>{S.arcSub=v},scF:v=>{S.scF=v},scTag:v=>{S.scTag=v},scOpen:v=>{S.modal={t:'scrap',id:+v}},
  fPick:v=>{S.modal={t:'folder',id:+v}},
  fSet:v=>{const x=SCRAPS.find(y=>y.id===S.modal.id);x.folder=v;S.modal=null;toast(`오답 정리 > ${v}에 추가했어요`)},
  scDel:v=>{SCRAPS=SCRAPS.filter(x=>x.id!==+v);S.modal=null;toast('스크랩을 삭제했어요')},
@@ -1095,7 +1214,7 @@ const ACT={
  askBack:()=>{S.askD=null},solTab:v=>{S.solTab=v},openAns:v=>{S.openAns=S.openAns===+v?-1:+v},
  askBm:()=>{const d=S.askD,t=`${d.s} ${d.c} ${d.r}회 ${d.n}번`,set=qsetOf(d.s),qi=d.qi%set.qs.length;const i=SCRAPS.findIndex(x=>x.t===t);if(i>=0){SCRAPS.splice(i,1);toast('스크랩을 해제했어요')}else{scrapAdd({s:d.s,t,kind:'북마크',src:'질문하기',sn:set.qs[qi].q.replace(/<[^>]+>/g,''),qi});toast('부엉이 아카이브 > 스크랩에 저장했어요')}},
  askThis:()=>{const d=S.askD;S.askD=null;S.askSub='write';S.form={s:d.s,c:d.c,r:d.r,n:d.n,txt:'',img:false,to:'TA',auto:true}},
- popOpen:v=>{const t=POP[+v][0].split(' ');const n=parseInt(t.pop()),r=parseInt(t.pop()),s=t.shift(),c=t.join(' ');S.askD={s,c,r,n,qi:n-1};S.solTab='q';S.openAns=0},
+ popOpen:v=>{S.popOpen=false;const t=POP[+v][0].split(' ');const n=parseInt(t.pop()),r=parseInt(t.pop()),s=t.shift(),c=t.join(' ');S.askD={s,c,r,n,qi:n-1};S.solTab='q';S.openAns=0},
  fImg:()=>{S.form.img=true},fTo:v=>{S.form.to=v},
  fSubmit:()=>{const F=S.form;if(!F.txt.trim())return;const t=`${F.s} ${F.c} ${F.r}회 ${F.n}번`;MYQ.unshift({t,q:F.txt,st:'답변 대기',d:'11. 03'});
   scrapAdd({s:F.s,t,kind:'질문 내역',src:'질문하기',sn:F.txt,qi:(F.n-1)});S.modal={t:'askDone',title:t};S.form=Object.assign({},F,{txt:'',img:false,auto:false})},
@@ -1123,13 +1242,13 @@ const ACT={
 const app=document.getElementById('app'),ov=document.getElementById('overlay');
 function render(){
  const sc0=document.getElementById('ctw'),keep=sc0?[sc0.scrollLeft,sc0.scrollTop]:null;
- app.innerHTML=S.viewer?viewer():({home,arc,ask,study,adm}[S.tab]())+tabbar();
+ app.innerHTML=S.pdf?pdfView():S.viewer?viewer():({home,arc,ask,study,adm}[S.tab]())+tabbar();
  const o=overlay();ov.innerHTML=o;ov.classList.toggle('on',!!o);
  initCanvas();
  const n=document.getElementById('ctw');if(n){if(keep&&!D.reset){n.scrollLeft=keep[0];n.scrollTop=keep[1]}else n.scrollLeft=n.scrollWidth}D.reset=false;
 }
 document.getElementById('ipad').addEventListener('click',e=>{const b=e.target.closest('[data-a]');
- if(!b||!b.dataset.a.startsWith('d')||b.dataset.a==='day'){let ch=false;if(D.dd&&!e.target.closest('.fp')){D.dd=null;ch=true}if(D.pop&&!e.target.closest('.pop')){D.pop=null;ch=true}if(!b){if(ch)render();return}}
+ if(!b||!b.dataset.a.startsWith('d')||b.dataset.a==='day'){let ch=false;if(D.dd&&!e.target.closest('.fp')){D.dd=null;ch=true}if(S.fdd&&!e.target.closest('.fsel')){S.fdd=null;ch=true}if(S.popOpen&&!e.target.closest('.popw')){S.popOpen=false;ch=true}if(!b){if(ch)render();return}}
  const f=ACT[b.dataset.a];if(!f)return;f(b.dataset.v,b,e);render()});
 document.getElementById('ipad').addEventListener('input',e=>{const k=e.target.dataset.in;if(!k)return;
  if(k==='dq'){D.q=e.target.value;D.reset=true;render();const i=document.querySelector('[data-in="dq"]');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}return}
@@ -1137,7 +1256,7 @@ document.getElementById('ipad').addEventListener('input',e=>{const k=e.target.da
  else if(k==='f-txt'){S.form.txt=e.target.value;const b=document.querySelector('[data-a="fSubmit"]');if(b)b.classList.toggle('dis',!e.target.value.trim())}});
 document.getElementById('ipad').addEventListener('change',e=>{const k=e.target.dataset.in;if(!k||!k.startsWith('f-')||k==='f-txt')return;const F=S.form,f=k.slice(2),v=e.target.value;
  F[f]=f==='r'||f==='n'?+v:v;if(f==='s'){F.c=Object.keys(TREE[F.s])[0];F.r=TREE[F.s][F.c][0];F.n=1}if(f==='c'){F.r=TREE[F.s][F.c][0]}F.auto=false;render()});
-setInterval(()=>{if(S.tm.run){S.tm.sec++;const d=document.getElementById('tdig');if(d)d.textContent=fmt(S.tm.sec,true)}
+setInterval(()=>{S.tick=(S.tick||0)+1;if(S.tick%3===0){const t=document.getElementById('popTk');if(t)t.innerHTML=tickHTML()}if(S.tm.run){S.tm.sec++;const d=document.getElementById('tdig');if(d)d.textContent=fmt(S.tm.sec,true)}
  if(S.viewer&&S.viewer.mode==='exam'&&!S.modal){S.viewer.sec++;const d=document.getElementById('vtime');if(d)d.textContent=fmt(S.viewer.sec,true)}},1000);
 
 /* 필기 캔버스 */
@@ -1151,9 +1270,9 @@ function initCanvas(){const cv=document.getElementById('cv');if(!cv)return;const
 
 /* 화면 목록 */
 const JUMP=[
- ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 칸 누름 (응시 완료) · 성적 확인',()=>{D.pop={r:1,n:'17',st:'c'}}],['① -4 칸 누름 (미응시) · 성적 입력',()=>{D.pop={r:1,n:'18',st:'o'}}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (국어 월례고사 10회)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{},chk:{},sec:0}}],['④ 문항 · 학습 모드 (수학 브릿지N 18회)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 · 회차 리포트 (정오표)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 · 채점 (지류 OMR 입력)',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
- ['부엉이 아카이브',[['⑩ 스크랩 (북마크 / 질문 내역 / OCR)',()=>{S.tab='arc'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';S.modal={t:'scrap',id:2}}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 폴더',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
- ['질문하기',[['⑱ 문항 검색',()=>{S.tab='ask';S.pick={s:'수학',c:'서바이벌',r:24,n:14}}],['⑲ 문항 세부 (원본 · 해설 · 답변 요약)',()=>{S.tab='ask';S.askD={s:'수학',c:'서바이벌',r:24,n:14,qi:0}}],['⑳ 문항 질문 (성적에서 자동 입력)',()=>{goAsk('수학','서바이벌',24,21)}],['㉑ 이번 주 인기 문항',()=>{S.tab='ask';S.askSub='pop'}]]],
+ ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 칸 누름 (응시 완료) · 원문 보기 / 성적 확인',()=>{D.pop={r:1,n:'17',st:'c'}}],['① -4 칸 누름 (미응시) · 원문 보기 / 성적 입력',()=>{D.pop={r:1,n:'18',st:'o'}}],['① -5 성적 입력 방법 (촬영 · 틀린 문항만 · OMR)',()=>{D.pop={r:1,n:'18',st:'o',step:'in'}}],['① -6 원문 PDF → 시험/학습 모드',()=>{S.pdf={cid:'k-mon-10'}}],['① -7 성적 입력 · 촬영',()=>{S.modal={t:'gcam',cid:'k-mon-10',step:0}}],['① -8 성적 입력 · 틀린 문항만',()=>{ACT.omrOpen('m-sv-25');S.gView='wrongIn';S.omr=null;S.win={cid:'m-sv-25',w:[9,22]}}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (국어 월례고사 10회)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{},chk:{},sec:0}}],['④ 문항 · 학습 모드 (수학 브릿지N 18회)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 리포트 (정오표 · 틀린 문항 색 구분)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 입력 · OMR 기입',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
+ ['부엉이 아카이브',[['⑩ 스크랩 (전체 / 질문 / 스크랩 / 태그)',()=>{S.tab='arc'}],['⑩ -1 스크랩 · 태그별 보기',()=>{S.tab='arc';S.scF='태그';S.scTag='#계산실수'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';S.modal={t:'scrap',id:2}}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 폴더',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
+ ['질문하기',[['⑱ 문항 검색',()=>{S.tab='ask';S.pick={s:'수학',c:'서바이벌',r:24,n:14}}],['⑲ 문항 세부 (원본 · 해설 · 답변 요약)',()=>{S.tab='ask';S.askD={s:'수학',c:'서바이벌',r:24,n:14,qi:0}}],['⑳ 문항 질문 (성적에서 자동 입력)',()=>{goAsk('수학','서바이벌',24,21)}],['㉑ 이번 주 인기 문항 (우측 상단 펼침)',()=>{S.tab='ask';S.popOpen=true}],['⑱ -1 문항 검색 첫 화면',()=>{S.tab='ask'}]]],
  ['부엉이 학습실',[['㉒ 학습 기록 (스케줄링 + 타이머)',()=>{S.tab='study'}],['㉓ 학습 기록 · 일정 추가',()=>{S.tab='study';ACT.addPlan()}],['㉔ 분석실 · 몰입도 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='imm'}],['㉕ 분석실 · 과목별 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='subj'}],['㉖ 분석실 · 콘텐츠별 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='cont'}]]],
  ['행정',[['㉗ 공지사항',()=>{S.tab='adm'}],['㉘ 상담 · 학습담임',()=>{S.tab='adm';S.adm='c-study'}],['㉙ 상담 · TA Meet',()=>{S.tab='adm';S.adm='c-ta'}],['㉚ 생활 · 출결 / 문의',()=>{S.tab='adm';S.adm='att'}],['㉛ 생활 · 선택특강 신청',()=>{S.tab='adm';S.adm='lect'}],['㉜ 생활 · 시간표',()=>{S.tab='adm';S.adm='tt'}],['㉝ 생활 · 급식',()=>{S.tab='adm';S.adm='meal'}],['㉞ 생활 · 벌점',()=>{S.tab='adm';S.adm='pen'}],['㉟ 생활 · 리클래스 수강',()=>{S.tab='adm';S.adm='re'}]]],
  ['공통',[['알림 (전체 앱 통합)',()=>{S.side='noti'}],['설정',()=>{S.side='settings'}]]],
@@ -1162,7 +1281,7 @@ const BASE=JSON.stringify({tab:'home',homeSub:'item',hSubj:'전체',gView:'repor
 let JF=[];
 document.getElementById('jumplist').innerHTML=JUMP.map(([h,l])=>`<li class="h">${h}</li>`+l.map(([t,f])=>{JF.push(f);return `<li><button data-j="${JF.length-1}">${t}</button></li>`}).join('')).join('');
 document.getElementById('jumplist').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
- Object.assign(S,JSON.parse(BASE),{viewer:null,modal:null,side:null,wd:null,askD:null,omr:null,pick:{s:null,c:null,r:null,n:null}});S.tm.run=false;Object.assign(D,{subj:"전체",types:new Set(DTYPES),names:new Set(),hide:new Set(),q:"",dd:null,view:"year",pop:null,reset:true});S._chip=0;
+ Object.assign(S,JSON.parse(BASE),{viewer:null,modal:null,side:null,wd:null,askD:null,omr:null,pick:{s:null,c:null,r:null,n:null}});S.tm.run=false;S.pdf=null;S.win=null;S.popOpen=false;S.fdd=null;S.scTag=null;Object.assign(D,{subj:"전체",types:new Set(DTYPES),names:new Set(),hide:new Set(),q:"",dd:null,view:"year",pop:null,reset:true});S._chip=0;
  document.getElementById('toast').classList.remove('on');JF[+b.dataset.j]();document.getElementById('jump').classList.remove('open');render();if(S._chip){S._chip=0;const ch=document.querySelector('.chipc[data-n="24"]');if(ch)ch.click()}});
 /* 화면 크기에 맞춰 축소 */
 function fit(){const k=Math.min(1,(innerWidth-20)/1180,(innerHeight-20)/820);document.getElementById('ipad').style.transform=k<1?`scale(${k})`:''}
