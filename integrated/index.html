@@ -335,6 +335,22 @@ input,textarea,select{font:inherit;color:inherit}
 .side .set{display:flex;align-items:center;height:52px;padding:0 22px;border-top:1px solid var(--line);font-size:14px}
 .side .set .tg{margin-left:auto;width:40px;height:22px;border-radius:11px;position:relative}
 .side .set .tg i{position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+.dmod{width:400px;padding:0!important}
+.dmod .dbody{padding:38px 30px 34px;text-align:center}
+.dmod .dh{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px}
+.dmod .dh>b{font-size:17px;font-weight:800}
+.dmod .dtag{display:inline-flex;align-items:center;gap:4px;width:102px;height:24px;padding:0 8px;font-size:10px;text-align:left}
+.dmod .dtag em{font-style:normal}
+.dmod .dtag .dot{margin-left:auto;display:flex}
+.dmod .dtag i.o{width:8px;height:8px;border-radius:50%;border:1px solid #ddd;background:#fff;display:block}
+.dmod .dq{font-size:15px}
+.dmod .dq b{font-weight:800}
+.dmod .dlink{display:inline-flex;align-items:center;gap:4px;margin-top:14px;font-size:11.5px;color:#666}
+.dmod .dlink .qm{width:12px;height:12px;border:1px solid #666;border-radius:50%;font-size:8.5px;line-height:10px;text-align:center}
+.dmod .dlink.sub{display:block;margin:8px auto 0;color:var(--sub)}
+.dmod .btns{margin:0!important}
+.dmod .btns button{height:68px;font-size:15px;font-weight:500;border-top:0;background:#f4f5f7}
+.dmod .btns button.k{background:#111}
 </style>
 </head>
 <body>
@@ -582,6 +598,9 @@ const DI={chk:c=>`<svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" c
  refresh:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 12a8 8 0 11-2.3-5.7L20 8M20 3v5h-5"/></svg>'};
 function ensureContent(s,n,r){let c=CONTENTS.find(x=>x.s===s&&x.n===n&&x.r===r);
  if(!c){const row=ROWS.find(x=>x.s===s&&x.n===n);c={id:`${s}-${n}-${r}`,s,n,r,ty:row?row.t:'모의고사',d:'',st:'new'};CONTENTS.push(c)}return c}
+function ensureReport(c){if(REPORT[c.id])return;const n=QN[c.s]||30,R=rnd(c.r*7+c.n.length),w=[];const k=1+Math.floor(R()*3);for(let i=0;i<k;i++)w.push(3+Math.floor(R()*(n-3)));
+ const items=mkItems(n,c.s==='수학'?MPTS:null,w,c.r*5+3);let raw=0;items.forEach(x=>{if(x.ans===x.mine)raw+=x.p});raw=Math.min(100,Math.round(raw/items.reduce((a,x)=>a+x.p,0)*100));
+ REPORT[c.id]={raw,std:'-',pct:'-',grade:raw>=90?1:raw>=80?2:3,date:'26.10.'+(10+c.r%18)+'(월)',cuts:[90,84,77],items};c.paper=true}
 function homeItem(){
  const typeSel=D.types.size<DTYPES.length?D.types.size:0;
  const dd=k=>{if(D.dd!==k)return '';
@@ -613,17 +632,16 @@ function homeItem(){
   <div class="r"><button class="bpb" data-a="dRefresh">${DI.refresh} 새로 고침</button><button class="bpb" data-a="dToday">오늘</button></div></div>
  <div class="tw" id="ctw"><table class="ct" style="${D.view!=="year"?"width:100%":""}"><colgroup><col style="width:63px"><col style="width:64px"><col style="width:98px">${weeks.map(()=>`<col style="width:${colw}px">`).join('')}</colgroup>
  <thead><tr><th class="l l1">과목</th><th class="l l2">유형</th><th class="l l3">콘텐츠명</th>${weeks.map(w=>`<th class="${w===CURW?'cur':''}" style="border-left:1px solid var(--line)">${w}주</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>
- ${D.pop?dPopup():''}</div></div>`;
+ </div></div>`;
 }
-function dPopup(){const p=D.pop,r=ROWS[p.r],no=+p.n,unit=r.t==='모의고사'?'회':'호';const st={c:'응시 완료',o:'배부 완료 · 미응시',d:'배부 완료',f:'배부 예정'}[p.st];
- const c=CONTENTS.find(x=>x.s===r.s&&x.n===r.n&&x.r===no),rep=c&&REPORT[c.id];
- let btns='';
- if(p.st==='f')btns='<button data-a="dClose">닫기</button>';
- else if(r.nobuy)btns='<button data-a="dClose">닫기</button>';
- else{btns=`<button data-a="dOpen">원문 보기</button>`;
-  if(rep)btns+=`<button class="k" data-a="dRep">성적 보기</button>`;
-  else if(r.t==='모의고사')btns+=`<button class="k" data-a="dOmr">채점하기</button>`}
- return `<div class="pop" style="left:${p.x}px;top:${p.y}px"><b>${r.s} ${r.n} ${no}${unit}</b><div class="st">${st}${r.nobuy?' · 미구매':''}${r.ebook?' · 이북 전용':''}</div><div class="btns">${btns}</div></div>`}
+function dPopup(){const p=D.pop,r=ROWS[p.r],no=+p.n,c=DCOL[r.s],done=p.st==='c';
+ const tag=r.n.replace(/[^가-힣A-Za-z]/g,'').slice(0,2);
+ const chip=`<span class="dtag" style="background:${c.fill};border-left:3px solid ${c.bd}"><em style="color:${c.ck}">${tag}</em> ${String(no).padStart(2,'0')}<span class="dot">${done?DI.chk(c.ck):'<i class="o"></i>'}</span></span>`;
+ return `<div class="dim" data-a="dClose"></div><div class="modal dmod"><div class="dbody"><div class="dh"><b>${r.s}</b>${chip}</div>
+  <p class="dq">성적을 <b>${done?'확인':'입력'}</b>하시겠습니까?</p>
+  ${done?'':`<button class="dlink" data-a="dNoDist"><span class="qm">?</span><u>콘텐츠를 배부받지 못하셨나요?</u></button>`}
+  <button class="dlink sub" data-a="dOpen"><u>원문 보기</u></button></div>
+  <div class="btns"><button data-a="dClose">취소</button><button class="k" data-a="${done?'dRep':'dOmr'}">확인</button></div></div>`}
 
 function homeGrade(){
  const graded=CONTENTS.filter(c=>REPORT[c.id]);
@@ -939,6 +957,7 @@ function overlay(){
   <div class="sec-t" style="padding:22px 22px 6px">알림 (기존 6개 앱 알림을 한 곳에서)</div>
   ${[['성적 업로드',1],['질문 답변',1],['학습 일정 시작',1],['행정 공지 · 신청 마감',1],['함께 공부하는 부엉이',0]].map(([t,on])=>`<div class="set">${t}<span class="tg" style="background:${on?'#111':'#ddd'}"><i style="${on?'right':'left'}:2px"></i></span></div>`).join('')}
   <div class="set muted">앱 버전<span style="margin-left:auto">3.0.0</span></div></div>`;
+ if(D.pop&&S.tab==='home')return dPopup();
  if(!M)return '';
  if(M.t==='mode'){const c=C(M.cid);return modalBox(`<h3>${c.s} ${cname(c)}</h3><p class="d">학습 방식을 선택하세요</p>
   <button class="mopt" data-a="vOpen" data-v="study"><span class="ic" style="color:#3f9e6e">${I.pen}</span><div><b>학습 모드</b><small>문항마다 바로 정답과 해설을 확인하며 학습</small></div></button>
@@ -1002,11 +1021,15 @@ const ACT={
  dPrev:()=>{toast(D.view==='year'?'2026년 상반기 (프로토타입에는 하반기 데이터만 있어요)':'이전 기간')},
  dNext:()=>{if(D.view!=='year')toast('다음 기간')},
  dRefresh:()=>{toast('새로 고침 했어요')},dToday:()=>{D.reset=true},
- dChip:(v,b)=>{const r=b.getBoundingClientRect(),bx=document.querySelector('.drw .box').getBoundingClientRect(),sc=document.getElementById('ipad').getBoundingClientRect().width/1180;
-  let x=(r.left-bx.left)/sc-90,y=(r.bottom-bx.top)/sc+6;const W=bx.width/sc;if(x>W-236)x=W-236;if(x<8)x=8;if(y>bx.height/sc-110)y=(r.top-bx.top)/sc-104;D.pop={r:+b.dataset.r,n:b.dataset.n,st:b.dataset.st,x,y};D.dd=null},
+ dChip:(v,b)=>{const r=ROWS[+b.dataset.r],st=b.dataset.st;D.dd=null;
+  if(st==='f'){toast('아직 배부 예정인 콘텐츠예요');return}
+  if(r.nobuy){toast('구매하지 않은 콘텐츠예요');return}
+  if(r.t!=='모의고사'){const c=ensureContent(r.s,r.n,+b.dataset.n);S.modal={t:'mode',cid:c.id};return}
+  D.pop={r:+b.dataset.r,n:b.dataset.n,st}},
+ dNoDist:()=>{D.pop=null;toast('배부 문의가 행정 > 출결/문의로 접수됐어요')},
  dClose:()=>{D.pop=null},
  dOpen:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.modal={t:'mode',cid:c.id}},
- dRep:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;S.homeSub='grade';S.gView='report';S.gSel=c.id},
+ dRep:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);D.pop=null;ensureReport(c);S.homeSub='grade';S.gView='report';S.gSel=c.id},
  dOmr:()=>{const r=ROWS[D.pop.r],c=ensureContent(r.s,r.n,+D.pop.n);c.paper=true;D.pop=null;ACT.omrOpen(c.id)},
  setClose:()=>{S.side=null},
  tab:v=>{S.tab=v;S.wd=null;S.askD=null},
@@ -1128,7 +1151,7 @@ function initCanvas(){const cv=document.getElementById('cv');if(!cv)return;const
 
 /* 화면 목록 */
 const JUMP=[
- ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 문항 · 칸 눌렀을 때',()=>{S._chip=1}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (국어 월례고사 10회)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{},chk:{},sec:0}}],['④ 문항 · 학습 모드 (수학 브릿지N 18회)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 · 회차 리포트 (정오표)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 · 채점 (지류 OMR 입력)',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
+ ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 칸 누름 (응시 완료) · 성적 확인',()=>{D.pop={r:1,n:'17',st:'c'}}],['① -4 칸 누름 (미응시) · 성적 입력',()=>{D.pop={r:1,n:'18',st:'o'}}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (국어 월례고사 10회)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{},chk:{},sec:0}}],['④ 문항 · 학습 모드 (수학 브릿지N 18회)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 · 회차 리포트 (정오표)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 · 채점 (지류 OMR 입력)',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
  ['부엉이 아카이브',[['⑩ 스크랩 (북마크 / 질문 내역 / OCR)',()=>{S.tab='arc'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';S.modal={t:'scrap',id:2}}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 폴더',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
  ['질문하기',[['⑱ 문항 검색',()=>{S.tab='ask';S.pick={s:'수학',c:'서바이벌',r:24,n:14}}],['⑲ 문항 세부 (원본 · 해설 · 답변 요약)',()=>{S.tab='ask';S.askD={s:'수학',c:'서바이벌',r:24,n:14,qi:0}}],['⑳ 문항 질문 (성적에서 자동 입력)',()=>{goAsk('수학','서바이벌',24,21)}],['㉑ 이번 주 인기 문항',()=>{S.tab='ask';S.askSub='pop'}]]],
  ['부엉이 학습실',[['㉒ 학습 기록 (스케줄링 + 타이머)',()=>{S.tab='study'}],['㉓ 학습 기록 · 일정 추가',()=>{S.tab='study';ACT.addPlan()}],['㉔ 분석실 · 몰입도 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='imm'}],['㉕ 분석실 · 과목별 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='subj'}],['㉖ 분석실 · 콘텐츠별 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='cont'}]]],
