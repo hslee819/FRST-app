@@ -640,7 +640,7 @@ input,textarea,select{font:inherit;color:inherit}
 .ttg .tr .hl{position:absolute;top:0;bottom:0;background:var(--c);display:flex;align-items:center;justify-content:center;overflow:visible}
 .ttg .tr .hl.st{box-shadow:inset 5px 0 0 var(--s)}
 .ttg .tr .hl.lv{animation:blink 1.4s infinite}
-.ttg .tr .hl em{font-style:normal;font-size:10px;font-weight:500;white-space:nowrap;color:#222;z-index:2}
+.ttg .tr .hl em{font-style:normal;font-size:10px;font-weight:500;white-space:nowrap;color:#222;z-index:2;max-width:100%;overflow:hidden;text-overflow:ellipsis;padding:0 6px 0 8px}
 </style>
 </head>
 <body>
@@ -794,13 +794,13 @@ let MYQ=[
 const WEEK=[['월',2],['화',3],['수',4],['목',5],['금',6],['토',7],['일',8]];
 let PLANS={
  1:[
-  {id:'p1',s:'국어',t:'국어 월례고사 10회',from:'08:00',plan:80,real:82,mark:'●',foc:4},
-  {id:'p2',s:'수학',t:'수학 서바이벌 25회',from:'09:40',plan:100,real:64,mark:'△',foc:3},
-  {id:'p3',s:'영어',t:'영어 듣기 + 독해 20문항',from:'13:00',plan:60,real:0,mark:'',foc:0},
+  {id:'p1',s:'국어',t:'국어 월례고사 10회',from:'06:30',plan:80,real:82,mark:'●',foc:4},
+  {id:'p2',s:'수학',t:'수학 서바이벌 25회',from:'11:55',plan:70,real:64,mark:'△',foc:3},
+  {id:'p3',s:'영어',t:'영어 듣기 + 독해 20문항',from:'17:00',plan:60,real:45,mark:'△',foc:3},
   {id:'p4',s:'지구과학I',t:'지구과학I 서바이벌 25회',from:'15:00',plan:60,real:0,mark:'',foc:0},
   {id:'p5',s:'수학',t:'오답 정리 · 미분',from:'19:00',plan:50,real:0,mark:'',foc:0},
   {id:'p6',s:'생활과윤리',t:'생활과윤리 개념 복습',from:'21:00',plan:40,real:0,mark:'',foc:0}],
- 0:[{id:'q1',s:'국어',t:'국어 엑셀러레이터 29회',from:'08:00',plan:60,real:58,mark:'●',foc:4},{id:'q2',s:'수학',t:'수학 브릿지N 17회',from:'10:00',plan:100,real:110,mark:'●',foc:5},{id:'q3',s:'영어',t:'영어 서바이벌 16회 오답',from:'14:00',plan:50,real:30,mark:'△',foc:3}],
+ 0:[{id:'q1',s:'국어',t:'국어 엑셀러레이터 29회',from:'06:30',plan:60,real:58,mark:'●',foc:4},{id:'q2',s:'수학',t:'수학 브릿지N 17회',from:'17:20',plan:100,real:110,mark:'●',foc:5},{id:'q3',s:'영어',t:'영어 서바이벌 16회 오답',from:'12:00',plan:50,real:30,mark:'△',foc:3}],
 };
 const ANA={
  imm:{days:['월','화','수','목','금','토','일'],min:[412,146,0,0,0,0,0],foc:[4.3,3.6,0,0,0,0,0],prev:[380,402,355,420,398,260,190]},
@@ -1199,7 +1199,7 @@ const HL=s=>SCOL[s]+'2e';
 const toM=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
 const toT=m=>`${String(Math.floor(m/60)%24).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const SESS={};const NOW=20*60;
-function sessOf(d){const out=[];plansOf(d).forEach(p=>{const m=p.real-(p.extra||0);if(m>0)out.push([p.s,toM(p.from),m])});(SESS[d]||[]).forEach(x=>out.push([x.s,x.start,x.min]));if(d===S.day&&S.tm.sec)out.push([S.tm.s||'_',S.tm.start||NOW,S.tm.sec/60]);return out}
+function sessOf(d){const out=[];plansOf(d).forEach(p=>{const m=p.real-(p.extra||0);if(m>0)out.push([p.s,toM(p.from),m,p.t])});(SESS[d]||[]).forEach(x=>out.push([x.s,x.start,x.min,x.t]));if(d===S.day&&S.tm.sec)out.push([S.tm.s||'_',S.tm.start||NOW,S.tm.sec/60,'측정 중']);return out}
 function calBar(){const v=S.calV||'day';const lab=v==='day'?`2026년 11월 ${WEEK[S.day][1]}일`:v==='week'?`2026년 11월 1주차`:`2026년 11월`;
  return `<div class="calb">${[['month','월간'],['week','주간'],['day','일간']].map(([k,t])=>`<button class="vt ${v===k?'on':''}" data-a="calV" data-v="${k}">${t}</button>`).join('')}
   <button class="ca" data-a="calNav" data-v="-1">${I.l}</button><b>${lab}</b><button class="ca" data-a="calNav" data-v="1">${I.r}</button>
@@ -1216,7 +1216,7 @@ function record(){
  const H=[...Array(19)].map((_,i)=>6+i);
  const se=sessOf(S.day);const lec=cls.map(([s,a,b])=>[s,toM(a),toM(b)-toM(a)]);
  const HD=s=>SCOL[s]+'40';
- const cellAt=m=>{const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);if(l)return [HD(l[0]),'lc',l];const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#cfcfcf','lv']:[HD(x[0]),''];return null};
+ const cellAt=m=>{const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);if(l)return [HD(l[0]),'lc',l];const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#cfcfcf','lv',x]:[HD(x[0]),'',x];return null};
  const tm=S.tm,live=tm.run||tm.sec;
  return `<div class="col" style="flex:1;min-width:0">${calBar()}<div style="display:flex;gap:16px;flex:1;min-height:0">
   <div class="panel col" style="flex:1;gap:0;min-width:0"><div class="scroll" style="flex:1;padding:16px 18px">
@@ -1230,11 +1230,10 @@ function record(){
    <div class="qs"><div style="width:100%"><small class="muted">${tm.run?'측정 중 · 종료 후 일정 선택':'일정 없이 바로 측정'}</small><b>바로 시작하기</b></div><span class="dg ${tm.run?'run':''}" id="tdig">${fmt(tm.sec,true)}</span>
     <button class="tb2 k" data-a="tToggle">${tm.run?I.pause:I.play}</button><button class="tb2 ${tm.sec?'':'dis'}" data-a="tStop">${I.stop}</button></div>
    <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b></span></div><div class="ttl"><span>강의 · 학습 시간을 과목 색 형광펜으로 표시</span></div>
-    <div class="ttg" id="tlw">${H.map(h=>{const segs=[];for(let k=0;k<6;k++){const c=cellAt(h*60+k*10+5);const key=c?(c[1]==='lc'?'L'+c[2][0]+c[2][1]:c[1]+c[0]):null;const last=segs[segs.length-1];if(c&&last&&last.key===key)last.n++;else if(c)segs.push({key,c,k,n:1})}
-      return `<div class="tr"><span>${h%24}</span><div class="tk">${segs.map(g=>{const c=g.c,st=h*60+g.k*10,isL=c[1]==='lc';const col=isL?c[2][0]:null;
-        const startHere=isL?c[2][1]>=st&&c[2][1]<st+10:!cellAt(st-5)||cellAt(st-5)[0]!==c[0];
-        let lab='';if(isL){const mid=c[2][1]+c[2][2]/2;if(mid>=h*60&&mid<h*60+60||c[2][2]<=60&&startHere){const n=c[2][0]==='지구과학I'?'지구과학':c[2][0]==='생활과윤리'?'생윤':c[2][0];lab=`${n} ${TEACH[c[2][0]][0]}T`}}else if(c[1]!=='lv'&&g.n>=2)lab=`${g.n*10}분`;
-        return `<b class="hl ${c[1]} ${startHere?'st':''}" style="left:${g.k/6*100}%;width:${g.n/6*100}%;--c:${c[0]};--s:${c[0].slice(0,7)}b3">${lab?`<em>${lab}</em>`:''}</b>`}).join('')}</div></div>`}).join('')}</div></div>
+    <div class="ttg" id="tlw">${(()=>{const ROWS={},BEST={};H.forEach(h=>{const segs=[];for(let k=0;k<6;k++){const c=cellAt(h*60+k*10+5);const key=c?(c[1]==='lc'?'L':'S')+c[2][0]+c[2][1]:null;const last=segs[segs.length-1];if(c&&last&&last.key===key)last.n++;else if(c)segs.push({key,c,k,n:1,h})}ROWS[h]=segs;segs.forEach(g=>{if(!BEST[g.key]||g.n>BEST[g.key].n)BEST[g.key]=g})});return H.map(h=>{const segs=ROWS[h];return `<div class="tr"><span>${h%24}</span><div class="tk">${segs.map(g=>{const c=g.c,st=h*60+g.k*10,isL=c[1]==='lc';const col=isL?c[2][0]:null;
+        const startHere=c[2][1]>=st&&c[2][1]<st+10;
+        let lab='';const e=c[2];if(BEST[g.key]===g)lab=isL?`${e[0]==='지구과학I'?'지구과학':e[0]==='생활과윤리'?'생윤':e[0]} ${TEACH[e[0]][0]}T`:(e[3]||'');
+        return `<b class="hl ${c[1]} ${startHere?'st':''}" style="left:${g.k/6*100}%;width:${g.n/6*100}%;--c:${c[0]};--s:${c[0].slice(0,7)}b3">${lab?`<em>${lab}</em>`:''}</b>`}).join('')}</div></div>`}).join('')})()}</div></div>
   </div></div></div>`;
 }
 const ATYPES=[['N제','#2f6ff0'],['기출','#1f9d55'],['모의고사','#e2453c'],['수능연계','#9b6be0']];
@@ -1522,7 +1521,7 @@ const ACT={
  tStop:()=>{if(!S.tm.sec)return;S.tm.run=false;S.modal={t:'assign',sel:null,ns:'수학',nt:'',star:4}},
  tAssign:()=>{const M=S.modal,m=Math.max(1,Math.round(S.tm.sec/60)),st=S.tm.start||NOW;
   if(M.sel==='new'){const t=(M.nt||'').trim()||`${M.ns} 자율 학습`;(PLANS[S.day]||(PLANS[S.day]=[])).push({id:'n'+Date.now(),s:M.ns,t,from:toT(st),plan:m,real:m,mark:'●',foc:M.star})}
-  else{const p=plansOf(S.day).find(x=>x.id===M.sel);if(!p){toast('일정을 선택하거나 새로 입력해 주세요');return}p.real+=m;p.extra=(p.extra||0)+m;p.foc=M.star;if(!p.mark)p.mark=p.real>=p.plan?'○':'△';(SESS[S.day]||(SESS[S.day]=[])).push({s:p.s,start:st,min:m})}
+  else{const p=plansOf(S.day).find(x=>x.id===M.sel);if(!p){toast('일정을 선택하거나 새로 입력해 주세요');return}p.real+=m;p.extra=(p.extra||0)+m;p.foc=M.star;if(!p.mark)p.mark=p.real>=p.plan?'○':'△';(SESS[S.day]||(SESS[S.day]=[])).push({s:p.s,start:st,min:m,t:p.t})}
   S.tm={run:false,sec:0};S.modal=null;toast(`${m}분 기록 · 타임 테이블과 분석실에 반영`)},
  star:v=>{S.modal.star=+v},
  tSave:()=>{const p=plansOf(S.day).find(x=>x.id===S.cur),m=Math.max(1,Math.round(S.tm.sec/60));p.real+=m;p.foc=S.modal.star;if(!p.mark)p.mark=p.real>=p.plan?'●':'△';S.tm={run:false,sec:0};S.modal=null;toast(`실제 학습 시간 ${m}분 반영 · 분석실에도 기록`)},
