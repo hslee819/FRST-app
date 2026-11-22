@@ -635,6 +635,12 @@ input,textarea,select{font:inherit;color:inherit}
 .ttg .tr i{position:relative}
 .ttg .tr i em{position:absolute;left:3px;top:50%;transform:translateY(-50%);font-style:normal;font-size:9.5px;font-weight:700;white-space:nowrap;z-index:2;color:#222}
 .ttg .tr i.lc{opacity:1}
+
+.ttg .tr .tk{flex:1;position:relative;margin:3px 6px;border:1px solid #f0f0f0;border-radius:2px}
+.ttg .tr .hl{position:absolute;top:0;bottom:0;background:var(--c);display:flex;align-items:center;justify-content:center;overflow:visible}
+.ttg .tr .hl.st{box-shadow:inset 5px 0 0 var(--s)}
+.ttg .tr .hl.lv{animation:blink 1.4s infinite}
+.ttg .tr .hl em{font-style:normal;font-size:10px;font-weight:500;white-space:nowrap;color:#222;z-index:2}
 </style>
 </head>
 <body>
@@ -1209,7 +1215,7 @@ function record(){
  const pill=s=>`<span class="sjl" style="background:${HL(s)};box-shadow:3px 0 0 ${SCOL[s]} inset">${s}</span>`;
  const H=[...Array(19)].map((_,i)=>6+i);
  const se=sessOf(S.day);const lec=cls.map(([s,a,b])=>[s,toM(a),toM(b)-toM(a)]);
- const HD=s=>SCOL[s]+'66';
+ const HD=s=>SCOL[s]+'40';
  const cellAt=m=>{const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);if(l)return [HD(l[0]),'lc',l];const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#cfcfcf','lv']:[HD(x[0]),''];return null};
  const tm=S.tm,live=tm.run||tm.sec;
  return `<div class="col" style="flex:1;min-width:0">${calBar()}<div style="display:flex;gap:16px;flex:1;min-height:0">
@@ -1224,7 +1230,11 @@ function record(){
    <div class="qs"><div style="width:100%"><small class="muted">${tm.run?'측정 중 · 종료 후 일정 선택':'일정 없이 바로 측정'}</small><b>바로 시작하기</b></div><span class="dg ${tm.run?'run':''}" id="tdig">${fmt(tm.sec,true)}</span>
     <button class="tb2 k" data-a="tToggle">${tm.run?I.pause:I.play}</button><button class="tb2 ${tm.sec?'':'dis'}" data-a="tStop">${I.stop}</button></div>
    <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b></span></div><div class="ttl"><span>강의 · 학습 시간을 과목 색 형광펜으로 표시</span></div>
-    <div class="ttg" id="tlw">${H.map(h=>`<div class="tr"><span>${h%24}</span>${[0,1,2,3,4,5].map(k=>{const c=cellAt(h*60+k*10+5);const mm=h*60+k*10;return c?`<i class="${c[1]}" style="background:${c[0]}">${c[1]==='lc'&&c[2][1]>=mm&&c[2][1]<mm+10?`<em>${c[2][0]==='지구과학I'?'지구과학':c[2][0]==='생활과윤리'?'생윤':c[2][0]} ${TEACH[c[2][0]][0]}T</em>`:''}</i>`:'<i></i>'}).join('')}</div>`).join('')}</div></div>
+    <div class="ttg" id="tlw">${H.map(h=>{const segs=[];for(let k=0;k<6;k++){const c=cellAt(h*60+k*10+5);const key=c?(c[1]==='lc'?'L'+c[2][0]+c[2][1]:c[1]+c[0]):null;const last=segs[segs.length-1];if(c&&last&&last.key===key)last.n++;else if(c)segs.push({key,c,k,n:1})}
+      return `<div class="tr"><span>${h%24}</span><div class="tk">${segs.map(g=>{const c=g.c,st=h*60+g.k*10,isL=c[1]==='lc';const col=isL?c[2][0]:null;
+        const startHere=isL?c[2][1]>=st&&c[2][1]<st+10:!cellAt(st-5)||cellAt(st-5)[0]!==c[0];
+        let lab='';if(isL){const mid=c[2][1]+c[2][2]/2;if(mid>=h*60&&mid<h*60+60||c[2][2]<=60&&startHere){const n=c[2][0]==='지구과학I'?'지구과학':c[2][0]==='생활과윤리'?'생윤':c[2][0];lab=`${n} ${TEACH[c[2][0]][0]}T`}}else if(c[1]!=='lv'&&g.n>=2)lab=`${g.n*10}분`;
+        return `<b class="hl ${c[1]} ${startHere?'st':''}" style="left:${g.k/6*100}%;width:${g.n/6*100}%;--c:${c[0]};--s:${c[0].slice(0,7)}b3">${lab?`<em>${lab}</em>`:''}</b>`}).join('')}</div></div>`}).join('')}</div></div>
   </div></div></div>`;
 }
 const ATYPES=[['N제','#2f6ff0'],['기출','#1f9d55'],['모의고사','#e2453c'],['수능연계','#9b6be0']];
