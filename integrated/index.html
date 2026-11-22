@@ -568,6 +568,73 @@ input,textarea,select{font:inherit;color:inherit}
 .tt2 tr.sec td{height:36px;background:#f6f7fa;font-weight:700}
 .tt2.dup td{height:48px}
 .ttp h5{font-size:15px;font-weight:800;margin:26px 0 10px}
+.vw{position:absolute;inset:0;background:#fff;z-index:5}
+.vbar{position:absolute;top:30px;left:100px;right:100px;height:40px;border-radius:20px;background:#29292c;display:flex;align-items:center;padding:0 22px;color:#bbb;font-size:12px;gap:10px;z-index:10}
+.vbar b{color:#eee;font-weight:700}
+.vbar .md{color:#ccc}.vbar .md i{color:var(--red);font-style:normal}
+.vbar .tm{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;color:#ddd;font-variant-numeric:tabular-nums}
+.vbar .tm svg{width:13px;height:13px}
+.vbar .rt{margin-left:auto;display:flex;align-items:center;gap:14px}
+.vbar .rt>button{color:#ddd;display:flex;align-items:center;font-size:14px}
+.vbar .rt svg{width:15px;height:15px}
+.vbar .pl{height:26px;padding:0 12px;border-radius:13px;border:1px solid #555;color:#ddd;font-size:11.5px!important}
+.vbar .end{color:#ddd;font-size:11.5px!important;font-weight:700}
+.vbar .end.k{background:#111;border-radius:13px;padding:6px 12px}
+.pencil{position:absolute;left:26px;top:80px;width:44px;height:44px;border-radius:50%;background:#f3f3f3;display:flex;align-items:center;justify-content:center;z-index:12;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.paper{position:absolute;top:110px;left:30px;right:30px;bottom:0;background:#fff;border:1px solid #e3e3e3;border-radius:6px 6px 0 0;display:flex;overflow:hidden}
+.paper .L{width:50%;padding:24px 28px;border-right:1px solid #ccc;overflow-y:auto;font-family:"Nanum Myeongjo","Batang",serif}
+.paper .R{flex:1;padding:24px 240px 24px 28px;font-family:"Nanum Myeongjo","Batang",serif;position:relative;overflow-y:auto}
+.paper.one .R{padding:30px 260px 30px 60px}
+.paper h3{font-size:15px;font-weight:400;margin-bottom:12px;font-family:Pretendard,sans-serif}
+.pass{border:1px solid #333;padding:12px 14px;font-size:14px;line-height:1.8;text-align:justify}
+.pass p{text-indent:1em}
+.pass .box{border:1px solid #111;padding:0 3px}
+.q{font-size:15px;line-height:1.75}
+.q .qt{margin-bottom:10px}
+.q .op{display:flex;align-items:center;padding:3px 8px;margin-top:3px;cursor:pointer;border-radius:3px;position:relative;overflow:hidden}
+.q .op>span{position:relative;z-index:1}
+.q .op>span:first-of-type{flex:1}
+.q .op.sel{background:#e3ebff}
+.q .op.ok{background:#e6f6ec}.q .op.bad{background:#fde8e6}
+.q .op .rb{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,.06)}
+.q .op.ok .rb{background:rgba(46,158,82,.2)}
+.q .op .rp{font-family:Pretendard;font-size:12px;font-weight:700;color:#555}
+.ansl{margin-top:14px;padding-top:10px;border-top:1px solid #111;font-family:Pretendard;font-size:13px;font-weight:700}
+.ansl span{font-weight:400;color:var(--sub);font-size:11.5px;margin-left:6px}
+.qbox{margin-top:16px;padding:12px 14px;background:var(--bg2);border-radius:6px;font-family:Pretendard;font-size:12.5px;line-height:1.7}
+.mark{position:absolute;right:14px;top:22px;width:200px;background:#fbfbfb;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:8px 10px 10px;font-family:Pretendard,sans-serif;font-size:11px;z-index:4}
+
+.mark .hd{width:22px;height:3px;background:#bbb;border-radius:2px;margin:0 auto 6px}
+.mark .r{display:flex;align-items:center;gap:5px;height:32px}
+.mark .r>span:first-child{width:30px;color:#666}
+.mark .pg{flex:1;display:flex;align-items:center;justify-content:space-between}
+.mark .pg button{font-size:16px;width:22px}
+.mark .pg em{font-style:normal;background:#ececee;border-radius:4px;padding:3px 10px}
+.mark .tool{height:22px;padding:0 10px;border-radius:4px;background:#ececee;font-size:10.5px}.mark .tool.on{background:#111;color:#fff}
+.mark .bub,.omrs .bub{display:inline-flex;width:18px;height:22px;border:1px solid #999;border-radius:9px;align-items:center;justify-content:center;font-size:10px;cursor:pointer;color:#555;flex:none}
+.mark .bub.on,.omrs .bub.on{background:#111;color:#fff;border-color:#111}
+.mark .bub.ans{border-color:var(--red);color:var(--red);font-weight:700}
+.mark .chk{font-size:11px;font-weight:700}
+.mark .two2{display:flex;gap:8px;margin-top:4px}.mark .two2 button{flex:1;height:26px;font-size:11px;background:#ececee;border-radius:4px}
+.omrs{position:absolute;left:0;right:0;bottom:0;height:560px;background:#f5f5f6;border-radius:12px 12px 0 0;z-index:40;padding:14px 18px}
+.omrs .h{font-size:13px;font-weight:700;display:flex;gap:10px;align-items:center}.omrs .h small{font-weight:400;color:#666}.omrs .h button{margin-left:auto;font-size:16px}
+.omrs .ocol{display:flex;gap:10px;margin-top:14px}
+.omrs .ocol>div{flex:1;background:#eeeef0;border-radius:4px;padding:4px}
+.omrs .hh{display:flex;font-size:10px;color:#888;padding:4px 8px}.omrs .hh span:first-child{width:30px}
+.omrs .orow{display:flex;align-items:center;gap:3px;height:41px;font-size:11px;color:#888;padding:0 8px;border-radius:4px}
+.omrs .orow.cur{outline:2px solid #111;background:#fff}
+.omrs .orow>span:first-child{width:30px;cursor:pointer}
+.omrs .fx{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:#666}
+.vex{width:520px!important;padding:18px 22px 24px!important;background:#fafafa!important;border-radius:8px!important}
+.vex .a{font-size:13px}
+.vex .eb{margin:18px 24px 0;font-size:13.5px;font-family:"Nanum Myeongjo",serif}
+.tgk{display:inline-block;border:1px solid #111;padding:0 6px;font-size:11px;font-family:Pretendard}
+.ios{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:280px;background:rgba(245,245,247,.97);border-radius:14px;text-align:center;overflow:hidden;z-index:50}
+.ios h5{font-size:15px;font-weight:700;margin-top:18px}.ios p{font-size:12.5px;margin:6px 16px 16px}
+.ios .b{display:flex;border-top:1px solid #ccc}.ios .b button{flex:1;height:44px;color:#2d6bdc;font-size:15px}.ios .b button+button{border-left:1px solid #ccc;font-weight:700}
+.ttg .tr i{position:relative}
+.ttg .tr i em{position:absolute;left:3px;top:50%;transform:translateY(-50%);font-style:normal;font-size:9.5px;font-weight:700;white-space:nowrap;z-index:2;color:#222}
+.ttg .tr i.lc{opacity:1}
 </style>
 </head>
 <body>
@@ -755,7 +822,7 @@ const S={tab:'home',
  homeSub:'item',hSubj:'전체',
  viewer:null, // {cid,mode:'study'|'exam'|'sol',qi,ans:{},chk:{},sec}
  gSel:'m-sv-24',gView:'report',wrongOnly:false,omr:null,aSubj:'수학',
- arcSub:'scrap',scF:'전체',sortBy:'folder',grp:'수학 · 미분',wd:null,wdTab:'memo',wdPick:0,flash:null,
+ arcSub:'scrap',scF:'전체',sortBy:'folder',grp:'수학',wd:null,wdTab:'memo',wdPick:0,flash:null,
  askSub:'search',pick:{s:null,c:null,r:null,n:null},askD:null,openAns:0,solTab:'q',form:{s:'수학',c:'서바이벌',r:24,n:14,txt:'',img:false,to:'TA',auto:false},
  studySub:'record',day:1,cur:'p2',tm:{run:false,sec:0,start:0},anaSub:'subj',calV:'day',schSort:'time',scSort:'time',
  adm:'notice',admD:null,cs:{who:'생활담임',slot:null,done:[]},att:null,
@@ -943,41 +1010,30 @@ function pdfView(){
  <div class="pdfw">${page(1,qs.slice(0,4))}${page(2,qs.slice(4))}</div>`;
 }
 /* ---------- 뷰어 (원문 · 학습모드 · 시험모드 · 해설) ---------- */
-function selRate(c,qi,a){const R=rnd(c.r*31+qi*7+3);const ok=48+Math.floor(R()*30);let left=100-ok;const o=[];for(let k=1;k<=5;k++){if(k===a)continue;o.push(R()+.15)}const sm=o.reduce((x,y)=>x+y,0);let out=[],j=0,acc=0;for(let k=1;k<=5;k++){if(k===a){out.push(ok);continue}let v=j<3?Math.round(o[j]/sm*left):left-acc;acc+=j<3?v:0;j++;out.push(v)}return out}
-function examView(){
- const V=S.viewer,c=C(V.cid),set=qsetOf(c.s),N=QN[c.s]||30;
- const qs=Array.from({length:Math.min(N,8)},(_,i)=>{const q=set.qs[i%set.qs.length];return `<div class="pq"><b>${i+1}.</b> ${q.q}<div class="po">${q.o.map((o,k)=>`<span>${CIRC[k+1]} ${o}</span>`).join('')}</div></div>`});
- const page=(k,arr)=>`<div class="pg"><div class="ph2"><span>${COVER[c.n]||c.n} ${c.r}</span><b>${c.s} 영역</b><span>${k} / ${Math.ceil(N/4)}</span></div>${k===1&&set.psg?`<div class="ppsg">${set.psg}</div>`:''}<div class="pcols">${arr.join('')}</div></div>`;
- const filled=Object.keys(V.ans).length;
- return `<button class="vback" data-a="vClose">${I.back}</button>
- <div class="vtop"><b>${c.s} ${cname(c)}</b><span class="sep"></span><span class="md"><i style="background:#e2363c"></i>시험 모드</span>
-  <span class="tm">${I.clock}<span id="vtime">${fmt(V.sec,true)}</span></span>
-  <span class="r"><button class="w" data-a="vEnd">시험 종료</button></span></div>
- <div class="exw"><div class="pdfw2">${page(1,qs.slice(0,4))}${page(2,qs.slice(4))}</div>
-  <div class="omrc"><div class="oh"><b>OMR 답안지</b><span>${filled} / ${N}</span></div><div class="ob">${Array.from({length:N},(_,i)=>`<div class="or"><b>${i+1}</b>${[1,2,3,4,5].map(v=>`<button class="${V.ans[i]===v?'on':''}" data-a="omrX" data-v="${i}:${v}">${v}</button>`).join('')}</div>`).join('')}</div></div></div>`;
-}
+function selRate(c,qi,a){const R=rnd((c.r||7)*31+qi*7+3);const ok=48+Math.floor(R()*30);let left=100-ok;const o=[];for(let k=1;k<=5;k++){if(k===a)continue;o.push(R()+.15)}const sm=o.reduce((x,y)=>x+y,0);let out=[],j=0,acc=0;for(let k=1;k<=5;k++){if(k===a){out.push(ok);continue}let v=j<3?Math.round(o[j]/sm*left):left-acc;acc+=j<3?v:0;j++;out.push(v)}return out}
+function vctx(){const V=S.viewer;if(V.scrap){const x=SCRAPS.find(y=>y.id===V.scrap);return {x,s:x.s,title:x.t,seed:{r:Math.floor(x.id)%40+3},set:qsetOf(x.s),N:qsetOf(x.s).qs.length}}
+ const c=C(V.cid);return {c,s:c.s,title:`${c.s} ${cname(c)}`,seed:c,set:qsetOf(c.s),N:QN[c.s]||30}}
 function viewer(){
- if(S.viewer.mode==='exam')return examView();
- const V=S.viewer,c=C(V.cid),set=qsetOf(c.s),q=set.qs[V.qi],n=set.qs.length;
- const modeT={study:['학습 모드','#3f9e6e'],exam:['시험 모드','#e2363c'],sol:['해설','#4a6bd8']}[V.mode];
- const qno=V.no||V.qi+1;
- const bmOn=SCRAPS.some(x=>x.t===`${c.s} ${cname(c)} ${qno}번`);
- const shown=V.mode==='sol'||(V.mode==='study'&&V.chk[V.qi]);
- const opts=q.o.map((o,i)=>{const v=i+1;let cl='';
-  if(shown){if(v===q.a)cl='ok';else if(V.ans[V.qi]===v)cl='no'}else if(V.ans[V.qi]===v)cl='sel';
-  const rt=shown&&V.mode==='study'?selRate(c,V.qi,q.a)[i]:null;
-  return `<button class="opt ${cl} ${rt!=null?'rto':''}" data-a="vAns" data-v="${v}">${rt!=null?`<i class="rb" style="width:${rt}%"></i>`:''}<span class="n">${CIRC[v]}</span><span style="flex:1">${o}</span>${rt!=null?`<span class="rp">${rt}%</span>`:''}</button>`}).join('');
- const sol=shown?`<div class="solbox"><h6>정답 ${CIRC[q.a]} ${V.mode==='study'?`<span class="muted" style="font-size:11.5px;font-weight:500">· 정답률 ${selRate(c,V.qi,q.a)[q.a-1]}% · 막대는 학생들의 선지 선택 비율</span>`:''} ${V.ans[V.qi]?(V.ans[V.qi]===q.a?'<span class="tag t-green">맞음</span>':'<span class="tag t-red">틀림</span>'):''}</h6>${q.sol}</div>`:'';
- const left=set.psg?`<div class="vpane"><div style="margin-bottom:12px">${set.head}</div><div class="psg">${set.psg}</div></div>`:'';
- return `<button class="vback" data-a="vClose">${I.back}</button>
- <div class="vtop"><b>${c.s} ${cname(c)}</b><span class="sep"></span><span class="md"><i style="background:${modeT[1]}"></i>${modeT[0]}</span>
-  ${V.mode==='exam'?`<span class="tm">${I.clock}<span id="vtime">${fmt(V.sec,true)}</span></span>`:''}
-  <span class="r"><button class="${bmOn?'on':''}" data-a="vBm">${bmOn?I.bmf:I.bm} 스크랩</button>${V.mode!=='sol'?`<button data-a="vMode" data-v="sol">${I.doc} 해설지</button>`:`<button data-a="vMode" data-v="study">학습 모드</button>`}${V.mode==='exam'?`<button class="w" data-a="vEnd">학습 종료</button>`:''}</span></div>
- <div class="vbody">${left}<div class="vpane" style="${set.psg?'':'max-width:none;padding:34px 60px'}"><div class="qtext">${qno}. ${q.q}</div>${opts}${sol}</div></div>
- <div class="mpanel"><div class="rw"><span>문항</span><button class="arr ${V.qi?'':'dis'}" data-a="vNav" data-v="-1">${I.l}</button><b style="flex:1;text-align:center">${qno} / ${QN[c.s]||n}</b><button class="arr ${V.qi<n-1?'':'dis'}" data-a="vNav" data-v="1">${I.r}</button></div>
-  <div class="rw"><span>답안</span>${[1,2,3,4,5].map(v=>{let cl=V.ans[V.qi]===v?'on':'';if(shown){if(v===q.a)cl='ok';else if(V.ans[V.qi]===v)cl='no'}return `<button class="bub ${cl}" data-a="vAns" data-v="${v}">${v}</button>`}).join('')}</div>
-  ${V.mode==='study'?`<div class="rw"><span></span><button class="pb" style="flex:1;justify-content:center" data-a="vChk">${V.chk[V.qi]?'해설 숨기기':'정답 확인'}</button></div>`:''}
- </div>`;
+ const V=S.viewer,X=vctx(),set=X.set,q=set.qs[V.qi%set.qs.length],n=set.qs.length,exam=V.mode==='exam';
+ const qno=V.scrap?(parseInt((X.title.match(/(\d+)번/)||[])[1])||V.qi+1):(V.no||V.qi+1);
+ const shown=V.mode==='sol'||(V.mode==='study'&&V.chk[V.qi]);const mine=V.ans[V.qi];
+ const rate=shown?selRate(X.seed,V.qi,q.a):null;
+ const opts=q.o.map((o,i)=>{const v=i+1;let cl='';if(shown){if(v===q.a)cl='ok';else if(mine===v)cl='bad'}else if(mine===v)cl='sel';
+  return `<div class="op ${cl} ${rate?'rto':''}" data-a="vAns" data-v="${v}">${rate?`<i class="rb" style="width:${rate[i]}%"></i>`:''}<span>${CIRC[v]} ${o}</span>${rate?`<span class="rp">${rate[i]}%</span>`:''}</div>`}).join('');
+ const modeL=V.scrap?(X.x.kind==='질문 내역'?'질문':'스크랩'):exam?'시험 모드':V.mode==='sol'?'해설':'학습 모드';
+ const bmOn=!V.scrap&&SCRAPS.some(x=>x.t===`${X.title} ${qno}번`);
+ const bar=`<div class="vbar"><b>${X.title}</b><span style="color:#555">|</span><span class="md"><i>●</i> ${modeL}</span>${exam?`<span class="tm">${I.clock} <span id="vtime">${fmt(V.sec,true)}</span></span>`:''}
+  <span class="rt"><button data-a="vReport" title="오류 신고">ⓘ</button>${V.scrap?'':`<button data-a="vBm" title="스크랩">${bmOn?I.bmf:I.bm}</button>`}${exam?'<button class="pl" data-a="vOmr">OMR 보기</button>':''}
+  ${V.scrap?`${X.x.folder?'':'<button class="pl" data-a="fPick" data-v="'+X.x.id+'">오답 정리에 추가</button>'}<button class="end k" data-a="vClose">닫기</button>`:`<button class="end k" data-a="${exam?'vEnd':'vClose'}">${exam?'시험 종료':'학습 종료'}</button>`}</span></div>`;
+ const mark=`<div class="mark"><div class="hd"></div><div class="r"><span>문항</span><div class="pg"><button data-a="vNav" data-v="-1">‹</button><em>${V.scrap?qno+'번':qno+'/'+X.N}</em><button data-a="vNav" data-v="1">›</button></div></div>
+  ${exam?`<div class="r"><span>도구</span><button class="tool ${V.tool!=='er'?'on':''}" data-a="vTool" data-v="pen">펜</button><button class="tool ${V.tool==='er'?'on':''}" data-a="vTool" data-v="er">지우개</button></div>`:''}
+  ${V.mode==='sol'?'':`<div class="r"><span>답안</span>${[1,2,3,4,5].map(v=>`<span class="bub ${shown?(v===q.a?'ans':mine===v?'on':''):(mine===v?'on':'')}" data-a="vAns" data-v="${v}">${v}</span>`).join('')}</div>`}
+  ${exam?'':`${V.mode==='study'?`<div class="r" style="justify-content:center"><button class="chk" data-a="vChk">${V.chk[V.qi]?'정답 숨기기 ⌃':'정답확인 ⌄'}</button></div>`:''}<div class="two2"><button data-a="vExpl">해설</button><button data-a="vNote">+ 오답노트</button></div>`}</div>`;
+ const qa=`<div class="q"><div class="qt">${qno}. ${q.q}</div>${opts}${shown?`<div class="ansl">정답 ${CIRC[q.a]} · 정답률 ${rate[q.a-1]}% <span>막대는 학생들의 선지 선택 비율</span></div>`:''}
+  ${V.scrap&&X.x.kind==='질문 내역'?`<div class="qbox"><b>내 질문</b> ${esc(X.x.sn)}<br><b>TA 답변 요약</b> ${ANS[0].sum}</div>`:''}</div>`;
+ const body=set.psg?`<div class="paper"><div class="L"><h3>[1~3] 다음 글을 읽고 물음에 답하시오.</h3><div class="pass">${set.psg}</div></div><div class="R">${qa}${mark}</div></div>`
+  :`<div class="paper one"><div class="R">${qa}${mark}</div></div>`;
+ return `<div class="vw">${bar}<button class="pencil" data-a="vPencil">${I.pen}</button>${body}</div>`;
 }
 const fmt=(s,h)=>{const p=n=>String(n).padStart(2,'0');return h?`${p(Math.floor(s/3600))} : ${p(Math.floor(s/60)%60)} : ${p(s%60)}`:`${p(Math.floor(s/60))}:${p(s%60)}`};
 
@@ -1015,16 +1071,16 @@ function scrap(){
   <div class="sgrid scroll" style="flex:1">${all.map(x=>`<button class="scard" data-a="scOpen" data-v="${x.id}">
    <div style="display:flex;gap:6px;align-items:center;font-size:10.5px"><i class="sd" style="background:${COL[x.s]}"></i>${x.s}<span class="tag ${kindL(x)==='질문'?'t-blue':'t-gray'}" style="margin-left:auto">${kindL(x)}</span></div>
    <h6>${x.t}</h6><p>${esc(x.sn)}</p>
-   <div class="ft">${x.date} 저장${x.tags.length?`<span style="margin-left:8px;color:var(--sub)">${x.tags.join(' ')}</span>`:''}${x.folder?`<span style="margin-left:auto;display:flex;align-items:center;gap:3px">${I.folder}${x.folder}</span>`:`<span style="margin-left:auto;color:var(--blue);font-weight:700">오답 정리에 추가 +</span>`}</div></button>`).join('')}</div></div>`;
+   <div class="ft">${x.date} 저장${x.tags.length?`<span style="margin-left:8px;color:var(--sub)">${x.tags.join(' ')}</span>`:''}${x.folder?`<span style="margin-left:auto;display:flex;align-items:center;gap:3px">${I.folder}오답 정리</span>`:`<span style="margin-left:auto;color:var(--blue);font-weight:700">오답 정리에 추가 +</span>`}</div></button>`).join('')}</div></div>`;
 }
-function groups(){return S.sortBy==='folder'?FOLDERS:TAGS}
-function inGroup(x,g){return S.sortBy==='folder'?x.folder===g:x.tags.includes(g)}
+function groups(){return S.sortBy==='folder'?SUBJ:TAGS}
+function inGroup(x,g){return S.sortBy==='folder'?(!!x.folder&&x.s===g):x.tags.includes(g)}
 function wrong(){
  const gs=groups();if(!gs.includes(S.grp))S.grp=gs[0];
  const list=SCRAPS.filter(x=>inGroup(x,S.grp));
- return `<div class="panel col" style="width:262px;flex:none;gap:0"><div class="ph"><h4>정렬 기준</h4><div class="r"><button class="pb ${S.sortBy==='folder'?'on':''}" data-a="sortBy" data-v="folder">${I.folder} 폴더</button><button class="pb ${S.sortBy==='tag'?'on':''}" data-a="sortBy" data-v="tag">${I.tagi} 태그</button></div></div>
-  <div class="scroll" style="flex:1">${gs.map(g=>`<button class="lrow ${S.grp===g?'on':''}" data-a="grp" data-v="${g}">${S.sortBy==='folder'?I.folder:I.tagi} ${g}<span class="r muted">${SCRAPS.filter(x=>inGroup(x,g)).length}</span></button>`).join('')}
-  ${S.sortBy==='folder'?`<button class="lrow muted" data-a="newFolder">${I.plus} 새 폴더</button>`:''}</div></div>
+ return `<div class="panel col" style="width:262px;flex:none;gap:0"><div class="ph"><h4>정렬 기준</h4><div class="r"><button class="pb ${S.sortBy==='folder'?'on':''}" data-a="sortBy" data-v="folder">${I.folder} 과목</button><button class="pb ${S.sortBy==='tag'?'on':''}" data-a="sortBy" data-v="tag">${I.tagi} 태그</button></div></div>
+  <div class="scroll" style="flex:1">${gs.map(g=>`<button class="lrow ${S.grp===g?'on':''}" data-a="grp" data-v="${g}">${S.sortBy==='folder'?`<i class="sd" style="background:${COL[g]}"></i>`:I.tagi} ${g}<span class="r muted">${SCRAPS.filter(x=>inGroup(x,g)).length}</span></button>`).join('')}
+</div></div>
   <div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>${S.grp}</h4><span class="muted" style="font-size:11.5px">${list.length}문항</span><div class="r"><span class="muted" style="font-size:11px;display:flex;gap:10px;align-items:center"><span><i class="sd" style="background:var(--green)"></i> 다시 풀어 맞힘</span><span><i class="sd" style="background:var(--red)"></i> 틀림</span></span></div></div>
   <div class="scroll" style="flex:1">${list.map(x=>`<button class="wrow" data-a="wdOpen" data-v="${x.id}"><i class="sd" style="background:${COL[x.s]}"></i><div style="flex:1;min-width:0"><h6>${x.t}</h6><p style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.sn)}</p></div>
    <span style="display:flex;gap:6px">${x.tags.map(t=>`<span class="tag t-gray">${t}</span>`).join('')}</span>
@@ -1153,7 +1209,8 @@ function record(){
  const pill=s=>`<span class="sjl" style="background:${HL(s)};box-shadow:3px 0 0 ${SCOL[s]} inset">${s}</span>`;
  const H=[...Array(19)].map((_,i)=>6+i);
  const se=sessOf(S.day);const lec=cls.map(([s,a,b])=>[s,toM(a),toM(b)-toM(a)]);
- const cellAt=m=>{const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#d9d9d9','lv']:[HL(x[0]),''];const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);return l?[SCOL[l[0]],'lc']:null};
+ const HD=s=>SCOL[s]+'66';
+ const cellAt=m=>{const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);if(l)return [HD(l[0]),'lc',l];const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#cfcfcf','lv']:[HD(x[0]),''];return null};
  const tm=S.tm,live=tm.run||tm.sec;
  return `<div class="col" style="flex:1;min-width:0">${calBar()}<div style="display:flex;gap:16px;flex:1;min-height:0">
   <div class="panel col" style="flex:1;gap:0;min-width:0"><div class="scroll" style="flex:1;padding:16px 18px">
@@ -1166,8 +1223,8 @@ function record(){
   <div class="panel col" style="width:300px;flex:none;gap:0;min-width:0">
    <div class="qs"><div style="width:100%"><small class="muted">${tm.run?'측정 중 · 종료 후 일정 선택':'일정 없이 바로 측정'}</small><b>바로 시작하기</b></div><span class="dg ${tm.run?'run':''}" id="tdig">${fmt(tm.sec,true)}</span>
     <button class="tb2 k" data-a="tToggle">${tm.run?I.pause:I.play}</button><button class="tb2 ${tm.sec?'':'dis'}" data-a="tStop">${I.stop}</button></div>
-   <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b></span></div><div class="ttl"><span><i class="lc" style="--c:#999"></i>강의</span><span><i style="background:#ddd"></i>학습</span></div>
-    <div class="ttg" id="tlw">${H.map(h=>`<div class="tr"><span>${h%24}</span>${[0,1,2,3,4,5].map(k=>{const c=cellAt(h*60+k*10+5);return c?(c[1]==='lc'?`<i class="lc" style="--c:${c[0]}"></i>`:`<i class="${c[1]}" style="background:${c[0]}"></i>`):'<i></i>'}).join('')}</div>`).join('')}</div></div>
+   <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b></span></div><div class="ttl"><span>강의 · 학습 시간을 과목 색 형광펜으로 표시</span></div>
+    <div class="ttg" id="tlw">${H.map(h=>`<div class="tr"><span>${h%24}</span>${[0,1,2,3,4,5].map(k=>{const c=cellAt(h*60+k*10+5);const mm=h*60+k*10;return c?`<i class="${c[1]}" style="background:${c[0]}">${c[1]==='lc'&&c[2][1]>=mm&&c[2][1]<mm+10?`<em>${c[2][0]==='지구과학I'?'지구과학':c[2][0]==='생활과윤리'?'생윤':c[2][0]} ${TEACH[c[2][0]][0]}T</em>`:''}</i>`:'<i></i>'}).join('')}</div>`).join('')}</div></div>
   </div></div></div>`;
 }
 const ATYPES=[['N제','#2f6ff0'],['기출','#1f9d55'],['모의고사','#e2453c'],['수능연계','#9b6be0']];
@@ -1295,6 +1352,13 @@ function overlay(){
    <div style="margin-top:10px;font-size:14px;line-height:1.9">${q.o.map((o,i)=>`<div>${CIRC[i+1]} ${o}</div>`).join('')}</div>
    ${F.flip?`<div class="solbox" style="font-size:13px"><h6>정답 ${CIRC[q.a]}</h6>${q.sol}</div>`:''}
    <div style="margin-top:auto;display:flex;gap:10px">${F.flip?`<button class="kb ghost lg" style="flex:1;justify-content:center" data-a="flashAns" data-v="0">틀렸어요</button><button class="kb lg" style="flex:1;justify-content:center" data-a="flashAns" data-v="1">맞혔어요</button>`:`<button class="kb lg" style="flex:1;justify-content:center" data-a="flashFlip">정답 보기</button>`}</div></div>`}
+ if(M.t==='vomr'){const V=S.viewer,X=vctx(),N=X.N,left=N-Object.keys(V.ans).length,cols=Math.ceil(N/10);
+  return `<div class="dim" data-a="mClose" style="background:rgba(0,0,0,.4)"></div><div class="omrs"><div class="h">답안지 (OMR) <small>남은 문제: ${left}</small><button data-a="mClose">✕</button></div>
+  <div class="ocol">${Array.from({length:cols},(_,c)=>`<div><div class="hh"><span>문항</span><span style="flex:1;text-align:center">답변</span></div>${Array.from({length:10},(_,r)=>c*10+r).filter(i=>i<N).map(i=>`<div class="orow ${i===V.qi?'cur':''}"><span data-a="vGo" data-v="${i}">${i+1}</span>${[1,2,3,4,5].map(k=>`<span class="bub ${V.ans[i]===k?'on':''}" data-a="omrX" data-v="${i}:${k}">${k}</span>`).join('')}</div>`).join('')}</div>`).join('')}</div>
+  <div class="fx">문항 번호를 탭하면 이동, 동그라미를 탭하면 마킹돼요</div></div>`}
+ if(M.t==='vexpl'){const V=S.viewer,X=vctx(),q=X.set.qs[V.qi%X.set.qs.length];return `<div class="dim" data-a="mClose" style="background:rgba(0,0,0,.15)"></div><div class="modal vex"><button class="x" data-a="mClose">${I.x}</button><b class="a">정답: ${q.a}</b>
+  <div class="eb"><b>${V.no||V.qi+1} 핵심 개념 이해</b><div style="margin-top:8px"><span class="tgk">정답</span> ${CIRC[q.a]}</div><div style="margin-top:10px"><span class="tgk">해설</span></div><div style="margin-top:6px;line-height:1.8">${q.sol}</div></div></div>`}
+ if(M.t==='vnote')return `<div class="dim" data-a="mClose" style="background:rgba(0,0,0,.2)"></div><div class="ios"><h5>오답노트</h5><p>이 문항을 오답노트에 추가할까요?</p><div class="b"><button data-a="mClose">취소</button><button data-a="vNoteAdd">추가</button></div></div>`;
  if(M.t==='cana'){const l=ACONT.filter(x=>x[0]===M.s),lab=(ASUB.find(x=>x[1]===M.s)||[M.s])[0],ty=(AWEEK[lab]||{});
   return `<div class="dim" data-a="mClose"></div><div class="modal" style="width:520px"><h3>${M.s} 콘텐츠 분석</h3>
    <p class="d" style="margin-bottom:14px">이번 주 ${hm(Object.values(ty).reduce((a,b)=>a+b,0))} · ${Object.entries(ty).map(([k,v])=>`${k} ${hm(v)}`).join(' · ')||'기록 없음'}</p>
@@ -1326,9 +1390,14 @@ function overlay(){
 /* =========================================================
    동작
    ========================================================= */
+SCRAPS.forEach(x=>{if(x.folder)x.folder=x.s});
 function scrapAdd(o){if(SCRAPS.some(x=>x.t===o.t))return false;SCRAPS.unshift(Object.assign({id:Date.now()+Math.random(),date:'11. 03',folder:null,tags:[],hist:[],memo:''},o));return true}
 function goAsk(s,c,r,n){ensureTree(s,c,r);S.fdd=null;S.tab='ask';S.askD=null;S.askSub='write';S.form={s,c,r,n,txt:'',img:false,to:'TA',auto:true};toast('질문하기로 이동 · 문항 정보가 자동 입력되었어요')}
 const ACT={
+ vTool:v=>{S.viewer.tool=v},vPencil:()=>{toast('필기 모드 · 화면에 바로 필기할 수 있어요')},vReport:()=>{toast('오류 신고는 브라우저에서 접수돼요')},
+ vOmr:()=>{S.modal={t:'vomr'}},vGo:v=>{S.viewer.qi=Math.min(+v,qsetOf(vctx().s).qs.length-1);S.viewer.no=+v+1;S.modal=null},
+ vExpl:()=>{S.modal={t:'vexpl'}},vNote:()=>{S.modal={t:'vnote'}},
+ vNoteAdd:()=>{const V=S.viewer,X=vctx(),q=X.set.qs[V.qi%X.set.qs.length];if(V.scrap){const x=X.x;if(!x.folder)x.folder=x.s;toast(`부엉이 아카이브 > 오답 정리 > ${x.s}에 추가했어요`)}else{const no=V.no||V.qi+1;scrapAdd({s:X.s,t:`${X.title} ${no}번`,kind:'북마크',src:'문항',sn:q.q.replace(/<[^>]+>/g,''),qi:V.qi,folder:X.s});toast(`부엉이 아카이브 > 오답 정리 > ${X.s}에 추가했어요`)}S.modal=null},
  ttDown:()=>{toast('시간표 이미지를 저장했어요')},
  anaPer:v=>{S.anaPer=v},anaMore:v=>{S.modal={t:'cana',s:v}},anaType:v=>{S.anaType=v},addType:()=>{const t=(S.newType||'').trim();if(!t)return;(S.extraTypes||(S.extraTypes=[])).push(t);S.anaType=t;S.newType='';toast(`콘텐츠 유형 "${t}"을 추가했어요`)},
  popTog:()=>{S.popOpen=!S.popOpen},
@@ -1376,9 +1445,9 @@ const ACT={
  vOpen:v=>{S.viewer={cid:S.modal.cid,mode:v,qi:0,ans:{},chk:{},sec:0};S.modal=null},
  vClose:()=>{S.viewer=null},
  vMode:v=>{S.viewer.mode=v},
- vNav:v=>{const V=S.viewer,n=qsetOf(C(V.cid).s).qs.length;V.qi=Math.max(0,Math.min(n-1,V.qi+ +v));if(V.no)V.no=null},
+ vNav:v=>{const V=S.viewer,n=vctx().set.qs.length;V.qi=Math.max(0,Math.min(n-1,V.qi+ +v));if(V.no)V.no=null},
  omrX:v=>{const [i,b]=v.split(':').map(Number),V=S.viewer;if(V.ans[i]===b)delete V.ans[i];else V.ans[i]=b},
- vAns:v=>{const V=S.viewer;if(V.mode==='sol')return;if(V.mode==='study'&&V.chk[V.qi])return;V.ans[V.qi]=+v},
+ vAns:v=>{const V=S.viewer;if(V.mode==='sol')return;if(V.mode==='exam'){if(V.ans[V.qi]===+v){delete V.ans[V.qi];return}}if(V.mode==='study'&&V.chk[V.qi])return;V.ans[V.qi]=+v},
  vChk:()=>{const V=S.viewer;V.chk[V.qi]=!V.chk[V.qi]},
  vBm:()=>{const V=S.viewer,c=C(V.cid),no=V.no||V.qi+1,t=`${c.s} ${cname(c)} ${no}번`;const i=SCRAPS.findIndex(x=>x.t===t);
   if(i>=0){SCRAPS.splice(i,1);toast('스크랩을 해제했어요')}else{scrapAdd({s:c.s,t,kind:'북마크',src:'문항',sn:qsetOf(c.s).qs[V.qi].q.replace(/<[^>]+>/g,''),qi:V.qi});toast('부엉이 아카이브 > 스크랩에 저장했어요')}},
@@ -1403,8 +1472,8 @@ const ACT={
   REPORT[c.id]={raw,std:'134.0',pct:98,grade:1,date:'26.11.03(화)',cuts:[129,123,117],items};c.st='graded';if(TREND[c.s])TREND[c.s].push([c.r,raw]);
   S.gSel=c.id;S.gView='report';S.omr=null;toast('채점 완료 · 성적 리포트가 만들어졌어요')},
  /* 아카이브 */
- arcSub:v=>{S.arcSub=v},scF:v=>{S.scF=v},scTag:v=>{S.scTag=v},scSort:v=>{S.scSort=v},scSubj:v=>{S.scSubj=v},scOpen:v=>{S.modal={t:'scrap',id:+v}},
- fPick:v=>{S.modal={t:'folder',id:+v}},
+ arcSub:v=>{S.arcSub=v},scF:v=>{S.scF=v},scTag:v=>{S.scTag=v},scSort:v=>{S.scSort=v},scSubj:v=>{S.scSubj=v},scOpen:v=>{const x=SCRAPS.find(y=>y.id===+v);S.viewer={scrap:x.id,mode:'study',qi:x.qi%qsetOf(x.s).qs.length,ans:{},chk:{},sec:0}},
+ fPick:v=>{const x=SCRAPS.find(y=>y.id===+v);x.folder=x.s;S.modal=null;toast(`오답 정리 > ${x.s}에 추가했어요`)},
  fSet:v=>{const x=SCRAPS.find(y=>y.id===S.modal.id);x.folder=v;S.modal=null;toast(`오답 정리 > ${v}에 추가했어요`)},
  scDel:v=>{SCRAPS=SCRAPS.filter(x=>x.id!==+v);S.modal=null;toast('스크랩을 삭제했어요')},
  sortBy:v=>{S.sortBy=v;S.grp=groups()[0]},grp:v=>{S.grp=v},
@@ -1495,7 +1564,7 @@ function initCanvas(){const cv=document.getElementById('cv');if(!cv)return;const
 /* 화면 목록 */
 const JUMP=[
  ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 칸 누름 (응시 완료) · 원문 보기 / 성적 확인',()=>{D.pop={r:1,n:'17',st:'c'}}],['① -4 칸 누름 (미응시) · 원문 보기 / 성적 입력',()=>{D.pop={r:1,n:'18',st:'o'}}],['① -5 성적 입력 방법 (촬영 · 틀린 문항만 · OMR)',()=>{D.pop={r:1,n:'18',st:'o',step:'in'}}],['① -6 원문 보기 → 시험 / 학습 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['① -7 성적 입력 · 촬영',()=>{S.modal={t:'gcam',cid:'k-mon-10',step:0}}],['① -8 성적 입력 · 틀린 문항만',()=>{ACT.omrOpen('m-sv-25');S.gView='wrongIn';S.omr=null;S.win={cid:'m-sv-25',w:[9,22]}}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (시간 측정 + OMR)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{0:1,1:2},chk:{},sec:754}}],['④ 문항 · 학습 모드 (정답 + 선지 선택 비율)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 리포트 (정오표 · 틀린 문항 색 구분)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 입력 · OMR 기입',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
- ['부엉이 아카이브',[['⑩ 스크랩 (전체 / 질문 / 스크랩 / 태그)',()=>{S.tab='arc'}],['⑩ -1 스크랩 · 태그별 보기',()=>{S.tab='arc';S.scF='태그';S.scTag='#계산실수'}],['⑩ -2 스크랩 · 과목별 정렬',()=>{S.tab='arc';S.scSort='subj';S.scSubj='수학'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';S.modal={t:'scrap',id:2}}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 폴더',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
+ ['부엉이 아카이브',[['⑩ 스크랩 (전체 / 질문 / 스크랩 / 태그)',()=>{S.tab='arc'}],['⑩ -1 스크랩 · 태그별 보기',()=>{S.tab='arc';S.scF='태그';S.scTag='#계산실수'}],['⑩ -2 스크랩 · 과목별 정렬',()=>{S.tab='arc';S.scSort='subj';S.scSubj='수학'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';ACT.scOpen('2')}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 과목',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
  ['질문하기',[['⑱ 문항 검색',()=>{S.tab='ask';S.pick={s:'수학',c:'서바이벌',r:24,n:14}}],['⑲ 문항 세부 (원본 · 해설 · 답변 요약)',()=>{S.tab='ask';S.askD={s:'수학',c:'서바이벌',r:24,n:14,qi:0}}],['⑳ 문항 질문 (성적에서 자동 입력)',()=>{goAsk('수학','서바이벌',24,21)}],['㉑ 이번 주 인기 문항 (우측 상단 펼침)',()=>{S.tab='ask';S.popOpen=true}],['⑱ -1 문항 검색 첫 화면',()=>{S.tab='ask'}]]],
  ['부엉이 학습실',[['㉒ 학습 기록 (강의 · 스케줄 + 실시간 학습 시간)',()=>{S.tab='study'}],['㉒ -1 바로 시작하기 · 측정 중',()=>{S.tab='study';S.tm={run:true,sec:1500,start:NOW}}],['㉒ -2 측정 종료 → 기존 일정 선택 / 새 일정 입력',()=>{S.tab='study';S.tm={run:false,sec:1500,start:NOW};S.modal={t:'assign',sel:'p3',ns:'수학',nt:'',star:4}}],['㉒ -3 학습 기록 · 주간',()=>{S.tab='study';S.calV='week'}],['㉒ -4 학습 기록 · 월간',()=>{S.tab='study';S.calV='month'}],['㉒ -5 스케줄 · 과목 정렬',()=>{S.tab='study';S.schSort='subj'}],['㉓ 학습 기록 · 일정 추가',()=>{S.tab='study';ACT.addPlan()}],['㉕ 과목별 분석 (콘텐츠 유형 + 그래프)',()=>{S.tab='study';S.studySub='ana'}],['㉖ 과목별 분석 · 자세히 보기 (콘텐츠 분석)',()=>{S.tab='study';S.studySub='ana';S.modal={t:'cana',s:'수학'}}]]],
  ['행정',[['㉗ 공지사항',()=>{S.tab='adm'}],['㉘ 상담 · 학습담임',()=>{S.tab='adm';S.adm='c-study'}],['㉙ 상담 · TA Meet',()=>{S.tab='adm';S.adm='c-ta'}],['㉚ 생활 · 출결 / 문의',()=>{S.tab='adm';S.adm='att'}],['㉛ 생활 · 선택특강 신청',()=>{S.tab='adm';S.adm='lect'}],['㉜ 생활 · 시간표',()=>{S.tab='adm';S.adm='tt'}],['㉝ 생활 · 급식',()=>{S.tab='adm';S.adm='meal'}],['㉞ 생활 · 벌점',()=>{S.tab='adm';S.adm='pen'}],['㉟ 생활 · 리클래스 수강',()=>{S.tab='adm';S.adm='re'}]]],
