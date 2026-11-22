@@ -544,6 +544,30 @@ input,textarea,select{font:inherit;color:inherit}
 .asl .rd{width:14px;height:14px;border-radius:50%;border:1px solid #999;flex:none}
 .asl button.on{background:#f6f6f7}
 .asl button.on .rd{background:#111;border-color:#111;box-shadow:inset 0 0 0 3px #fff}
+.ttg .tr i{opacity:1}
+.ttg .tr i.lc{background:repeating-linear-gradient(135deg,transparent 0 3px,var(--c) 3px 4px);opacity:.55;border-right-color:transparent}
+.ttl{display:flex;gap:12px;font-size:10.5px;color:#666;margin:6px 0 4px}
+.ttl span{display:flex;align-items:center;gap:4px}
+.ttl i{width:14px;height:10px;display:block}
+.ttl i.lc{background:repeating-linear-gradient(135deg,transparent 0 3px,var(--c) 3px 4px)}
+.qs{flex-wrap:wrap;row-gap:6px}
+.qs .dg{margin-right:auto}
+.abar .more{display:flex;align-items:center;gap:2px;font-size:11.5px;color:var(--sub);width:86px;justify-content:flex-end;white-space:nowrap}
+.abar .more svg{width:12px;height:12px}
+.abar .more:hover{color:#111}
+.ttp{padding:10px 6px}
+.ttp h2{text-align:center;font-size:30px;font-weight:800;margin-top:4px}
+.ttp .sub{text-align:center;font-size:15px;color:#666;margin-top:6px}
+.ttp .dl{display:flex;justify-content:flex-end;margin:6px 0 4px}
+.ttp .dl button{font-size:13px;color:#555;display:flex;align-items:center;gap:4px}
+.ttp .dl span{font-weight:800;color:#111;border-bottom:2px solid #111;line-height:1}
+.tt2{width:100%;border-collapse:collapse;border-top:2px solid #111;font-size:13px;text-align:center}
+.tt2 th{height:40px;background:#f6f7fa;font-weight:700;border:1px solid #ececef}
+.tt2 td{height:72px;border:1px solid #ececef;line-height:1.5}
+.tt2 td.n{font-weight:800;font-size:15px;width:16%}
+.tt2 tr.sec td{height:36px;background:#f6f7fa;font-weight:700}
+.tt2.dup td{height:48px}
+.ttp h5{font-size:15px;font-weight:800;margin:26px 0 10px}
 </style>
 </head>
 <body>
@@ -1103,10 +1127,13 @@ function study(){
 }
 const plansOf=d=>PLANS[d]||[];
 const hm=m=>m>=60?`${Math.floor(m/60)}h ${m%60}m`:`${m}m`;
-const TEACH={'국어':['박서윤','N관 201호'],'수학':['최현우','N관 302호'],'영어':['이준호','N관 205호'],'지구과학I':['정다은','N관 401호'],'생활과윤리':['김미향','N관 301호']};
-const TTROW=[['08:00','09:40',['국어','국어','수학','국어','수학']],['10:10','11:50',['수학','수학','국어','수학','국어']],['13:10','14:50',['영어','지구과학I','영어','생활과윤리','영어']],['15:20','17:00',['지구과학I','생활과윤리','자습','지구과학I','자습']]];
+const TEACH={'국어':['박서윤','임시관 201호'],'수학':['최현우','임시관 302호'],'영어':['이준호','임시관 205호'],'지구과학I':['정다은','임시관 401호'],'생활과윤리':['김미향','임시관 301호']};
+const PER=[['아침시간'],['1','08:00','09:40'],['2','10:10','11:50'],['점심시간'],['3','13:10','14:50'],['4','15:20','17:00'],['저녁시간'],['5','19:00','20:40'],['6','21:00','22:30']];
+const TT6={'1':['국어','국어','수학','국어','수학'],'2':['수학','수학','국어','수학','국어'],'3':['영어','지구과학I','생활과윤리','영어','영어'],'4':['지구과학I','','','지구과학I',''],'5':['','','','',''],'6':['','','','','']};
+const TTROW=PER.filter(p=>p[1]).map(([n,a,b])=>[a,b,TT6[n]]);
 const clsOf=d=>d>4?[]:TTROW.map(([a,b,l])=>[l[d],a,b]).filter(x=>TEACH[x[0]]);
 const SCOL={...COL,'한국사':'#A0784F'};
+const HL=s=>SCOL[s]+'2e';
 const toM=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
 const toT=m=>`${String(Math.floor(m/60)%24).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const SESS={};const NOW=20*60;
@@ -1123,23 +1150,24 @@ function record(){
    return `<button class="mc ${!ok?'x':''} ${has&&S.day===idx?'on':''}" ${has?`data-a="calDay" data-v="${idx}"`:''}><b>${ok?d:''}</b>${ps.length?`<span class="dts">${ps.slice(0,6).map(p=>`<i style="background:${SCOL[p.s]}"></i>`).join('')}</span>`:''}${t?`<small>${hm(t|0)}</small>`:''}</button>`}).join('')}</div></div></div>`}
  let ps=plansOf(S.day).slice();const cls=clsOf(S.day);const ss=S.schSort||'time';
  if(ss==='time')ps.sort((a,b)=>toM(a.from)-toM(b.from));else ps.sort((a,b)=>SUBJ.indexOf(a.s)-SUBJ.indexOf(b.s)||toM(a.from)-toM(b.from));
- const pill=s=>`<span class="sjl" style="background:${SCOL[s]}22;box-shadow:3px 0 0 ${SCOL[s]} inset">${s}</span>`;
+ const pill=s=>`<span class="sjl" style="background:${HL(s)};box-shadow:3px 0 0 ${SCOL[s]} inset">${s}</span>`;
  const H=[...Array(19)].map((_,i)=>6+i);
- const se=sessOf(S.day);const colAt=m=>{const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);return x?(x[0]==='_'?'#9a9a9a':SCOL[x[0]]):null};
+ const se=sessOf(S.day);const lec=cls.map(([s,a,b])=>[s,toM(a),toM(b)-toM(a)]);
+ const cellAt=m=>{const x=se.find(([s,st,mn])=>m>=st&&m<st+mn);if(x)return x[0]==='_'?['#d9d9d9','lv']:[HL(x[0]),''];const l=lec.find(([s,st,mn])=>m>=st&&m<st+mn);return l?[SCOL[l[0]],'lc']:null};
  const tm=S.tm,live=tm.run||tm.sec;
  return `<div class="col" style="flex:1;min-width:0">${calBar()}<div style="display:flex;gap:16px;flex:1;min-height:0">
-  <div class="panel col" style="flex:1.35;gap:0;min-width:0"><div class="scroll" style="flex:1;padding:16px 18px">
+  <div class="panel col" style="flex:1;gap:0;min-width:0"><div class="scroll" style="flex:1;padding:16px 18px">
     <span class="lchip">강의 리스트</span>
     ${cls.map(([s,a,b])=>`<div class="lrw"><span class="lb" style="background:${SCOL[s]}"></span><span class="ls">${s}</span><span class="lt">${TEACH[s][0]} | ${TEACH[s][1]}</span><span class="lm">${a} - ${b}</span></div>`).join('')||'<p class="muted" style="font-size:12px;padding:12px 4px">이 날은 재종 강의가 없어요</p>'}
     <div class="sh"><b>내 스케줄</b><span class="muted">${ps.length}개 · 완료 표시 ○ △ ✕</span><span class="rad"><button class="${ss==='subj'?'on':''}" data-a="schSort" data-v="subj"><i></i>과목 정렬</button><button class="${ss==='time'?'on':''}" data-a="schSort" data-v="time"><i></i>시간순 정렬</button></span></div>
     ${ps.map((p,k)=>`${ss==='subj'&&(k===0||ps[k-1].s!==p.s)?`<div class="sgh">${p.s}</div>`:''}<div class="srow">${pill(p.s)}<span class="sn">${p.t}</span><span class="st">${I.clock} ${p.from}-${toT(toM(p.from)+p.plan)}</span><button class="mk" data-a="mark" data-v="${p.id}">${p.mark||''}</button></div>`).join('')}
     <button class="srow add" data-a="addPlan">${I.plus} 새로운 일정 생성하기</button>
   </div></div>
-  <div class="panel col" style="flex:1;gap:0;min-width:0">
-   <div class="qs"><div style="flex:1;min-width:0"><small class="muted">${tm.run?'측정 중 · 종료 후 일정 선택':'일정 없이 바로 측정'}</small><b>바로 시작하기</b></div><span class="dg ${tm.run?'run':''}" id="tdig">${fmt(tm.sec,true)}</span>
+  <div class="panel col" style="width:300px;flex:none;gap:0;min-width:0">
+   <div class="qs"><div style="width:100%"><small class="muted">${tm.run?'측정 중 · 종료 후 일정 선택':'일정 없이 바로 측정'}</small><b>바로 시작하기</b></div><span class="dg ${tm.run?'run':''}" id="tdig">${fmt(tm.sec,true)}</span>
     <button class="tb2 k" data-a="tToggle">${tm.run?I.pause:I.play}</button><button class="tb2 ${tm.sec?'':'dis'}" data-a="tStop">${I.stop}</button></div>
-   <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>이 날 총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b> 학습 완료했어요!</span></div>
-    <div class="ttg" id="tlw">${H.map(h=>`<div class="tr"><span>${h%24}</span>${[0,1,2,3,4,5].map(k=>{const c=colAt(h*60+k*10+5);return `<i style="${c?`background:${c}`:''}" class="${c==='#9a9a9a'?'lv':''}"></i>`}).join('')}</div>`).join('')}</div></div>
+   <div class="ttb"><div class="tth"><b>TIME TABLE</b><span>총 <b>${hm(se.reduce((a,x)=>a+x[2],0)|0)}</b></span></div><div class="ttl"><span><i class="lc" style="--c:#999"></i>강의</span><span><i style="background:#ddd"></i>학습</span></div>
+    <div class="ttg" id="tlw">${H.map(h=>`<div class="tr"><span>${h%24}</span>${[0,1,2,3,4,5].map(k=>{const c=cellAt(h*60+k*10+5);return c?(c[1]==='lc'?`<i class="lc" style="--c:${c[0]}"></i>`:`<i class="${c[1]}" style="background:${c[0]}"></i>`):'<i></i>'}).join('')}</div>`).join('')}</div></div>
   </div></div></div>`;
 }
 const ATYPES=[['N제','#2f6ff0'],['기출','#1f9d55'],['모의고사','#e2453c'],['수능연계','#9b6be0']];
@@ -1149,39 +1177,22 @@ const APER={today:.12,week:1,month:3.8};
 const ATIMER={'N제':[['국어','국어 N제 · 문학 3세트','1h 20m'],['한국사','한국사 N제 근현대','58m'],['수학','수학 N제 미분 30제','45m']],'기출':[['수학','수학 기출 수열 15문항','32m']],'모의고사':[['국어','국어 월례고사 10회','1h 22m'],['수학','수학 서바이벌 25회','1h 04m']]};
 const ACONT=[['국어','월례고사',3],['국어','서바이벌',4],['국어','상상(FINAL)',1],['국어','엑셀러레이터',8],['수학','서바이벌',6],['수학','브릿지N',4],['수학','서바이벌전국',2],['수학','월례고사',1],['영어','서바이벌',3],['영어','월례고사',1],['지구과학I','서바이벌',5],['생활과윤리','서바이벌',2],['한국사','주간지',3]];
 function owl(){
- const sub=S.anaSub==='cont'?'cont':'subj';
- const chips=`<div style="display:flex;gap:8px">${[['subj','과목별 분석'],['cont','콘텐츠별 분석']].map(([k,t])=>`<button class="chip ${sub===k?'on':''}" data-a="anaSub" data-v="${k}">${t}</button>`).join('')}<span class="muted" style="margin-left:auto;font-size:11.5px">스케줄러 일정과 타이머 시간을 바탕으로 분석 · 11. 02 ~ 11. 08</span></div>`;
- let body='';
- if(sub==='subj'){
-  const per=S.anaPer||'week',k=APER[per],types=ATYPES.concat((S.extraTypes||[]).map(t=>[t,'#8a8a8a']));
-  const sel=S.anaType||'N제';
-  const rows=ASUB.map(([l,s])=>{const m=AWEEK[l]||{};const parts=types.map(([t,c])=>[t,c,Math.round((m[t]||0)*k)]);return [l,s,parts,parts.reduce((a,x)=>a+x[2],0)]});
-  const tot=rows.reduce((a,r)=>a+r[3],0),mx=Math.max(...rows.map(r=>r[3]),1),top=rows.slice().sort((a,b)=>b[3]-a[3])[0];
-  const typeTot=t=>rows.reduce((a,r)=>a+(r[2].find(x=>x[0]===t)||[0,0,0])[2],0);
-  const tm=(ATIMER[sel]||[]).slice(0,per==='today'?1:3);
-  body=`<div style="display:flex;gap:14px;flex:1;min-height:0">
+ const types=ATYPES.concat((S.extraTypes||[]).map(t=>[t,'#8a8a8a']));const sel=S.anaType||'전체';
+ const shown=sel==='전체'?types:types.filter(t=>t[0]===sel);
+ const rows=ASUB.map(([l,s])=>{const m=AWEEK[l]||{};const parts=shown.map(([t,c])=>[t,c,m[t]||0]);return [l,s,parts,parts.reduce((a,x)=>a+x[2],0)]});
+ const tot=rows.reduce((a,r)=>a+r[3],0),mx=Math.max(...rows.map(r=>r[3]),1),top=rows.slice().sort((a,b)=>b[3]-a[3])[0];
+ const typeTot=t=>ASUB.reduce((a,[l])=>a+((AWEEK[l]||{})[t]||0),0),allTot=types.reduce((a,[t])=>a+typeTot(t),0);
+ return `<div class="col" style="flex:1"><div style="display:flex"><span class="muted" style="margin-left:auto;font-size:11.5px">스케줄러 일정과 타이머 시간을 바탕으로 분석 · 11. 02 ~ 11. 08</span></div>
+ <div style="display:flex;gap:14px;flex:1;min-height:0">
    <div class="panel col" style="width:290px;flex:none;gap:0"><div class="ph"><h4>콘텐츠 유형</h4><span class="muted" style="font-size:11px;margin-left:auto">${types.length}개</span></div>
-    <div class="scroll" style="flex:1;padding:0 16px">${types.map(([t])=>`<button class="tyb ${sel===t?'on':''}" data-a="anaType" data-v="${t}"><span>${t}</span><span class="muted">${hm(typeTot(t))}</span></button>`).join('')}</div>
+    <div class="scroll" style="flex:1;padding:0 16px">${[['전체']].concat(types).map(([t])=>`<button class="tyb ${sel===t?'on':''}" data-a="anaType" data-v="${t}"><span>${t}</span><span class="muted">${hm(t==='전체'?allTot:typeTot(t))}</span></button>`).join('')}</div>
     <div style="display:flex;padding:12px 16px 16px"><input class="tyin" data-in="newType" placeholder="유형 직접 추가 (예: 사설 모의고사)" value="${esc(S.newType||'')}"><button class="tyadd" data-a="addType">추가</button></div></div>
-   <div class="panel col" style="flex:1;gap:0;padding:0 22px">
-    <div class="ph" style="padding:0;height:64px;border-bottom:1px solid var(--line)"><h4 style="font-size:18px">과목별 학습 시간</h4>
-     <span class="seg"><button class="on">과목별</button><button data-a="anaSub" data-v="cont">콘텐츠별</button></span>
-     <div class="r">${[['today','오늘'],['week','이번 주'],['month','이번 달']].map(([p,t])=>`<button class="pb ${per===p?'on':''}" data-a="anaPer" data-v="${p}">${t}</button>`).join('')}</div></div>
-    <p style="font-size:12.5px;color:#555;margin-top:14px">${{today:'오늘',week:'이번 주',month:'이번 달'}[per]} 총 <b style="color:#111">${hm(tot)}</b> · 가장 많이 공부한 과목 <b style="color:#111">${top[1]==='지구과학I'?'지I':top[0]}</b></p>
-    <div class="alg">${types.filter(([t])=>typeTot(t)).map(([t,c])=>`<span><i style="background:${c}"></i>${t}</span>`).join('')}</div>
-    ${rows.map(([l,s,parts,t])=>`<div class="abar"><span class="lb">${l}</span><span class="tr">${parts.filter(x=>x[2]).map(([n,c,m])=>`<i style="width:${m/mx*100}%;background:${c};${sel===n?'':'opacity:.85'}"></i>`).join('')}</span><span class="v">${hm(t)} · ${tot?Math.round(t/tot*100):0}%</span></div>`).join('')}
-    <div style="border-top:1px solid var(--line);margin-top:10px;padding-top:14px;flex:1;overflow:auto"><b style="font-size:14px">${sel} 타이머</b><span class="muted" style="font-size:11.5px;margin-left:6px">${{today:'오늘',week:'이번 주',month:'이번 달'}[per]} ${tm.length}개</span>
-     ${tm.map(([s,t,d])=>`<div class="atm"><i class="sd" style="background:${SCOL[s]}"></i>${t}<span class="muted" style="margin-left:auto">${d}</span></div>`).join('')||`<p class="muted" style="font-size:12.5px;margin-top:14px">이 기간에 이 유형으로 측정한 타이머가 없어요.</p>`}</div>
-   </div></div>`;
- }else{
-  const order=['국어','수학','영어','지구과학I','생활과윤리','한국사'];
-  const g=order.map(s=>[s,ACONT.filter(x=>x[0]===s)]).filter(x=>x[1].length);
-  body=`<div class="panel col" style="flex:1;gap:0"><div class="ph"><h4>콘텐츠별 분석</h4><span class="seg" style="margin-left:12px"><button data-a="anaSub" data-v="subj">과목별</button><button class="on">콘텐츠별</button></span><span class="muted" style="font-size:11px;margin-left:auto">과목별 정렬 · 배부 콘텐츠 기준</span></div>
-   <div class="scroll" style="flex:1;padding:0 16px 12px"><table class="qtab ctab"><thead><tr><th style="width:24%">과목</th><th>콘텐츠</th><th style="width:24%">학습 회차</th></tr></thead><tbody>
-   ${g.map(([s,l])=>l.map(([,c,n],i)=>`<tr>${i===0?`<td rowspan="${l.length}" class="sg"><i class="sd" style="background:${SCOL[s]}"></i> ${s}</td>`:''}<td><b>${c}</b></td><td>${n}회</td></tr>`).join('')).join('')}
-   </tbody></table></div></div>`;
- }
- return `<div class="col" style="flex:1">${chips}${body}</div>`;
+   <div class="panel col" style="flex:1;gap:0;padding:18px 24px">
+    <p style="font-size:13px;color:#555">이번 주 총 <b style="color:#111">${hm(tot)}</b> · 가장 많이 공부한 과목 <b style="color:#111">${top[3]?top[0]:'-'}</b></p>
+    <div class="alg">${shown.filter(([t])=>typeTot(t)).map(([t,c])=>`<span><i style="background:${c}"></i>${t}</span>`).join('')}</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:space-around;margin-top:8px">
+    ${rows.map(([l,s,parts,t])=>`<div class="abar"><span class="lb">${l}</span><span class="tr">${parts.filter(x=>x[2]).map(([n,c,m])=>`<i style="width:${m/mx*100}%;background:${c}"></i>`).join('')}</span><span class="v">${hm(t)} · ${tot?Math.round(t/tot*100):0}%</span><button class="more" data-a="anaMore" data-v="${s}">자세히 보기 ${I.chev}</button></div>`).join('')}</div>
+   </div></div></div>`;
 }
 
 /* =========================================================
@@ -1215,8 +1226,11 @@ function admBody(){
   cal+='</div>';
   return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><b style="font-size:16px">2026년 11월</b><span class="tag t-gray">10월 출석률 98.2% · 지각 1회</span><button class="kb" style="margin-left:auto" data-a="attForm">결석 / 지각 신청</button></div>${S.att?`<div style="padding:12px 14px;background:#f6f9ff;border-radius:6px;font-size:12.5px;margin-bottom:12px">신청 완료 · ${S.att}</div>`:''}${cal}`}
  if(k==='lect')return LECT.map((l,i)=>`<div class="nrow" style="height:72px"><div style="flex:1"><b style="font-size:14px">${l.t}</b><p class="muted" style="font-size:12px;margin-top:4px">${l.who} · ${l.when} · ${l.left?`잔여 ${l.left}석`:'마감'}</p></div>${l.on?`<button class="kb ghost" data-a="lect" data-v="${i}">신청 취소</button>`:l.left?`<button class="kb" data-a="lect" data-v="${i}">신청하기</button>`:'<button class="kb dis">마감</button>'}</div>`).join('')+`<p class="muted" style="font-size:11.5px;margin-top:14px">신청 마감 11/4(수) 22:00</p>`;
- if(k==='tt'){const rows=[['1교시','08:00','국어','국어','수학','국어','수학'],['2교시','10:10','수학','수학','국어','수학','국어'],['3교시','13:10','영어','지구과학I','영어','생활과윤리','영어'],['4교시','15:20','지구과학I','생활과윤리','자습','지구과학I','자습'],['5교시','19:00','자습','자습','선택특강','자습','자습']];
-  return `<table class="ttab"><tr><th style="width:70px"></th><th style="width:70px">시간</th>${['월','화','수','목','금'].map((d,i)=>`<th style="${i===1?'background:#111;color:#fff':''}">${d}</th>`).join('')}</tr>${rows.map(r=>`<tr><td class="f">${r[0]}</td><td class="muted">${r[1]}</td>${r.slice(2).map(s=>`<td style="${COL[s]?`box-shadow:inset 3px 0 0 ${COL[s]}`:'color:#aaa'}">${s}</td>`).join('')}</tr>`).join('')}</table>`}
+ if(k==='tt'){
+  return `<div class="ttp"><h2>이현서님의 시간표</h2><p class="sub">57285288 / 임시관 / 1 / 2</p><div class="dl"><button data-a="ttDown">시간표 다운로드 <span>↓</span></button></div>
+  <table class="tt2"><tr><th>교시</th>${['월','화','수','목','금'].map(d=>`<th>${d}</th>`).join('')}</tr>
+  ${PER.map(p=>p[1]?`<tr><td class="n">${p[0]}</td>${TT6[p[0]].map(x=>`<td>${x&&TEACH[x]?`${x}A<br>${TEACH[x][0]}<br>${TEACH[x][1]}`:''}</td>`).join('')}</tr>`:`<tr class="sec"><td colspan="6">${p[0]}</td></tr>`).join('')}</table>
+  <h5>중복일정</h5><table class="tt2 dup"><tr><th style="width:26%">기간</th><th>구분</th><th>과목</th><th>수업명</th><th>요일</th><th>교실</th></tr><tr><td colspan="6" class="muted">중복된 일정이 없습니다</td></tr></table></div>`}
  if(k==='meal')return `<div style="display:flex;gap:12px">${[['조식','07:00 ~ 07:40','흰쌀밥 · 북엇국 · 계란말이 · 김치'],['중식','12:00 ~ 12:50','카레라이스 · 미소된장국 · 돈가스 · 단무지 · 요구르트'],['석식','17:40 ~ 18:30','잡곡밥 · 순두부찌개 · 제육볶음 · 콩나물무침']].map(([t,h,m],i)=>`<div class="panel" style="flex:1;padding:18px;${i===1?'border-color:#111':''}"><b style="font-size:15px">${t}</b> ${i===1?'<span class="tag t-dark">지금</span>':''}<p class="muted" style="font-size:11.5px;margin-top:4px">${h}</p><p style="font-size:13.5px;line-height:1.9;margin-top:12px">${m.split(' · ').join('<br>')}</p></div>`).join('')}</div><p class="muted" style="font-size:11.5px;margin-top:14px">11월 3일 (화) 기준 · 알레르기 정보는 공지사항 참고</p>`;
  if(k==='re')return [['[수학] 미적분 기출 분석 3강','10/29 결강','42분'],['[국어] 문학 갈래 복합 2강','10/27 결강','51분'],['[영어] 어법 핵심 정리 5강','10/22 결강','38분']].map(r=>`<div class="nrow" style="height:72px"><div style="width:96px;height:54px;border-radius:5px;background:#2b2b2d;color:#fff;display:flex;align-items:center;justify-content:center">${I.play}</div><div style="flex:1"><b style="font-size:14px">${r[0]}</b><p class="muted" style="font-size:12px;margin-top:4px">${r[1]} · ${r[2]}</p></div><button class="kb" data-a="reWatch">수강하기</button></div>`).join('');
  return '';
@@ -1281,6 +1295,11 @@ function overlay(){
    <div style="margin-top:10px;font-size:14px;line-height:1.9">${q.o.map((o,i)=>`<div>${CIRC[i+1]} ${o}</div>`).join('')}</div>
    ${F.flip?`<div class="solbox" style="font-size:13px"><h6>정답 ${CIRC[q.a]}</h6>${q.sol}</div>`:''}
    <div style="margin-top:auto;display:flex;gap:10px">${F.flip?`<button class="kb ghost lg" style="flex:1;justify-content:center" data-a="flashAns" data-v="0">틀렸어요</button><button class="kb lg" style="flex:1;justify-content:center" data-a="flashAns" data-v="1">맞혔어요</button>`:`<button class="kb lg" style="flex:1;justify-content:center" data-a="flashFlip">정답 보기</button>`}</div></div>`}
+ if(M.t==='cana'){const l=ACONT.filter(x=>x[0]===M.s),lab=(ASUB.find(x=>x[1]===M.s)||[M.s])[0],ty=(AWEEK[lab]||{});
+  return `<div class="dim" data-a="mClose"></div><div class="modal" style="width:520px"><h3>${M.s} 콘텐츠 분석</h3>
+   <p class="d" style="margin-bottom:14px">이번 주 ${hm(Object.values(ty).reduce((a,b)=>a+b,0))} · ${Object.entries(ty).map(([k,v])=>`${k} ${hm(v)}`).join(' · ')||'기록 없음'}</p>
+   <table class="qtab ctab"><thead><tr><th>콘텐츠</th><th style="width:30%">학습 회차</th></tr></thead><tbody>${l.map(([,c,n])=>`<tr><td><b>${c}</b></td><td>${n}회</td></tr>`).join('')||'<tr><td colspan="2" class="muted" style="height:80px">이 과목은 아직 학습한 콘텐츠가 없어요</td></tr>'}</tbody></table>
+   <div class="btns"><button class="k" data-a="mClose" style="flex:1">확인</button></div></div>`}
  if(M.t==='assign'){const ps=plansOf(S.day);return `<div class="dim" data-a="mClose"></div><div class="modal dmod" style="width:520px"><div class="dbody" style="text-align:left;padding:30px 30px 24px">
   <p class="dq" style="text-align:center">측정한 <b>${fmt(S.tm.sec,true)}</b>을 어디에 기록할까요?</p>
   <div class="fl" style="margin-top:18px">기존 일정 선택</div>
@@ -1310,7 +1329,8 @@ function overlay(){
 function scrapAdd(o){if(SCRAPS.some(x=>x.t===o.t))return false;SCRAPS.unshift(Object.assign({id:Date.now()+Math.random(),date:'11. 03',folder:null,tags:[],hist:[],memo:''},o));return true}
 function goAsk(s,c,r,n){ensureTree(s,c,r);S.fdd=null;S.tab='ask';S.askD=null;S.askSub='write';S.form={s,c,r,n,txt:'',img:false,to:'TA',auto:true};toast('질문하기로 이동 · 문항 정보가 자동 입력되었어요')}
 const ACT={
- anaPer:v=>{S.anaPer=v},anaType:v=>{S.anaType=v},addType:()=>{const t=(S.newType||'').trim();if(!t)return;(S.extraTypes||(S.extraTypes=[])).push(t);S.anaType=t;S.newType='';toast(`콘텐츠 유형 "${t}"을 추가했어요`)},
+ ttDown:()=>{toast('시간표 이미지를 저장했어요')},
+ anaPer:v=>{S.anaPer=v},anaMore:v=>{S.modal={t:'cana',s:v}},anaType:v=>{S.anaType=v},addType:()=>{const t=(S.newType||'').trim();if(!t)return;(S.extraTypes||(S.extraTypes=[])).push(t);S.anaType=t;S.newType='';toast(`콘텐츠 유형 "${t}"을 추가했어요`)},
  popTog:()=>{S.popOpen=!S.popOpen},
  pCrumb:v=>{const P=S.pick;if(v==='s'){P.s=P.c=P.r=P.n=null}else if(v==='c'){P.c=P.r=P.n=null}else if(v==='r'){P.r=P.n=null}else P.n=null},
  fDD:(v,b,e)=>{if(e&&e.target.closest('.fl2'))return;S.fdd=S.fdd===v?null:v},
@@ -1477,7 +1497,7 @@ const JUMP=[
  ['홈',[['① 홈 · 문항 (콘텐츠 서랍장 연간)',()=>{}],['① -1 문항 · 필터: 콘텐츠 유형',()=>{D.dd='type'}],['① -2 문항 · 월간 보기',()=>{D.view='month'}],['① -3 칸 누름 (응시 완료) · 원문 보기 / 성적 확인',()=>{D.pop={r:1,n:'17',st:'c'}}],['① -4 칸 누름 (미응시) · 원문 보기 / 성적 입력',()=>{D.pop={r:1,n:'18',st:'o'}}],['① -5 성적 입력 방법 (촬영 · 틀린 문항만 · OMR)',()=>{D.pop={r:1,n:'18',st:'o',step:'in'}}],['① -6 원문 보기 → 시험 / 학습 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['① -7 성적 입력 · 촬영',()=>{S.modal={t:'gcam',cid:'k-mon-10',step:0}}],['① -8 성적 입력 · 틀린 문항만',()=>{ACT.omrOpen('m-sv-25');S.gView='wrongIn';S.omr=null;S.win={cid:'m-sv-25',w:[9,22]}}],['② 문항 · 모드 선택',()=>{S.modal={t:'mode',cid:'k-mon-10'}}],['③ 문항 · 시험 모드 (시간 측정 + OMR)',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:0,ans:{0:1,1:2},chk:{},sec:754}}],['④ 문항 · 학습 모드 (정답 + 선지 선택 비율)',()=>{S.viewer={cid:'m-br-18',mode:'study',qi:0,ans:{0:5},chk:{0:true},sec:0}}],['⑤ 문항 · 시험 종료 → 채점 결과',()=>{S.viewer={cid:'k-mon-10',mode:'exam',qi:2,ans:{0:1,1:2,2:5},chk:{},sec:1520};ACT.grade()}],['⑥ 성적 리포트 (정오표 · 틀린 문항 색 구분)',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24'}],['⑦ 성적 · 틀린 문항만 보기',()=>{S.homeSub='grade';S.gView='report';S.gSel='m-sv-24';S.wrongOnly=true}],['⑧ 성적 입력 · OMR 기입',()=>{ACT.omrOpen('m-sv-25');ACT.omrFill()}],['⑨ 성적 · 성적 분석',()=>{S.homeSub='grade';S.gView='ana';S.aSubj='수학'}]]],
  ['부엉이 아카이브',[['⑩ 스크랩 (전체 / 질문 / 스크랩 / 태그)',()=>{S.tab='arc'}],['⑩ -1 스크랩 · 태그별 보기',()=>{S.tab='arc';S.scF='태그';S.scTag='#계산실수'}],['⑩ -2 스크랩 · 과목별 정렬',()=>{S.tab='arc';S.scSort='subj';S.scSubj='수학'}],['⑪ 스크랩 · 문항 상세',()=>{S.tab='arc';S.modal={t:'scrap',id:2}}],['⑫ 스크랩 · OCR 촬영',()=>{S.tab='arc';S.modal={t:'cam',step:0,from:'scrap'}}],['⑬ 오답 정리 · 폴더',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='folder';S.grp='수학 · 미분'}],['⑭ 오답 정리 · 태그',()=>{S.tab='arc';S.arcSub='wrong';S.sortBy='tag';S.grp='#계산실수'}],['⑮ 오답 정리 · 세부 (메모)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='memo'}],['⑯ 오답 정리 · 세부 (필기)',()=>{S.tab='arc';S.arcSub='wrong';ACT.wdOpen(1);S.wdTab='draw'}],['⑰ 오답 플래시',()=>{S.tab='arc';S.arcSub='wrong';S.grp='수학 · 미분';ACT.flashStart()}]]],
  ['질문하기',[['⑱ 문항 검색',()=>{S.tab='ask';S.pick={s:'수학',c:'서바이벌',r:24,n:14}}],['⑲ 문항 세부 (원본 · 해설 · 답변 요약)',()=>{S.tab='ask';S.askD={s:'수학',c:'서바이벌',r:24,n:14,qi:0}}],['⑳ 문항 질문 (성적에서 자동 입력)',()=>{goAsk('수학','서바이벌',24,21)}],['㉑ 이번 주 인기 문항 (우측 상단 펼침)',()=>{S.tab='ask';S.popOpen=true}],['⑱ -1 문항 검색 첫 화면',()=>{S.tab='ask'}]]],
- ['부엉이 학습실',[['㉒ 학습 기록 (강의 · 스케줄 + 실시간 학습 시간)',()=>{S.tab='study'}],['㉒ -1 바로 시작하기 · 측정 중',()=>{S.tab='study';S.tm={run:true,sec:1500,start:NOW}}],['㉒ -2 측정 종료 → 기존 일정 선택 / 새 일정 입력',()=>{S.tab='study';S.tm={run:false,sec:1500,start:NOW};S.modal={t:'assign',sel:'p3',ns:'수학',nt:'',star:4}}],['㉒ -3 학습 기록 · 주간',()=>{S.tab='study';S.calV='week'}],['㉒ -4 학습 기록 · 월간',()=>{S.tab='study';S.calV='month'}],['㉒ -5 스케줄 · 과목 정렬',()=>{S.tab='study';S.schSort='subj'}],['㉓ 학습 기록 · 일정 추가',()=>{S.tab='study';ACT.addPlan()}],['㉕ 분석실 · 과목별 분석 (콘텐츠 유형)',()=>{S.tab='study';S.studySub='ana';S.anaSub='subj'}],['㉖ 분석실 · 콘텐츠별 분석',()=>{S.tab='study';S.studySub='ana';S.anaSub='cont'}]]],
+ ['부엉이 학습실',[['㉒ 학습 기록 (강의 · 스케줄 + 실시간 학습 시간)',()=>{S.tab='study'}],['㉒ -1 바로 시작하기 · 측정 중',()=>{S.tab='study';S.tm={run:true,sec:1500,start:NOW}}],['㉒ -2 측정 종료 → 기존 일정 선택 / 새 일정 입력',()=>{S.tab='study';S.tm={run:false,sec:1500,start:NOW};S.modal={t:'assign',sel:'p3',ns:'수학',nt:'',star:4}}],['㉒ -3 학습 기록 · 주간',()=>{S.tab='study';S.calV='week'}],['㉒ -4 학습 기록 · 월간',()=>{S.tab='study';S.calV='month'}],['㉒ -5 스케줄 · 과목 정렬',()=>{S.tab='study';S.schSort='subj'}],['㉓ 학습 기록 · 일정 추가',()=>{S.tab='study';ACT.addPlan()}],['㉕ 과목별 분석 (콘텐츠 유형 + 그래프)',()=>{S.tab='study';S.studySub='ana'}],['㉖ 과목별 분석 · 자세히 보기 (콘텐츠 분석)',()=>{S.tab='study';S.studySub='ana';S.modal={t:'cana',s:'수학'}}]]],
  ['행정',[['㉗ 공지사항',()=>{S.tab='adm'}],['㉘ 상담 · 학습담임',()=>{S.tab='adm';S.adm='c-study'}],['㉙ 상담 · TA Meet',()=>{S.tab='adm';S.adm='c-ta'}],['㉚ 생활 · 출결 / 문의',()=>{S.tab='adm';S.adm='att'}],['㉛ 생활 · 선택특강 신청',()=>{S.tab='adm';S.adm='lect'}],['㉜ 생활 · 시간표',()=>{S.tab='adm';S.adm='tt'}],['㉝ 생활 · 급식',()=>{S.tab='adm';S.adm='meal'}],['㉞ 생활 · 벌점',()=>{S.tab='adm';S.adm='pen'}],['㉟ 생활 · 리클래스 수강',()=>{S.tab='adm';S.adm='re'}]]],
  ['공통',[['알림 (전체 앱 통합)',()=>{S.side='noti'}],['설정',()=>{S.side='settings'}]]],
 ];
@@ -1485,7 +1505,7 @@ const BASE=JSON.stringify({tab:'home',homeSub:'item',hSubj:'전체',gView:'repor
 let JF=[];
 document.getElementById('jumplist').innerHTML=JUMP.map(([h,l])=>`<li class="h">${h}</li>`+l.map(([t,f])=>{JF.push(f);return `<li><button data-j="${JF.length-1}">${t}</button></li>`}).join('')).join('');
 document.getElementById('jumplist').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
- Object.assign(S,JSON.parse(BASE),{viewer:null,modal:null,side:null,wd:null,askD:null,omr:null,pick:{s:null,c:null,r:null,n:null}});S.tm={run:false,sec:0,start:0};S.pdf=null;S.win=null;S.popOpen=false;S.fdd=null;S.scTag=null;S.scSort='time';S.scSubj=null;S.calV='day';S.schSort='time';Object.assign(D,{subj:"전체",types:new Set(DTYPES),names:new Set(),hide:new Set(),q:"",dd:null,view:"year",pop:null,reset:true});S._chip=0;
+ Object.assign(S,JSON.parse(BASE),{viewer:null,modal:null,side:null,wd:null,askD:null,omr:null,pick:{s:null,c:null,r:null,n:null}});S.tm={run:false,sec:0,start:0};S.pdf=null;S.win=null;S.popOpen=false;S.fdd=null;S.scTag=null;S.scSort='time';S.scSubj=null;S.anaType='전체';S.calV='day';S.schSort='time';Object.assign(D,{subj:"전체",types:new Set(DTYPES),names:new Set(),hide:new Set(),q:"",dd:null,view:"year",pop:null,reset:true});S._chip=0;
  document.getElementById('toast').classList.remove('on');JF[+b.dataset.j]();document.getElementById('jump').classList.remove('open');render();if(S._chip){S._chip=0;const ch=document.querySelector('.chipc[data-n="24"]');if(ch)ch.click()}});
 /* 화면 크기에 맞춰 축소 */
 function fit(){const k=Math.min(1,(innerWidth-20)/1180,(innerHeight-20)/820);document.getElementById('ipad').style.transform=k<1?`scale(${k})`:''}
