@@ -1200,7 +1200,7 @@ function calBar(){const v=S.calV||'day';const lab=v==='day'?`2026년 11월 ${WEE
   <span class="tot">총 학습 시간 <b>${hm(sessOf(S.day).reduce((a,x)=>a+x[2],0)|0)}</b></span><button class="pb" data-a="calToday">오늘</button></div>`}
 function record(){
  const v=S.calV||'day';
- if(v==='week')return `<div class="col" style="flex:1">${calBar()}<div class="wkv panel">${WEEK.map(([w,d],i)=>{const ps=plansOf(i),cl=clsOf(i);return `<button class="wc ${S.day===i?'on':''}" data-a="calDay" data-v="${i}"><div class="wh">${w} <b>${d}</b></div>${cl.map(([s,a])=>`<div class="wi ln" style="border-color:${SCOL[s]}">${a} ${s} 강의</div>`).join('')}${ps.map(p=>`<div class="wi" style="background:${SCOL[p.s]}26;border-color:${SCOL[p.s]}">${p.from} ${p.t}<span>${p.mark||''}</span></div>`).join('')}</button>`}).join('')}</div></div>`;
+ if(v==='week')return `<div class="col" style="flex:1">${calBar()}<div class="wkv panel">${WEEK.map(([w,d],i)=>{const ps=plansOf(i);return `<button class="wc ${S.day===i?'on':''}" data-a="calDay" data-v="${i}"><div class="wh">${w} <b>${d}</b></div>${ps.map(p=>`<div class="wi" style="background:${SCOL[p.s]}26;border-color:${SCOL[p.s]}">${p.from} ${p.t}<span>${p.mark||''}</span></div>`).join('')}</button>`}).join('')}</div></div>`;
  if(v==='month'){const cells=[];for(let k=0;k<42;k++){cells.push(k-5)}
   return `<div class="col" style="flex:1">${calBar()}<div class="mov panel"><div class="mh">${['월','화','수','목','금','토','일'].map(x=>`<span>${x}</span>`).join('')}</div><div class="mg">${cells.map(d=>{const idx=d-2;const ok=d>=1&&d<=30;const has=idx>=0&&idx<7;const ps=has?plansOf(idx):[];const t=has?sessOf(idx).reduce((a,x)=>a+x[2],0):0;
    return `<button class="mc ${!ok?'x':''} ${has&&S.day===idx?'on':''}" ${has?`data-a="calDay" data-v="${idx}"`:''}><b>${ok?d:''}</b>${ps.length?`<span class="dts">${ps.slice(0,6).map(p=>`<i style="background:${SCOL[p.s]}"></i>`).join('')}</span>`:''}${t?`<small>${hm(t|0)}</small>`:''}</button>`}).join('')}</div></div></div>`}
@@ -1360,8 +1360,7 @@ function overlay(){
   <div class="eb"><b>${V.no||V.qi+1} 핵심 개념 이해</b><div style="margin-top:8px"><span class="tgk">정답</span> ${CIRC[q.a]}</div><div style="margin-top:10px"><span class="tgk">해설</span></div><div style="margin-top:6px;line-height:1.8">${q.sol}</div></div></div>`}
  if(M.t==='vnote')return `<div class="dim" data-a="mClose" style="background:rgba(0,0,0,.2)"></div><div class="ios"><h5>오답노트</h5><p>이 문항을 오답노트에 추가할까요?</p><div class="b"><button data-a="mClose">취소</button><button data-a="vNoteAdd">추가</button></div></div>`;
  if(M.t==='cana'){const l=ACONT.filter(x=>x[0]===M.s),lab=(ASUB.find(x=>x[1]===M.s)||[M.s])[0],ty=(AWEEK[lab]||{});
-  return `<div class="dim" data-a="mClose"></div><div class="modal" style="width:520px"><h3>${M.s} 콘텐츠 분석</h3>
-   <p class="d" style="margin-bottom:14px">이번 주 ${hm(Object.values(ty).reduce((a,b)=>a+b,0))} · ${Object.entries(ty).map(([k,v])=>`${k} ${hm(v)}`).join(' · ')||'기록 없음'}</p>
+  return `<div class="dim" data-a="mClose"></div><div class="modal" style="width:520px"><h3 style="margin-bottom:14px">${M.s} 콘텐츠 분석</h3>
    <table class="qtab ctab"><thead><tr><th>콘텐츠</th><th style="width:30%">학습 회차</th></tr></thead><tbody>${l.map(([,c,n])=>`<tr><td><b>${c}</b></td><td>${n}회</td></tr>`).join('')||'<tr><td colspan="2" class="muted" style="height:80px">이 과목은 아직 학습한 콘텐츠가 없어요</td></tr>'}</tbody></table>
    <div class="btns"><button class="k" data-a="mClose" style="flex:1">확인</button></div></div>`}
  if(M.t==='assign'){const ps=plansOf(S.day);return `<div class="dim" data-a="mClose"></div><div class="modal dmod" style="width:520px"><div class="dbody" style="text-align:left;padding:30px 30px 24px">
